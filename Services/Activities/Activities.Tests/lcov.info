@@ -1,0 +1,1554 @@
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\Messages\Command.cs
+FN:8,System.DateTime Framework.Core.Messages.CommandBase::get_Timestamp()
+FNDA:2,System.DateTime Framework.Core.Messages.CommandBase::get_Timestamp()
+DA:9,2
+FN:17,System.Boolean Framework.Core.Messages.CommandBase::IsValid()
+FNDA:0,System.Boolean Framework.Core.Messages.CommandBase::IsValid()
+DA:18,0
+DA:19,0
+DA:20,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+BRDA:23,32,0,0
+BRDA:23,32,1,0
+FN:11,System.Void Framework.Core.Messages.CommandBase::.ctor()
+FNDA:2,System.Void Framework.Core.Messages.CommandBase::.ctor()
+DA:12,2
+DA:13,2
+DA:14,2
+DA:15,2
+LF:19
+LH:5
+BRF:2
+BRH:0
+FNF:3
+FNH:2
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\Messages\CommandHandler.cs
+FN:12,System.Void Framework.Core.Messages.CommandHandler/<PersistData>d__0::MoveNext()
+FNDA:1,System.Void Framework.Core.Messages.CommandHandler/<PersistData>d__0::MoveNext()
+DA:13,1
+DA:14,1
+DA:15,1
+BRDA:14,129,0,0
+BRDA:14,129,1,1
+LF:3
+LH:3
+BRF:2
+BRH:1
+FNF:1
+FNH:1
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\Messages\Event.cs
+FN:7,System.DateTime Framework.Core.Messages.Event::get_Timestamp()
+FNDA:55,System.DateTime Framework.Core.Messages.Event::get_Timestamp()
+DA:8,55
+FN:9,System.Void Framework.Core.Messages.Event::.ctor()
+FNDA:55,System.Void Framework.Core.Messages.Event::.ctor()
+DA:10,55
+DA:11,55
+DA:12,55
+DA:13,55
+LF:5
+LH:5
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\Messages\Message.cs
+FN:6,System.String Framework.Core.Messages.Message::get_MessageType()
+FNDA:58,System.String Framework.Core.Messages.Message::get_MessageType()
+DA:7,58
+FN:7,System.Guid Framework.Core.Messages.Message::get_AggregateId()
+FNDA:0,System.Guid Framework.Core.Messages.Message::get_AggregateId()
+DA:8,0
+FN:9,System.Void Framework.Core.Messages.Message::.ctor()
+FNDA:57,System.Void Framework.Core.Messages.Message::.ctor()
+DA:10,57
+DA:11,57
+DA:12,57
+DA:13,57
+LF:6
+LH:5
+BRF:0
+BRH:0
+FNF:3
+FNH:2
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\Messages\Result.cs
+FN:11,System.Collections.Generic.List`1<System.String> Framework.Core.Messages.ValidationResultBase::get_Erros()
+FNDA:0,System.Collections.Generic.List`1<System.String> Framework.Core.Messages.ValidationResultBase::get_Erros()
+DA:12,0
+FN:7,System.Void Framework.Core.Messages.ValidationResultBase::.ctor()
+FNDA:0,System.Void Framework.Core.Messages.ValidationResultBase::.ctor()
+DA:8,0
+DA:9,0
+DA:10,0
+DA:11,0
+FN:18,Framework.Core.Messages.ValidationResultBase Framework.Core.Messages.ResultBase::GetValidationResultBase()
+FNDA:0,Framework.Core.Messages.ValidationResultBase Framework.Core.Messages.ResultBase::GetValidationResultBase()
+DA:19,0
+DA:20,0
+DA:21,0
+FN:22,System.Collections.Generic.List`1<System.String> Framework.Core.Messages.ResultBase::GetErroMessagens()
+FNDA:0,System.Collections.Generic.List`1<System.String> Framework.Core.Messages.ResultBase::GetErroMessagens()
+DA:23,0
+DA:24,0
+DA:25,0
+FN:26,System.Void Framework.Core.Messages.ResultBase::Fail(System.String)
+FNDA:0,System.Void Framework.Core.Messages.ResultBase::Fail(System.String)
+DA:27,0
+DA:28,0
+DA:29,0
+FN:30,System.Void Framework.Core.Messages.ResultBase::Fail(System.Collections.Generic.List`1<System.String>)
+FNDA:0,System.Void Framework.Core.Messages.ResultBase::Fail(System.Collections.Generic.List`1<System.String>)
+DA:31,0
+DA:32,0
+DA:33,0
+FN:34,System.Boolean Framework.Core.Messages.ResultBase::IsValid()
+FNDA:0,System.Boolean Framework.Core.Messages.ResultBase::IsValid()
+DA:35,0
+DA:36,0
+DA:37,0
+FN:16,System.Void Framework.Core.Messages.ResultBase::.ctor()
+FNDA:0,System.Void Framework.Core.Messages.ResultBase::.ctor()
+DA:17,0
+FN:52,T Framework.Core.Messages.Result`1::get_Data()
+FNDA:0,T Framework.Core.Messages.Result`1::get_Data()
+DA:53,0
+FN:40,System.Void Framework.Core.Messages.Result`1::.ctor()
+FNDA:0,System.Void Framework.Core.Messages.Result`1::.ctor()
+DA:41,0
+DA:43,0
+FN:44,System.Void Framework.Core.Messages.Result`1::.ctor(Framework.Core.Messages.ValidationResultBase)
+FNDA:0,System.Void Framework.Core.Messages.Result`1::.ctor(Framework.Core.Messages.ValidationResultBase)
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+FN:48,System.Void Framework.Core.Messages.Result`1::.ctor(Framework.Core.Messages.Result)
+FNDA:0,System.Void Framework.Core.Messages.Result`1::.ctor(Framework.Core.Messages.Result)
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+FN:57,System.Void Framework.Core.Messages.Result::.ctor()
+FNDA:0,System.Void Framework.Core.Messages.Result::.ctor()
+DA:58,0
+DA:60,0
+FN:61,System.Void Framework.Core.Messages.Result::.ctor(Framework.Core.Messages.ValidationResultBase)
+FNDA:0,System.Void Framework.Core.Messages.Result::.ctor(Framework.Core.Messages.ValidationResultBase)
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+FN:65,System.Void Framework.Core.Messages.Result::.ctor(Framework.Core.Messages.Result)
+FNDA:0,System.Void Framework.Core.Messages.Result::.ctor(Framework.Core.Messages.Result)
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+LF:42
+LH:0
+BRF:0
+BRH:0
+FNF:15
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\Messages\Integration\ResponseMessage.cs
+FN:6,FluentValidation.Results.ValidationResult Framework.Core.Messages.Integration.ResponseMessage::get_ValidationResult()
+FNDA:0,FluentValidation.Results.ValidationResult Framework.Core.Messages.Integration.ResponseMessage::get_ValidationResult()
+DA:7,0
+FN:8,System.Void Framework.Core.Messages.Integration.ResponseMessage::.ctor(FluentValidation.Results.ValidationResult)
+FNDA:0,System.Void Framework.Core.Messages.Integration.ResponseMessage::.ctor(FluentValidation.Results.ValidationResult)
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,0
+LF:5
+LH:0
+BRF:0
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\Mediator\MediatorHandler.cs
+FN:11,System.Void Framework.Core.Mediator.MediatorHandler::.ctor(MediatR.IMediator)
+FNDA:0,System.Void Framework.Core.Mediator.MediatorHandler::.ctor(MediatR.IMediator)
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,0
+FN:41,System.Void Framework.Core.Mediator.MediatorHandler/<<PublishEventDbContext>b__4_3>d::MoveNext()
+FNDA:0,System.Void Framework.Core.Mediator.MediatorHandler/<<PublishEventDbContext>b__4_3>d::MoveNext()
+DA:42,0
+FN:31,System.Boolean Framework.Core.Mediator.MediatorHandler/<>c::<PublishEventDbContext>b__4_0(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry`1<Framework.Core.DomainObjects.Entity>)
+FNDA:0,System.Boolean Framework.Core.Mediator.MediatorHandler/<>c::<PublishEventDbContext>b__4_0(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry`1<Framework.Core.DomainObjects.Entity>)
+DA:32,0
+BRDA:32,12,0,0
+BRDA:32,12,1,0
+FN:34,System.Collections.Generic.IEnumerable`1<Framework.Core.Messages.Event> Framework.Core.Mediator.MediatorHandler/<>c::<PublishEventDbContext>b__4_1(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry`1<Framework.Core.DomainObjects.Entity>)
+FNDA:0,System.Collections.Generic.IEnumerable`1<Framework.Core.Messages.Event> Framework.Core.Mediator.MediatorHandler/<>c::<PublishEventDbContext>b__4_1(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry`1<Framework.Core.DomainObjects.Entity>)
+DA:35,0
+FN:38,System.Void Framework.Core.Mediator.MediatorHandler/<>c::<PublishEventDbContext>b__4_2(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry`1<Framework.Core.DomainObjects.Entity>)
+FNDA:0,System.Void Framework.Core.Mediator.MediatorHandler/<>c::<PublishEventDbContext>b__4_2(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry`1<Framework.Core.DomainObjects.Entity>)
+DA:39,0
+FN:23,System.Void Framework.Core.Mediator.MediatorHandler/<PublishEvent>d__3`1::MoveNext()
+FNDA:0,System.Void Framework.Core.Mediator.MediatorHandler/<PublishEvent>d__3`1::MoveNext()
+DA:24,0
+DA:25,0
+DA:26,0
+FN:28,System.Void Framework.Core.Mediator.MediatorHandler/<PublishEventDbContext>d__4::MoveNext()
+FNDA:0,System.Void Framework.Core.Mediator.MediatorHandler/<PublishEventDbContext>d__4::MoveNext()
+DA:29,0
+DA:30,0
+DA:31,0
+DA:34,0
+DA:36,0
+DA:38,0
+DA:41,0
+DA:43,0
+DA:44,0
+FN:50,System.Void Framework.Core.Mediator.MediatorHandler/<Send>d__6::MoveNext()
+FNDA:0,System.Void Framework.Core.Mediator.MediatorHandler/<Send>d__6::MoveNext()
+DA:51,0
+FN:18,System.Void Framework.Core.Mediator.MediatorHandler/<SendCommand>d__2`2::MoveNext()
+FNDA:0,System.Void Framework.Core.Mediator.MediatorHandler/<SendCommand>d__2`2::MoveNext()
+DA:19,0
+DA:20,0
+DA:21,0
+FN:46,System.Void Framework.Core.Mediator.MediatorHandler/<SendCommand>d__5::MoveNext()
+FNDA:0,System.Void Framework.Core.Mediator.MediatorHandler/<SendCommand>d__5::MoveNext()
+DA:47,0
+DA:48,0
+DA:49,0
+LF:27
+LH:0
+BRF:2
+BRH:0
+FNF:10
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\DomainObjects\BusinessRuleValidation.cs
+FN:11,System.Void Framework.Core.DomainObjects.BusinessRuleValidation::Check(System.Collections.Generic.List`1<Framework.Core.DomainObjects.IBusinessRule>)
+FNDA:0,System.Void Framework.Core.DomainObjects.BusinessRuleValidation::Check(System.Collections.Generic.List`1<Framework.Core.DomainObjects.IBusinessRule>)
+DA:12,0
+DA:13,0
+DA:15,0
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+DA:21,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:28,0
+BRDA:23,53,0,0
+BRDA:23,53,1,0
+BRDA:17,9,0,0
+BRDA:17,9,1,0
+FN:30,System.Void Framework.Core.DomainObjects.BusinessRuleValidation::Check(Framework.Core.DomainObjects.IBusinessRule)
+FNDA:167,System.Void Framework.Core.DomainObjects.BusinessRuleValidation::Check(Framework.Core.DomainObjects.IBusinessRule)
+DA:31,167
+DA:32,167
+DA:33,3
+DA:34,3
+DA:36,164
+BRDA:32,9,0,3
+BRDA:32,9,1,164
+LF:18
+LH:5
+BRF:6
+BRH:2
+FNF:2
+FNH:1
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\DomainObjects\BusinessRuleValidationException.cs
+FN:10,System.String Framework.Core.DomainObjects.BusinessRuleValidationException::get_Details()
+FNDA:0,System.String Framework.Core.DomainObjects.BusinessRuleValidationException::get_Details()
+DA:11,0
+FN:18,System.String Framework.Core.DomainObjects.BusinessRuleValidationException::ToString()
+FNDA:0,System.String Framework.Core.DomainObjects.BusinessRuleValidationException::ToString()
+DA:19,0
+DA:20,0
+DA:21,0
+BRDA:20,8,0,0
+BRDA:20,8,1,0
+FN:12,System.Void Framework.Core.DomainObjects.BusinessRuleValidationException::.ctor(System.String)
+FNDA:0,System.Void Framework.Core.DomainObjects.BusinessRuleValidationException::.ctor(System.String)
+DA:13,0
+DA:14,0
+DA:15,0
+DA:16,0
+LF:8
+LH:0
+BRF:2
+BRH:0
+FNF:3
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\DomainObjects\DomainException.cs
+FN:6,System.Collections.Generic.List`1<System.String> Framework.Core.DomainObjects.DomainException::get_Messagens()
+FNDA:6,System.Collections.Generic.List`1<System.String> Framework.Core.DomainObjects.DomainException::get_Messagens()
+DA:7,6
+FN:8,System.Void Framework.Core.DomainObjects.DomainException::AddMessage(System.String)
+FNDA:0,System.Void Framework.Core.DomainObjects.DomainException::AddMessage(System.String)
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,0
+BRDA:10,7,0,0
+BRDA:10,7,1,0
+FN:12,System.Void Framework.Core.DomainObjects.DomainException::.ctor(System.Collections.Generic.List`1<System.String>)
+FNDA:3,System.Void Framework.Core.DomainObjects.DomainException::.ctor(System.Collections.Generic.List`1<System.String>)
+DA:13,3
+DA:14,9
+FN:15,System.Void Framework.Core.DomainObjects.DomainException::.ctor(System.String)
+FNDA:0,System.Void Framework.Core.DomainObjects.DomainException::.ctor(System.String)
+DA:16,0
+DA:17,0
+FN:18,System.Void Framework.Core.DomainObjects.DomainException::.ctor(System.String,System.Exception)
+FNDA:0,System.Void Framework.Core.DomainObjects.DomainException::.ctor(System.String,System.Exception)
+DA:19,0
+DA:20,0
+LF:11
+LH:3
+BRF:2
+BRH:0
+FNF:5
+FNH:2
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\DomainObjects\Entity.cs
+FN:8,System.Guid Framework.Core.DomainObjects.Entity::get_Id()
+FNDA:209,System.Guid Framework.Core.DomainObjects.Entity::get_Id()
+DA:9,209
+FN:16,System.Collections.Generic.IReadOnlyCollection`1<Framework.Core.Messages.Event> Framework.Core.DomainObjects.Entity::get_Notificacoes()
+FNDA:2,System.Collections.Generic.IReadOnlyCollection`1<Framework.Core.Messages.Event> Framework.Core.DomainObjects.Entity::get_Notificacoes()
+DA:17,2
+BRDA:17,7,0,0
+BRDA:17,7,1,2
+FN:19,System.Void Framework.Core.DomainObjects.Entity::AddEvent(Framework.Core.Messages.Event)
+FNDA:55,System.Void Framework.Core.DomainObjects.Entity::AddEvent(Framework.Core.Messages.Event)
+DA:20,55
+DA:21,55
+DA:22,55
+DA:23,55
+BRDA:21,9,0,54
+BRDA:21,9,1,55
+FN:25,System.Void Framework.Core.DomainObjects.Entity::RemoveEvent(Framework.Core.Messages.Event)
+FNDA:0,System.Void Framework.Core.DomainObjects.Entity::RemoveEvent(Framework.Core.Messages.Event)
+DA:26,0
+DA:27,0
+DA:28,0
+BRDA:27,8,0,0
+BRDA:27,8,1,0
+FN:30,System.Void Framework.Core.DomainObjects.Entity::ClearEvent()
+FNDA:0,System.Void Framework.Core.DomainObjects.Entity::ClearEvent()
+DA:31,0
+DA:32,0
+DA:33,0
+BRDA:32,8,0,0
+BRDA:32,8,1,0
+FN:35,System.Void Framework.Core.DomainObjects.Entity::Check(Framework.Core.DomainObjects.IBusinessRule)
+FNDA:1,System.Void Framework.Core.DomainObjects.Entity::Check(Framework.Core.DomainObjects.IBusinessRule)
+DA:36,1
+DA:37,1
+DA:38,0
+DA:39,0
+DA:41,1
+BRDA:37,9,0,0
+BRDA:37,9,1,1
+FN:47,System.Boolean Framework.Core.DomainObjects.Entity::Equals(System.Object)
+FNDA:0,System.Boolean Framework.Core.DomainObjects.Entity::Equals(System.Object)
+DA:48,0
+DA:49,0
+DA:51,0
+DA:52,0
+DA:54,0
+DA:55,0
+BRDA:51,14,0,0
+BRDA:51,14,1,0
+BRDA:52,26,0,0
+BRDA:52,26,1,0
+FN:57,System.Boolean Framework.Core.DomainObjects.Entity::op_Equality(Framework.Core.DomainObjects.Entity,Framework.Core.DomainObjects.Entity)
+FNDA:0,System.Boolean Framework.Core.DomainObjects.Entity::op_Equality(Framework.Core.DomainObjects.Entity,Framework.Core.DomainObjects.Entity)
+DA:58,0
+DA:59,0
+DA:60,0
+DA:62,0
+DA:63,0
+DA:65,0
+DA:66,0
+BRDA:59,2,0,0
+BRDA:59,2,1,0
+BRDA:59,13,0,0
+BRDA:59,13,1,0
+BRDA:62,20,0,0
+BRDA:62,20,1,0
+BRDA:62,31,0,0
+BRDA:62,31,1,0
+FN:68,System.Boolean Framework.Core.DomainObjects.Entity::op_Inequality(Framework.Core.DomainObjects.Entity,Framework.Core.DomainObjects.Entity)
+FNDA:0,System.Boolean Framework.Core.DomainObjects.Entity::op_Inequality(Framework.Core.DomainObjects.Entity,Framework.Core.DomainObjects.Entity)
+DA:69,0
+DA:70,0
+DA:71,0
+FN:73,System.Int32 Framework.Core.DomainObjects.Entity::GetHashCode()
+FNDA:0,System.Int32 Framework.Core.DomainObjects.Entity::GetHashCode()
+DA:74,0
+DA:75,0
+DA:76,0
+FN:78,System.String Framework.Core.DomainObjects.Entity::ToString()
+FNDA:0,System.String Framework.Core.DomainObjects.Entity::ToString()
+DA:79,0
+DA:80,0
+DA:81,0
+FN:10,System.Void Framework.Core.DomainObjects.Entity::.ctor()
+FNDA:151,System.Void Framework.Core.DomainObjects.Entity::.ctor()
+DA:11,151
+DA:12,151
+DA:13,151
+DA:14,151
+LF:43
+LH:13
+BRF:22
+BRH:4
+FNF:12
+FNH:5
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\DomainObjects\Notifications\DomainNotification.cs
+FN:14,System.Collections.Generic.IReadOnlyCollection`1<Framework.Core.DomainObjects.Notifications.NotificationMessage> Framework.Core.DomainObjects.Notifications.DomainNotification::get_Notifications()
+FNDA:0,System.Collections.Generic.IReadOnlyCollection`1<Framework.Core.DomainObjects.Notifications.NotificationMessage> Framework.Core.DomainObjects.Notifications.DomainNotification::get_Notifications()
+DA:15,0
+FN:16,System.Boolean Framework.Core.DomainObjects.Notifications.DomainNotification::get_HasNotifications()
+FNDA:0,System.Boolean Framework.Core.DomainObjects.Notifications.DomainNotification::get_HasNotifications()
+DA:17,0
+FN:19,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotification(System.String,System.String)
+FNDA:0,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotification(System.String,System.String)
+DA:20,0
+DA:21,0
+DA:22,0
+FN:24,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotifications(System.Collections.Generic.IEnumerable`1<Framework.Core.DomainObjects.Notifications.NotificationMessage>)
+FNDA:0,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotifications(System.Collections.Generic.IEnumerable`1<Framework.Core.DomainObjects.Notifications.NotificationMessage>)
+DA:25,0
+DA:26,0
+DA:27,0
+FN:29,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotifications(FluentValidation.Results.ValidationResult)
+FNDA:0,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotifications(FluentValidation.Results.ValidationResult)
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+BRDA:31,62,1,0
+BRDA:31,62,0,0
+FN:9,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::.ctor()
+FNDA:0,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::.ctor()
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,0
+LF:18
+LH:0
+BRF:2
+BRH:0
+FNF:6
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\BuildingBlocks\Framework.Core\DomainObjects\Notifications\NotificationMessage.cs
+FN:16,System.Guid Framework.Core.DomainObjects.Notifications.NotificationMessage::get_Id()
+FNDA:0,System.Guid Framework.Core.DomainObjects.Notifications.NotificationMessage::get_Id()
+DA:17,0
+FN:17,System.String Framework.Core.DomainObjects.Notifications.NotificationMessage::get_Key()
+FNDA:0,System.String Framework.Core.DomainObjects.Notifications.NotificationMessage::get_Key()
+DA:18,0
+FN:18,System.String Framework.Core.DomainObjects.Notifications.NotificationMessage::get_Value()
+FNDA:0,System.String Framework.Core.DomainObjects.Notifications.NotificationMessage::get_Value()
+DA:19,0
+FN:9,System.Void Framework.Core.DomainObjects.Notifications.NotificationMessage::.ctor(System.String,System.String)
+FNDA:0,System.Void Framework.Core.DomainObjects.Notifications.NotificationMessage::.ctor(System.String,System.String)
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,0
+LF:9
+LH:0
+BRF:0
+BRH:0
+FNF:4
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\Queries\ActivityQuery.cs
+FN:15,System.Void Activities.Application.Queries.ActivityQuery::.ctor(Activities.Domain.Models.Repositories.IActivityRepository)
+FNDA:0,System.Void Activities.Application.Queries.ActivityQuery::.ctor(Activities.Domain.Models.Repositories.IActivityRepository)
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+FN:29,System.String Activities.Application.Queries.ActivityQuery/<>c::<GetActivityById>b__2_0(Activities.Domain.Models.Entities.WorkActivity)
+FNDA:0,System.String Activities.Application.Queries.ActivityQuery/<>c::<GetActivityById>b__2_0(Activities.Domain.Models.Entities.WorkActivity)
+DA:30,0
+FN:20,System.Void Activities.Application.Queries.ActivityQuery/<GetActivityById>d__2::MoveNext()
+FNDA:0,System.Void Activities.Application.Queries.ActivityQuery/<GetActivityById>d__2::MoveNext()
+DA:21,0
+DA:22,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:31,0
+DA:32,0
+BRDA:22,140,0,0
+BRDA:22,140,1,0
+LF:15
+LH:0
+BRF:2
+BRH:0
+FNF:3
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\Queries\GetWorkersActiveNext7Days\GetWorkersActiveNext7DaysQuery.cs
+FN:17,System.Void Activities.Application.Queries.GetWorkersActiveNext7DaysQuery::.ctor(System.DateTime)
+FNDA:2,System.Void Activities.Application.Queries.GetWorkersActiveNext7DaysQuery::.ctor(System.DateTime)
+DA:18,2
+DA:19,2
+DA:20,2
+DA:21,2
+LF:4
+LH:4
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\Queries\GetWorkersActiveNext7Days\GetWorkersActiveNext7DaysQueryHandler.cs
+FN:59,System.Collections.Generic.List`1<Activities.Domain.DTO.WorkActiveReportDto> Activities.Application.Queries.GetWorkersActiveNext7DaysQueryHandler::MapReport(System.Collections.Generic.IEnumerable`1<System.Object>)
+FNDA:2,System.Collections.Generic.List`1<Activities.Domain.DTO.WorkActiveReportDto> Activities.Application.Queries.GetWorkersActiveNext7DaysQueryHandler::MapReport(System.Collections.Generic.IEnumerable`1<System.Object>)
+DA:60,2
+DA:61,18
+DA:62,2
+DA:63,6
+DA:64,6
+DA:65,6
+DA:66,6
+DA:67,4
+DA:68,4
+DA:69,4
+DA:70,4
+DA:71,4
+DA:72,4
+DA:73,4
+DA:74,4
+DA:75,6
+DA:77,2
+DA:78,2
+BRDA:61,5,1,1
+BRDA:61,5,0,4
+BRDA:63,12,1,1
+BRDA:63,12,0,4
+BRDA:67,12,1,1
+BRDA:67,12,0,4
+BRDA:67,73,1,1
+BRDA:67,73,0,4
+BRDA:67,167,1,1
+BRDA:67,167,0,4
+BRDA:67,227,1,1
+BRDA:67,227,0,4
+BRDA:67,320,1,1
+BRDA:67,320,0,4
+BRDA:67,414,1,1
+BRDA:67,414,0,4
+BRDA:67,474,1,1
+BRDA:67,474,0,4
+BRDA:67,567,1,1
+BRDA:67,567,0,4
+BRDA:67,661,1,1
+BRDA:67,661,0,4
+BRDA:67,721,1,1
+BRDA:67,721,0,4
+BRDA:67,814,1,1
+BRDA:67,814,0,4
+BRDA:67,908,1,1
+BRDA:67,908,0,4
+BRDA:67,969,1,1
+BRDA:67,969,0,4
+BRDA:67,1082,1,1
+BRDA:67,1082,0,4
+FN:20,System.Void Activities.Application.Queries.GetWorkersActiveNext7DaysQueryHandler::.ctor(Activities.Domain.Models.Repositories.IActivityRepository)
+FNDA:2,System.Void Activities.Application.Queries.GetWorkersActiveNext7DaysQueryHandler::.ctor(Activities.Domain.Models.Repositories.IActivityRepository)
+DA:21,2
+DA:22,2
+DA:23,2
+DA:24,2
+FN:26,System.Void Activities.Application.Queries.GetWorkersActiveNext7DaysQueryHandler/<Handle>d__3::MoveNext()
+FNDA:2,System.Void Activities.Application.Queries.GetWorkersActiveNext7DaysQueryHandler/<Handle>d__3::MoveNext()
+DA:27,2
+DA:29,2
+DA:52,2
+DA:53,2
+DA:54,2
+DA:56,2
+DA:57,2
+LF:29
+LH:29
+BRF:32
+BRH:32
+FNF:3
+FNH:3
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\Events\ActivityCreatedEventHandler.cs
+FN:7,System.Void Activities.Application.Events.ActivityCreatedEventHandler::.ctor()
+FNDA:0,System.Void Activities.Application.Events.ActivityCreatedEventHandler::.ctor()
+DA:8,0
+DA:9,0
+DA:10,0
+FN:12,System.Void Activities.Application.Events.ActivityCreatedEventHandler/<Handle>d__1::MoveNext()
+FNDA:0,System.Void Activities.Application.Events.ActivityCreatedEventHandler/<Handle>d__1::MoveNext()
+DA:13,0
+DA:14,0
+DA:16,0
+LF:6
+LH:0
+BRF:0
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\DomainServices\ActivityValidatorService.cs
+FN:22,System.Collections.Generic.List`1<Activities.Domain.DTO.ActivityWithWorkerDto> Activities.Application.DomainServices.ActivityValidatorService::GetWorkersInActivityByTimeActivityStartAndEnd(System.Collections.Generic.List`1<System.String>,System.DateTime,System.DateTime,System.Guid)
+FNDA:6,System.Collections.Generic.List`1<Activities.Domain.DTO.ActivityWithWorkerDto> Activities.Application.DomainServices.ActivityValidatorService::GetWorkersInActivityByTimeActivityStartAndEnd(System.Collections.Generic.List`1<System.String>,System.DateTime,System.DateTime,System.Guid)
+DA:23,6
+DA:43,6
+DA:44,6
+DA:45,6
+DA:46,6
+FN:15,System.Void Activities.Application.DomainServices.ActivityValidatorService::.ctor(Activities.Domain.Models.Repositories.IActivityRepository)
+FNDA:6,System.Void Activities.Application.DomainServices.ActivityValidatorService::.ctor(Activities.Domain.Models.Repositories.IActivityRepository)
+DA:16,6
+DA:17,6
+DA:18,6
+DA:19,6
+LF:9
+LH:9
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\Commands\UpdateTimeStartAndTimeEndActivity\UpdateTimeStartAndTimeEndActivityCommand.cs
+FN:11,System.Guid Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommand::get_ActivityId()
+FNDA:0,System.Guid Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommand::get_ActivityId()
+DA:12,0
+FN:13,System.DateTime Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommand::get_TimeActivityStart()
+FNDA:0,System.DateTime Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommand::get_TimeActivityStart()
+DA:14,0
+FN:15,System.DateTime Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommand::get_TimeActivityEnd()
+FNDA:0,System.DateTime Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommand::get_TimeActivityEnd()
+DA:16,0
+FN:18,System.Void Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommand::.ctor(System.Guid,System.DateTime,System.DateTime)
+FNDA:0,System.Void Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommand::.ctor(System.Guid,System.DateTime,System.DateTime)
+DA:19,0
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+LF:9
+LH:0
+BRF:0
+BRH:0
+FNF:4
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\Commands\UpdateTimeStartAndTimeEndActivity\UpdateTimeStartAndTimeEndActivityCommandHandler.cs
+FN:16,System.Void Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandHandler::.ctor(Activities.Domain.Models.Repositories.IActivityRepository,Activities.Domain.ValidatorServices.IActivityValidatorService)
+FNDA:0,System.Void Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandHandler::.ctor(Activities.Domain.Models.Repositories.IActivityRepository,Activities.Domain.ValidatorServices.IActivityValidatorService)
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+DA:21,0
+FN:22,System.Void Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandHandler/<Handle>d__3::MoveNext()
+FNDA:0,System.Void Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandHandler/<Handle>d__3::MoveNext()
+DA:23,0
+DA:24,0
+DA:26,0
+DA:28,0
+DA:30,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+BRDA:24,47,0,0
+BRDA:24,47,1,0
+LF:19
+LH:0
+BRF:2
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\Commands\UpdateTimeStartAndTimeEndActivity\UpdateTimeStartAndTimeEndActivityCommandOutput.cs
+FN:11,System.Guid Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandOutput::get_ActivityId()
+FNDA:0,System.Guid Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandOutput::get_ActivityId()
+DA:12,0
+FN:12,Activities.Domain.Enums.TypeActivityBuild Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandOutput::get_TypeActivityBuild()
+FNDA:0,Activities.Domain.Enums.TypeActivityBuild Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandOutput::get_TypeActivityBuild()
+DA:13,0
+FN:13,System.DateTime Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandOutput::get_TimeActivityStart()
+FNDA:0,System.DateTime Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandOutput::get_TimeActivityStart()
+DA:14,0
+FN:14,System.DateTime Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandOutput::get_TimeActivityEnd()
+FNDA:0,System.DateTime Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandOutput::get_TimeActivityEnd()
+DA:15,0
+FN:15,System.DateTime Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandOutput::get_TimeRestEnd()
+FNDA:0,System.DateTime Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity.UpdateTimeStartAndTimeEndActivityCommandOutput::get_TimeRestEnd()
+DA:16,0
+LF:5
+LH:0
+BRF:0
+BRH:0
+FNF:5
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\Commands\DeleteActivity\DeleteActivityCommandHandler.cs
+FN:15,System.Void Activities.Application.Commands.DelteActivity.DeleteActivityCommandHandler::.ctor(Activities.Domain.Models.Repositories.IActivityRepository)
+FNDA:0,System.Void Activities.Application.Commands.DelteActivity.DeleteActivityCommandHandler::.ctor(Activities.Domain.Models.Repositories.IActivityRepository)
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+FN:21,System.Void Activities.Application.Commands.DelteActivity.DeleteActivityCommandHandler/<Handle>d__2::MoveNext()
+FNDA:0,System.Void Activities.Application.Commands.DelteActivity.DeleteActivityCommandHandler/<Handle>d__2::MoveNext()
+DA:22,0
+DA:23,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:29,0
+DA:30,0
+BRDA:23,47,0,0
+BRDA:23,47,1,0
+LF:11
+LH:0
+BRF:2
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\Commands\DeleteActivity\DeleteActivityCommand.cs
+FN:10,System.Guid Activities.Application.Commands.DeleteActivity.DeleteActivityCommand::get_ActivityId()
+FNDA:0,System.Guid Activities.Application.Commands.DeleteActivity.DeleteActivityCommand::get_ActivityId()
+DA:11,0
+FN:12,System.Void Activities.Application.Commands.DeleteActivity.DeleteActivityCommand::.ctor()
+FNDA:0,System.Void Activities.Application.Commands.DeleteActivity.DeleteActivityCommand::.ctor()
+DA:13,0
+DA:14,0
+FN:15,System.Void Activities.Application.Commands.DeleteActivity.DeleteActivityCommand::.ctor(System.Guid)
+FNDA:0,System.Void Activities.Application.Commands.DeleteActivity.DeleteActivityCommand::.ctor(System.Guid)
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+LF:7
+LH:0
+BRF:0
+BRH:0
+FNF:3
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\Commands\AddActivity\AddActivityCommand.cs
+FN:11,Activities.Domain.Enums.TypeActivityBuild Activities.Application.Commands.AddActivity.AddActivityCommand::get_TypeActivityBuild()
+FNDA:4,Activities.Domain.Enums.TypeActivityBuild Activities.Application.Commands.AddActivity.AddActivityCommand::get_TypeActivityBuild()
+DA:12,4
+FN:13,System.DateTime Activities.Application.Commands.AddActivity.AddActivityCommand::get_TimeActivityStart()
+FNDA:4,System.DateTime Activities.Application.Commands.AddActivity.AddActivityCommand::get_TimeActivityStart()
+DA:14,4
+FN:15,System.DateTime Activities.Application.Commands.AddActivity.AddActivityCommand::get_TimeActivityEnd()
+FNDA:4,System.DateTime Activities.Application.Commands.AddActivity.AddActivityCommand::get_TimeActivityEnd()
+DA:16,4
+FN:18,System.Collections.Generic.List`1<System.String> Activities.Application.Commands.AddActivity.AddActivityCommand::get_Workers()
+FNDA:5,System.Collections.Generic.List`1<System.String> Activities.Application.Commands.AddActivity.AddActivityCommand::get_Workers()
+DA:19,5
+FN:20,System.Void Activities.Application.Commands.AddActivity.AddActivityCommand::.ctor()
+FNDA:2,System.Void Activities.Application.Commands.AddActivity.AddActivityCommand::.ctor()
+DA:21,2
+DA:22,4
+FN:23,System.Void Activities.Application.Commands.AddActivity.AddActivityCommand::.ctor(Activities.Domain.Enums.TypeActivityBuild,System.DateTime,System.DateTime,System.Collections.Generic.List`1<System.String>)
+FNDA:0,System.Void Activities.Application.Commands.AddActivity.AddActivityCommand::.ctor(Activities.Domain.Enums.TypeActivityBuild,System.DateTime,System.DateTime,System.Collections.Generic.List`1<System.String>)
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+LF:13
+LH:6
+BRF:0
+BRH:0
+FNF:6
+FNH:5
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\Commands\AddActivity\AddActivityCommandHandler.cs
+FN:16,System.Void Activities.Application.Commands.AddActivity.AddActivityCommandHandler::.ctor(Activities.Domain.Models.Repositories.IActivityRepository,Activities.Domain.ValidatorServices.IActivityValidatorService)
+FNDA:2,System.Void Activities.Application.Commands.AddActivity.AddActivityCommandHandler::.ctor(Activities.Domain.Models.Repositories.IActivityRepository,Activities.Domain.ValidatorServices.IActivityValidatorService)
+DA:17,2
+DA:18,2
+DA:19,2
+DA:20,2
+DA:21,2
+FN:22,System.Void Activities.Application.Commands.AddActivity.AddActivityCommandHandler/<Handle>d__3::MoveNext()
+FNDA:2,System.Void Activities.Application.Commands.AddActivity.AddActivityCommandHandler/<Handle>d__3::MoveNext()
+DA:23,2
+DA:25,2
+DA:26,2
+DA:27,2
+DA:28,2
+DA:30,1
+DA:32,1
+DA:34,1
+DA:35,1
+DA:36,1
+DA:37,1
+DA:38,1
+DA:39,1
+DA:40,1
+DA:41,1
+DA:42,1
+DA:43,1
+LF:22
+LH:22
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Application\Commands\AddActivity\AddActivityCommandOutput.cs
+FN:11,System.Guid Activities.Application.Commands.AddActivity.AddActivityCommandOutput::get_ActivityId()
+FNDA:1,System.Guid Activities.Application.Commands.AddActivity.AddActivityCommandOutput::get_ActivityId()
+DA:12,1
+FN:12,Activities.Domain.Enums.TypeActivityBuild Activities.Application.Commands.AddActivity.AddActivityCommandOutput::get_TypeActivityBuild()
+FNDA:1,Activities.Domain.Enums.TypeActivityBuild Activities.Application.Commands.AddActivity.AddActivityCommandOutput::get_TypeActivityBuild()
+DA:13,1
+FN:13,System.DateTime Activities.Application.Commands.AddActivity.AddActivityCommandOutput::get_TimeActivityStart()
+FNDA:2,System.DateTime Activities.Application.Commands.AddActivity.AddActivityCommandOutput::get_TimeActivityStart()
+DA:14,2
+FN:14,System.DateTime Activities.Application.Commands.AddActivity.AddActivityCommandOutput::get_TimeActivityEnd()
+FNDA:1,System.DateTime Activities.Application.Commands.AddActivity.AddActivityCommandOutput::get_TimeActivityEnd()
+DA:15,1
+FN:15,System.DateTime Activities.Application.Commands.AddActivity.AddActivityCommandOutput::get_TimeRestEnd()
+FNDA:1,System.DateTime Activities.Application.Commands.AddActivity.AddActivityCommandOutput::get_TimeRestEnd()
+DA:16,1
+FN:16,System.Collections.Generic.List`1<System.String> Activities.Application.Commands.AddActivity.AddActivityCommandOutput::get_Workers()
+FNDA:1,System.Collections.Generic.List`1<System.String> Activities.Application.Commands.AddActivity.AddActivityCommandOutput::get_Workers()
+DA:17,1
+LF:6
+LH:6
+BRF:0
+BRH:0
+FNF:6
+FNH:6
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Domain\Rules\ActivityWithTypeBuildComponentAcceptJustOneWorkerRule.cs
+FN:29,System.Collections.Generic.List`1<System.String> Activities.Domain.Rules.ActivityWithTypeBuildComponentAcceptJustOneWorkerRule::Framework.Core.DomainObjects.IBusinessRule.get_Message()
+FNDA:2,System.Collections.Generic.List`1<System.String> Activities.Domain.Rules.ActivityWithTypeBuildComponentAcceptJustOneWorkerRule::Framework.Core.DomainObjects.IBusinessRule.get_Message()
+DA:30,2
+FN:32,System.Boolean Activities.Domain.Rules.ActivityWithTypeBuildComponentAcceptJustOneWorkerRule::IsBroken()
+FNDA:60,System.Boolean Activities.Domain.Rules.ActivityWithTypeBuildComponentAcceptJustOneWorkerRule::IsBroken()
+DA:33,60
+DA:34,60
+DA:35,60
+DA:36,60
+BRDA:34,8,0,31
+BRDA:34,8,1,29
+FN:14,System.Void Activities.Domain.Rules.ActivityWithTypeBuildComponentAcceptJustOneWorkerRule::.ctor(Activities.Domain.Enums.TypeActivityBuild,System.Collections.Generic.List`1<System.String>)
+FNDA:60,System.Void Activities.Domain.Rules.ActivityWithTypeBuildComponentAcceptJustOneWorkerRule::.ctor(Activities.Domain.Enums.TypeActivityBuild,System.Collections.Generic.List`1<System.String>)
+DA:15,60
+DA:21,60
+DA:22,60
+DA:24,60
+DA:25,60
+DA:27,60
+DA:28,60
+LF:12
+LH:12
+BRF:2
+BRH:2
+FNF:3
+FNH:3
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Domain\Rules\WorkerDuplicatedRule.cs
+FN:25,System.Collections.Generic.List`1<System.String> Activities.Domain.Rules.WorkerDuplicatedRule::Framework.Core.DomainObjects.IBusinessRule.get_Message()
+FNDA:1,System.Collections.Generic.List`1<System.String> Activities.Domain.Rules.WorkerDuplicatedRule::Framework.Core.DomainObjects.IBusinessRule.get_Message()
+DA:26,1
+FN:29,System.Boolean Activities.Domain.Rules.WorkerDuplicatedRule::IsBroken()
+FNDA:59,System.Boolean Activities.Domain.Rules.WorkerDuplicatedRule::IsBroken()
+DA:30,59
+DA:31,267
+DA:32,202
+DA:33,63
+DA:34,59
+DA:36,59
+DA:37,59
+FN:14,System.Void Activities.Domain.Rules.WorkerDuplicatedRule::.ctor(System.Collections.Generic.List`1<System.String>)
+FNDA:59,System.Void Activities.Domain.Rules.WorkerDuplicatedRule::.ctor(System.Collections.Generic.List`1<System.String>)
+DA:15,59
+DA:20,59
+DA:21,59
+DA:22,59
+DA:23,59
+LF:13
+LH:13
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Domain\Rules\WorkerInActivityRule.cs
+FN:37,System.Collections.Generic.List`1<System.String> Activities.Domain.Rules.WorkerInActivityRule::Framework.Core.DomainObjects.IBusinessRule.get_Message()
+FNDA:0,System.Collections.Generic.List`1<System.String> Activities.Domain.Rules.WorkerInActivityRule::Framework.Core.DomainObjects.IBusinessRule.get_Message()
+DA:38,0
+FN:40,System.Boolean Activities.Domain.Rules.WorkerInActivityRule::IsBroken()
+FNDA:57,System.Boolean Activities.Domain.Rules.WorkerInActivityRule::IsBroken()
+DA:41,57
+DA:42,57
+DA:43,57
+DA:44,57
+DA:45,57
+DA:46,57
+DA:47,57
+DA:48,1
+DA:49,1
+DA:50,58
+DA:51,57
+DA:52,57
+BRDA:46,38,0,53
+BRDA:46,38,1,57
+FN:20,System.Void Activities.Domain.Rules.WorkerInActivityRule::.ctor(Activities.Domain.ValidatorServices.IActivityValidatorService,System.Collections.Generic.List`1<System.String>,System.DateTime,System.DateTime,System.Nullable`1<System.Guid>)
+FNDA:57,System.Void Activities.Domain.Rules.WorkerInActivityRule::.ctor(Activities.Domain.ValidatorServices.IActivityValidatorService,System.Collections.Generic.List`1<System.String>,System.DateTime,System.DateTime,System.Nullable`1<System.Guid>)
+DA:21,57
+DA:23,57
+DA:24,57
+DA:25,57
+DA:26,57
+DA:27,57
+DA:28,57
+DA:29,57
+DA:30,57
+DA:31,57
+DA:32,57
+DA:33,57
+DA:36,57
+BRDA:33,59,0,54
+BRDA:33,59,1,3
+LF:26
+LH:25
+BRF:4
+BRH:4
+FNF:3
+FNH:2
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Domain\Models\Entities\Activity.cs
+FN:19,System.Collections.Generic.List`1<Activities.Domain.Models.Entities.WorkActivity> Activities.Domain.Models.Entities.Activity::GetWorkers()
+FNDA:174,System.Collections.Generic.List`1<Activities.Domain.Models.Entities.WorkActivity> Activities.Domain.Models.Entities.Activity::GetWorkers()
+DA:20,174
+FN:20,Activities.Domain.Enums.TypeActivityBuild Activities.Domain.Models.Entities.Activity::get_TypeActivityBuild()
+FNDA:169,Activities.Domain.Enums.TypeActivityBuild Activities.Domain.Models.Entities.Activity::get_TypeActivityBuild()
+DA:21,169
+FN:21,System.DateTime Activities.Domain.Models.Entities.Activity::get_TimeActivityStart()
+FNDA:169,System.DateTime Activities.Domain.Models.Entities.Activity::get_TimeActivityStart()
+DA:22,169
+FN:22,System.DateTime Activities.Domain.Models.Entities.Activity::get_TimeActivityEnd()
+FNDA:172,System.DateTime Activities.Domain.Models.Entities.Activity::get_TimeActivityEnd()
+DA:23,172
+FN:23,System.DateTime Activities.Domain.Models.Entities.Activity::get_TimeRestEnd()
+FNDA:117,System.DateTime Activities.Domain.Models.Entities.Activity::get_TimeRestEnd()
+DA:24,117
+FN:24,System.Boolean Activities.Domain.Models.Entities.Activity::get_IsAlive()
+FNDA:57,System.Boolean Activities.Domain.Models.Entities.Activity::get_IsAlive()
+DA:25,57
+FN:35,Activities.Domain.Models.Entities.Activity Activities.Domain.Models.Entities.Activity::Create(System.Collections.Generic.List`1<System.String>,Activities.Domain.Enums.TypeActivityBuild,System.DateTime,System.DateTime,Activities.Domain.ValidatorServices.IActivityValidatorService)
+FNDA:57,Activities.Domain.Models.Entities.Activity Activities.Domain.Models.Entities.Activity::Create(System.Collections.Generic.List`1<System.String>,Activities.Domain.Enums.TypeActivityBuild,System.DateTime,System.DateTime,Activities.Domain.ValidatorServices.IActivityValidatorService)
+DA:36,57
+DA:37,151
+DA:38,57
+DA:39,57
+DA:41,54
+DA:42,54
+DA:43,54
+DA:44,54
+DA:45,54
+DA:46,54
+DA:47,54
+FN:49,System.Void Activities.Domain.Models.Entities.Activity::CheckCreateRules(Activities.Domain.Models.Entities.Activity,Activities.Domain.ValidatorServices.IActivityValidatorService)
+FNDA:57,System.Void Activities.Domain.Models.Entities.Activity::CheckCreateRules(Activities.Domain.Models.Entities.Activity,Activities.Domain.ValidatorServices.IActivityValidatorService)
+DA:50,57
+DA:51,151
+DA:54,57
+DA:56,56
+DA:58,54
+DA:59,54
+DA:60,54
+DA:61,54
+DA:63,54
+FN:75,System.DateTime Activities.Domain.Models.Entities.Activity::CalculateTimeRest(Activities.Domain.Enums.TypeActivityBuild,System.DateTime)
+FNDA:60,System.DateTime Activities.Domain.Models.Entities.Activity::CalculateTimeRest(Activities.Domain.Enums.TypeActivityBuild,System.DateTime)
+DA:76,60
+DA:78,60
+DA:79,60
+DA:80,32
+DA:81,28
+DA:82,0
+DA:83,60
+DA:84,60
+BRDA:78,7,0,28
+BRDA:78,7,1,32
+BRDA:78,13,1,28
+BRDA:78,13,0,0
+FN:85,System.DateTime Activities.Domain.Models.Entities.Activity::CalculateTimeRestTypeActivityBuildComponent(System.DateTime)
+FNDA:32,System.DateTime Activities.Domain.Models.Entities.Activity::CalculateTimeRestTypeActivityBuildComponent(System.DateTime)
+DA:86,32
+DA:87,32
+DA:88,32
+FN:88,System.DateTime Activities.Domain.Models.Entities.Activity::CalculateTimeRestTypeActivityBuildMachinet(System.DateTime)
+FNDA:28,System.DateTime Activities.Domain.Models.Entities.Activity::CalculateTimeRestTypeActivityBuildMachinet(System.DateTime)
+DA:89,28
+DA:90,28
+DA:91,28
+FN:93,System.Void Activities.Domain.Models.Entities.Activity::Inactivate()
+FNDA:0,System.Void Activities.Domain.Models.Entities.Activity::Inactivate()
+DA:94,0
+DA:95,0
+DA:96,0
+FN:98,System.Void Activities.Domain.Models.Entities.Activity::UpdateTimeStartAndTimeEnd(System.DateTime,System.DateTime,Activities.Domain.ValidatorServices.IActivityValidatorService)
+FNDA:1,System.Void Activities.Domain.Models.Entities.Activity::UpdateTimeStartAndTimeEnd(System.DateTime,System.DateTime,Activities.Domain.ValidatorServices.IActivityValidatorService)
+DA:99,1
+DA:100,1
+DA:101,1
+DA:102,1
+DA:104,1
+DA:105,1
+DA:106,1
+DA:107,1
+DA:108,1
+FN:109,System.Void Activities.Domain.Models.Entities.Activity::CheckUpdateTimeStartAndTimeEnd(Activities.Domain.ValidatorServices.IActivityValidatorService)
+FNDA:1,System.Void Activities.Domain.Models.Entities.Activity::CheckUpdateTimeStartAndTimeEnd(Activities.Domain.ValidatorServices.IActivityValidatorService)
+DA:110,1
+DA:112,1
+DA:113,1
+DA:114,1
+DA:115,1
+DA:116,1
+FN:25,System.Void Activities.Domain.Models.Entities.Activity::.ctor()
+FNDA:0,System.Void Activities.Domain.Models.Entities.Activity::.ctor()
+DA:26,0
+DA:27,0
+DA:29,0
+FN:65,System.Void Activities.Domain.Models.Entities.Activity::.ctor(System.Collections.Generic.List`1<Activities.Domain.Models.Entities.WorkActivity>,Activities.Domain.Enums.TypeActivityBuild,System.DateTime,System.DateTime)
+FNDA:57,System.Void Activities.Domain.Models.Entities.Activity::.ctor(System.Collections.Generic.List`1<Activities.Domain.Models.Entities.WorkActivity>,Activities.Domain.Enums.TypeActivityBuild,System.DateTime,System.DateTime)
+DA:66,57
+DA:67,57
+DA:68,57
+DA:69,57
+DA:70,57
+DA:71,57
+DA:72,57
+DA:73,57
+DA:74,57
+LF:70
+LH:63
+BRF:4
+BRH:3
+FNF:16
+FNH:14
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Domain\Models\Entities\WorkActivity.cs
+FN:20,System.Guid Activities.Domain.Models.Entities.WorkActivity::get_ActivityId()
+FNDA:0,System.Guid Activities.Domain.Models.Entities.WorkActivity::get_ActivityId()
+DA:21,0
+FN:21,System.String Activities.Domain.Models.Entities.WorkActivity::get_WorkerId()
+FNDA:189,System.String Activities.Domain.Models.Entities.WorkActivity::get_WorkerId()
+DA:22,189
+FN:12,System.Void Activities.Domain.Models.Entities.WorkActivity::.ctor(System.String)
+FNDA:188,System.Void Activities.Domain.Models.Entities.WorkActivity::.ctor(System.String)
+DA:13,188
+DA:14,94
+DA:15,94
+FN:15,System.Void Activities.Domain.Models.Entities.WorkActivity::.ctor(System.Guid,System.String)
+FNDA:0,System.Void Activities.Domain.Models.Entities.WorkActivity::.ctor(System.Guid,System.String)
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+LF:10
+LH:4
+BRF:0
+BRH:0
+FNF:4
+FNH:2
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Domain\DTO\ActivityDto.cs
+FN:10,System.Guid Activities.Domain.DTO.ActivityDto::get_ActivityId()
+FNDA:4,System.Guid Activities.Domain.DTO.ActivityDto::get_ActivityId()
+DA:11,4
+FN:11,System.DateTime Activities.Domain.DTO.ActivityDto::get_TimeActivityStart()
+FNDA:4,System.DateTime Activities.Domain.DTO.ActivityDto::get_TimeActivityStart()
+DA:12,4
+FN:12,System.DateTime Activities.Domain.DTO.ActivityDto::get_TimeActivityEnd()
+FNDA:4,System.DateTime Activities.Domain.DTO.ActivityDto::get_TimeActivityEnd()
+DA:13,4
+FN:13,System.DateTime Activities.Domain.DTO.ActivityDto::get_TimeRestEnd()
+FNDA:4,System.DateTime Activities.Domain.DTO.ActivityDto::get_TimeRestEnd()
+DA:14,4
+FN:14,System.Collections.Generic.List`1<System.String> Activities.Domain.DTO.ActivityDto::get_WorkerId()
+FNDA:0,System.Collections.Generic.List`1<System.String> Activities.Domain.DTO.ActivityDto::get_WorkerId()
+DA:15,0
+FN:15,Activities.Domain.Enums.TypeActivityBuild Activities.Domain.DTO.ActivityDto::get_TypeActivityBuild()
+FNDA:4,Activities.Domain.Enums.TypeActivityBuild Activities.Domain.DTO.ActivityDto::get_TypeActivityBuild()
+DA:16,4
+LF:6
+LH:5
+BRF:0
+BRH:0
+FNF:6
+FNH:5
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Domain\DTO\ActivityWithWorkerDto.cs
+FN:9,System.Guid Activities.Domain.DTO.ActivityWithWorkerDto::get_ActivityId()
+FNDA:1,System.Guid Activities.Domain.DTO.ActivityWithWorkerDto::get_ActivityId()
+DA:10,1
+FN:10,System.DateTime Activities.Domain.DTO.ActivityWithWorkerDto::get_TimeActivityStart()
+FNDA:3,System.DateTime Activities.Domain.DTO.ActivityWithWorkerDto::get_TimeActivityStart()
+DA:11,3
+FN:11,System.DateTime Activities.Domain.DTO.ActivityWithWorkerDto::get_TimeActivityEnd()
+FNDA:3,System.DateTime Activities.Domain.DTO.ActivityWithWorkerDto::get_TimeActivityEnd()
+DA:12,3
+FN:12,System.DateTime Activities.Domain.DTO.ActivityWithWorkerDto::get_TimeRestEnd()
+FNDA:3,System.DateTime Activities.Domain.DTO.ActivityWithWorkerDto::get_TimeRestEnd()
+DA:13,3
+FN:13,System.String Activities.Domain.DTO.ActivityWithWorkerDto::get_WorkerId()
+FNDA:4,System.String Activities.Domain.DTO.ActivityWithWorkerDto::get_WorkerId()
+DA:14,4
+LF:5
+LH:5
+BRF:0
+BRH:0
+FNF:5
+FNH:5
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Domain\DTO\WorkActiveReportDto.cs
+FN:14,System.String Activities.Domain.DTO.WorkActiveReportDto::get_WorkerId()
+FNDA:4,System.String Activities.Domain.DTO.WorkActiveReportDto::get_WorkerId()
+DA:15,4
+FN:15,System.Collections.Generic.List`1<Activities.Domain.DTO.ActivityDto> Activities.Domain.DTO.WorkActiveReportDto::get_Activities()
+FNDA:8,System.Collections.Generic.List`1<Activities.Domain.DTO.ActivityDto> Activities.Domain.DTO.WorkActiveReportDto::get_Activities()
+DA:16,8
+FN:10,System.Void Activities.Domain.DTO.WorkActiveReportDto::.ctor()
+FNDA:4,System.Void Activities.Domain.DTO.WorkActiveReportDto::.ctor()
+DA:11,4
+DA:12,4
+DA:13,4
+DA:14,4
+LF:6
+LH:6
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Domain\DomainEvents\ActivityCreatedEvent.cs
+FN:17,System.Void Activities.Domain.DomainEvents.ActivityCreatedEvent::.ctor(System.Guid,System.Collections.Generic.List`1<System.String>,Activities.Domain.Enums.TypeActivityBuild,System.DateTime,System.DateTime)
+FNDA:54,System.Void Activities.Domain.DomainEvents.ActivityCreatedEvent::.ctor(System.Guid,System.Collections.Generic.List`1<System.String>,Activities.Domain.Enums.TypeActivityBuild,System.DateTime,System.DateTime)
+DA:18,54
+DA:19,54
+DA:20,54
+DA:21,54
+DA:22,54
+DA:23,54
+DA:24,54
+DA:25,54
+DA:26,54
+DA:27,54
+DA:28,54
+DA:29,54
+LF:12
+LH:12
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Domain\DomainEvents\ActivityUptatedTimeStartAndTimeEndEvent.cs
+FN:15,System.Void Activities.Domain.DomainEvents.ActivityUptatedTimeStartAndTimeEndEvent::.ctor(System.Guid,System.DateTime,System.DateTime)
+FNDA:1,System.Void Activities.Domain.DomainEvents.ActivityUptatedTimeStartAndTimeEndEvent::.ctor(System.Guid,System.DateTime,System.DateTime)
+DA:16,1
+DA:17,1
+DA:18,1
+DA:19,1
+DA:20,1
+DA:21,1
+DA:22,1
+DA:23,1
+LF:8
+LH:8
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Infra\ActivityContext.cs
+FN:26,Microsoft.EntityFrameworkCore.DbSet`1<Activities.Domain.Models.Entities.Activity> Activities.Infra.ActivityContext::get_Activities()
+FNDA:57,Microsoft.EntityFrameworkCore.DbSet`1<Activities.Domain.Models.Entities.Activity> Activities.Infra.ActivityContext::get_Activities()
+DA:27,57
+FN:30,System.Void Activities.Infra.ActivityContext::OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)
+FNDA:2,System.Void Activities.Infra.ActivityContext::OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)
+DA:31,2
+DA:32,10
+DA:33,24
+DA:34,2
+DA:36,2
+DA:38,2
+DA:40,10
+DA:41,8
+DA:44,2
+DA:45,2
+BRDA:32,82,1,2
+BRDA:32,82,0,2
+BRDA:40,204,1,2
+BRDA:40,204,0,2
+FN:18,System.Void Activities.Infra.ActivityContext::.ctor(Microsoft.EntityFrameworkCore.DbContextOptions`1<Activities.Infra.ActivityContext>,Framework.Core.Mediator.IMediatorHandler)
+FNDA:8,System.Void Activities.Infra.ActivityContext::.ctor(Microsoft.EntityFrameworkCore.DbContextOptions`1<Activities.Infra.ActivityContext>,Framework.Core.Mediator.IMediatorHandler)
+DA:19,8
+DA:20,8
+DA:21,8
+DA:22,8
+DA:23,8
+DA:24,8
+FN:49,System.Boolean Activities.Infra.ActivityContext/<>c::<Commit>b__7_0(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry)
+FNDA:156,System.Boolean Activities.Infra.ActivityContext/<>c::<Commit>b__7_0(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry)
+DA:50,156
+FN:47,System.Void Activities.Infra.ActivityContext/<Commit>d__7::MoveNext()
+FNDA:9,System.Void Activities.Infra.ActivityContext/<Commit>d__7::MoveNext()
+DA:48,9
+DA:49,27
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:63,9
+DA:64,18
+DA:66,9
+DA:67,9
+BRDA:49,227,1,0
+BRDA:52,129,0,0
+BRDA:52,129,1,0
+BRDA:57,181,0,0
+BRDA:57,181,1,0
+BRDA:49,227,0,9
+BRDA:64,411,0,9
+BRDA:64,411,1,9
+LF:34
+LH:24
+BRF:12
+BRH:7
+FNF:5
+FNH:5
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Infra\Migrations\20230805183216_Initial.cs
+FN:12,System.Void Activities.Infra.Migrations.Initial::Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)
+FNDA:0,System.Void Activities.Infra.Migrations.Initial::Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)
+DA:13,0
+DA:14,0
+DA:15,0
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+FN:50,System.Void Activities.Infra.Migrations.Initial::Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)
+FNDA:0,System.Void Activities.Infra.Migrations.Initial::Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)
+DA:51,0
+DA:52,0
+DA:53,0
+DA:55,0
+DA:56,0
+DA:57,0
+LF:40
+LH:0
+BRF:0
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Infra\Migrations\20230805183216_Initial.Designer.cs
+FN:19,System.Void Activities.Infra.Migrations.Initial::BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)
+FNDA:0,System.Void Activities.Infra.Migrations.Initial::BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)
+DA:20,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:26,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:78,0
+LF:54
+LH:0
+BRF:0
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Infra\Migrations\ActivityContextModelSnapshot.cs
+FN:16,System.Void Activities.Infra.Migrations.ActivityContextModelSnapshot::BuildModel(Microsoft.EntityFrameworkCore.ModelBuilder)
+FNDA:0,System.Void Activities.Infra.Migrations.ActivityContextModelSnapshot::BuildModel(Microsoft.EntityFrameworkCore.ModelBuilder)
+DA:17,0
+DA:19,0
+DA:20,0
+DA:21,0
+DA:23,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:75,0
+LF:54
+LH:0
+BRF:0
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Infra\Data\Repository\ActivityRepository.cs
+FN:16,Framework.Core.Data.IUnitOfWork Activities.Infra.Data.Repository.ActivityRepository::get_UnitOfWork()
+FNDA:9,Framework.Core.Data.IUnitOfWork Activities.Infra.Data.Repository.ActivityRepository::get_UnitOfWork()
+DA:17,9
+FN:19,System.Void Activities.Infra.Data.Repository.ActivityRepository::Add(Activities.Domain.Models.Entities.Activity)
+FNDA:49,System.Void Activities.Infra.Data.Repository.ActivityRepository::Add(Activities.Domain.Models.Entities.Activity)
+DA:20,49
+DA:21,49
+DA:22,49
+FN:24,System.Void Activities.Infra.Data.Repository.ActivityRepository::Update(Activities.Domain.Models.Entities.Activity)
+FNDA:0,System.Void Activities.Infra.Data.Repository.ActivityRepository::Update(Activities.Domain.Models.Entities.Activity)
+DA:25,0
+DA:26,0
+DA:28,0
+FN:30,System.Void Activities.Infra.Data.Repository.ActivityRepository::Dispose()
+FNDA:0,System.Void Activities.Infra.Data.Repository.ActivityRepository::Dispose()
+DA:31,0
+DA:32,0
+DA:33,0
+FN:34,System.Data.Common.DbConnection Activities.Infra.Data.Repository.ActivityRepository::GetConnection()
+FNDA:8,System.Data.Common.DbConnection Activities.Infra.Data.Repository.ActivityRepository::GetConnection()
+DA:35,8
+FN:37,System.Linq.IQueryable`1<Activities.Domain.Models.Entities.Activity> Activities.Infra.Data.Repository.ActivityRepository::GetQueryable()
+FNDA:0,System.Linq.IQueryable`1<Activities.Domain.Models.Entities.Activity> Activities.Infra.Data.Repository.ActivityRepository::GetQueryable()
+DA:38,0
+DA:39,0
+DA:40,0
+FN:42,System.Void Activities.Infra.Data.Repository.ActivityRepository::Delete(System.Guid)
+FNDA:0,System.Void Activities.Infra.Data.Repository.ActivityRepository::Delete(System.Guid)
+DA:43,0
+DA:44,0
+DA:45,0
+FN:46,Activities.Domain.Models.Entities.Activity Activities.Infra.Data.Repository.ActivityRepository::GetById(System.Guid)
+FNDA:0,Activities.Domain.Models.Entities.Activity Activities.Infra.Data.Repository.ActivityRepository::GetById(System.Guid)
+DA:47,0
+FN:12,System.Void Activities.Infra.Data.Repository.ActivityRepository::.ctor(Activities.Infra.ActivityContext)
+FNDA:8,System.Void Activities.Infra.Data.Repository.ActivityRepository::.ctor(Activities.Infra.ActivityContext)
+DA:13,8
+DA:14,8
+DA:15,8
+DA:16,8
+FN:47,System.Void Activities.Infra.Data.Repository.ActivityRepository/<GetByIdAsync>d__11::MoveNext()
+FNDA:0,System.Void Activities.Infra.Data.Repository.ActivityRepository/<GetByIdAsync>d__11::MoveNext()
+DA:48,0
+LF:23
+LH:9
+BRF:0
+BRH:0
+FNF:10
+FNH:4
+end_of_record
+SF:D:\Programacao\WorkSpace\InterviewsProjects\rocs-hiring-test-v2\src\Services\Workers\Activities.Infra\Data\Mappings\ActivityMapping.cs
+FN:11,System.Void Activities.Infra.Data.Mappings.ActivityMapping::Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1<Activities.Domain.Models.Entities.Activity>)
+FNDA:2,System.Void Activities.Infra.Data.Mappings.ActivityMapping::Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1<Activities.Domain.Models.Entities.Activity>)
+DA:12,2
+DA:13,2
+DA:15,2
+DA:17,2
+DA:18,2
+DA:19,2
+DA:21,2
+DA:22,2
+DA:23,2
+DA:26,2
+DA:27,2
+DA:28,2
+DA:30,2
+DA:31,2
+DA:32,2
+DA:34,2
+DA:35,2
+DA:36,2
+DA:38,2
+DA:39,2
+DA:40,2
+DA:41,2
+DA:42,2
+DA:43,2
+DA:44,2
+DA:45,2
+DA:46,4
+DA:49,2
+LF:28
+LH:28
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record

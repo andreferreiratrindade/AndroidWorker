@@ -1,0 +1,12 @@
+extend type Query {
+  allWorkerOnly: [WorkerDto] @delegate(schema: "workers")
+}
+
+extend type WorkerDto{
+    rests: [RestDto] @delegate(schema: "rests", path: "allRestOnly(workerId: $fields:workerId)")
+}
+
+
+extend type RestDto{
+    activities: [ActivityDto] @delegate(schema: "activities", path: "allActivityOnly(activityId: $fields:activityId)")
+}

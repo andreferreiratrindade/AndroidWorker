@@ -1,0 +1,55 @@
+using FluentValidation.Results;
+using Framework.Core.DomainObjects;
+using Framework.Core.Messages;
+using Framework.Core.Notifications;
+using MediatR;
+using Rests.Domain.Models.Entities;
+using Rests.Domain.Models.Repositories;
+using Rests.Domain.Rules;
+using Rests.Domain.ValidationServices;
+
+namespace Rests.Application.Commands.AddRest
+{
+    public class AddRestCommandHandler : CommandHandler,
+    IRequestHandler<AddRestCommand, AddRestCommandOutput>
+    {
+        private readonly IRestRepository _restRepository;
+        private readonly IRestValidatorService _restValidatorService;
+
+        public AddRestCommandHandler(IRestRepository restRepository, IDomainNotification domainNotification, IRestValidatorService restValidatorService) :base(domainNotification)
+        {
+            this._restRepository = restRepository;
+            this._restValidatorService = restValidatorService;
+        }
+        public async Task<AddRestCommandOutput> Handle(AddRestCommand request, CancellationToken cancellationToken)
+        {
+
+
+            request.Workers.ForEach(x =>
+            {
+                var rest = Rest.Create(request.ActivityId, x, request.TypeActivityBuild, request.TimeRestStart);
+                _domainNotification.AddNotifications(CheckCreateRules(rest,request.TimeActivityStart));
+                _restRepository.Add(rest);
+            });
+
+            await PersistData(_restRepository.UnitOfWork);
+
+            if(_domainNotification.HasNotifications) return new AddRestCommandOutput();
+
+            return new AddRestCommandOutput();
+        }
+
+        public  List<NotificationMessage> CheckCreateRules(Rest rest, DateTime timeActivityStart)
+        {
+            var notifications = new List<NotificationMessage>();
+            notifications.AddRange(BusinessRuleValidation.Check(new WorkerInRestRule(_restValidatorService,
+                                                                                                  rest.WorkerId,
+                                                                                                  timeActivityStart,
+                                                                                                  rest.TimeRestEnd,
+                                                                                                  Guid.Empty)));
+
+            return notifications;
+
+        }
+    }
+}

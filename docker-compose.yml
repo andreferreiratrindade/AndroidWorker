@@ -1,0 +1,77 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+
+version: '3.4'
+
+services:
+  database:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Change123!@#
+    ports:
+      - "1433:1433"
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  # restapi:
+  #   image: restapi
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Rest/Rests.Api/Dockerfile
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStringSql=Server=database;Database=RestDb;User ID=SA;Password=Change123!@#;TrustServerCertificate=True;
+  #     - MessageQueueConnection=host=rabbitmq;username=guest;password=guest
+  #   ports:
+  #     - 5212:80 #Swagger
+  #     - 5112:443 #API      
+
+  # activityapi:
+  #   image: activityapi
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Activities/Activities.Api/Dockerfile
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStringSql=Server=database;Database=ActivityDb;User ID=SA;Password=Change123!@#;TrustServerCertificate=True;
+  #     - MessageQueueConnection=host=rabbitmq;username=guest;password=guest
+  #   ports:
+  #     - 4212:80 #Swagger
+  #     - 4112:443 #API
+
+  # workerapi:
+  #   image: workerapi
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Worker/Worker.Api/Dockerfile
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #   ports:
+  #     - 6212:80 #Swagger
+  #     - 6112:443 #API
+
+  # apigatewayqueryapi:
+  #   image: apigatewayqueryapi
+  #   build:
+  #     context: .
+  #     dockerfile: ApiGateway.Queries/Dockerfile
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - activityUrl=http://activityapi:4212
+  #     - restUrl=http://restapi:5212
+  #     - workerUrl=http://workerapi:6212
+  #   ports:
+  #     - 7212:80 #Swagger
+  #     - 7112:443 #API
+  #   depends_on:
+  #     - workerapi
+  #     - activityapi
+  #     - restapi

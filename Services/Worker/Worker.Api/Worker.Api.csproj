@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Nullable>disable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
+	  <PackageReference Include="HotChocolate.AspNetCore" Version="13.4.0" />
+	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
+
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    		<PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="6.1.0" />
+        		<PackageReference Include="NSwag.Annotations" Version="13.19.0" />
+        		<PackageReference Include="Serilog" Version="3.0.1" />
+        		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Core\Framework.Core.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Framework.WebApi.Core\Framework.WebApi.Core.csproj" />
+    <ProjectReference Include="..\..\..\Framework.Shared.IntegrationEvent\Framework.Shared.IntegrationEvent.csproj" />
+    <ProjectReference Include="..\Worker.Application\Worker.Application.csproj" />
+    <ProjectReference Include="..\Worker.Infra\Worker.Infra.csproj" />
+    <ProjectReference Include="..\Worker.Domain\Worker.Domain.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Message.Bus\Framework.Message.Bus.csproj" />
+
+  </ItemGroup>
+  	<ItemGroup>
+	  <Content Update="log4net.config">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+  <PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		  <NoWarn>$(NoWarn);1591</NoWarn>
+		  <UserSecretsId>4b908ca3-fa9d-4ab1-bab4-e496c465ba5d</UserSecretsId>
+		  <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		  <DockerfileContext>..\..\..</DockerfileContext>
+	</PropertyGroup>
+</Project>
