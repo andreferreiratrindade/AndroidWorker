@@ -19,7 +19,7 @@ namespace Activities.Application.Queries
 
         public async Task<List<WorkActiveReportDto>> Handle(GetWorkersActiveNext7DaysQuery request, CancellationToken cancellationToken)
         {
-            var tt = _activityRepository.GetQueryable().Select(x=> x.Id).ToList();
+            var tt = _activityRepository.GetQueryable().Select(x=> x.AggregateId).ToList();
 
             DateTime dateNext7Days = request.DateReference.AddDays(WORKERS_BY_DAYS);
 

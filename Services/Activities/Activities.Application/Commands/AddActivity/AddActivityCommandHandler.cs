@@ -49,13 +49,13 @@ namespace Activities.Application.Commands.AddActivity
 
             _activitytRepository.Add(activity);
 
-            var addRestResult = await _messageBus.RequestAsync<AddRestIntegrationEvent, ResponseMessage>(new(activity.Id,
-                                               request.Workers,
-                                               request.TypeActivityBuild.GetHashCode(),
-                                               request.TimeActivityStart,
-                                               request.TimeActivityEnd));
+            //var addRestResult = await _messageBus.RequestAsync<AddRestIntegrationEvent, ResponseMessage>(new(activity.Id,
+            //                                   request.Workers,
+            //                                   request.TypeActivityBuild.GetHashCode(),
+            //                                   request.TimeActivityStart,
+            //                                   request.TimeActivityEnd));
             
-            _domainNotification.AddNotifications(addRestResult.Notifications);
+            //_domainNotification.AddNotifications(addRestResult.Notifications);
 
             await PersistData(_activitytRepository.UnitOfWork);
 
@@ -67,7 +67,7 @@ namespace Activities.Application.Commands.AddActivity
 
             return new AddActivityCommandOutput
             {
-                ActivityId = activity.Id,
+                ActivityId = activity.AggregateId,
                 TimeActivityStart = activity.TimeActivityStart,
                 TimeActivityEnd = activity.TimeActivityEnd,
                 TypeActivityBuild = activity.TypeActivityBuild,

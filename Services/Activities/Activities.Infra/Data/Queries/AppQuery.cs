@@ -16,12 +16,11 @@ namespace Activities.Infra.Data.Queries
         public IQueryable<ActivityDto> AllActivityOnly(Guid activityId,  ActivityContext context)
         {
             var activityRepository = new ActivityRepository(context);
-            var query = activityRepository.GetQueryable().Where(x=> x.Id == activityId).Select(x => new ActivityDto
+            var query = activityRepository.GetQueryable().Where(x=> x.AggregateId == activityId).Select(x => new ActivityDto
             {
-                ActivityId = x.Id,
+                ActivityId = x.AggregateId,
                 TimeActivityEnd = x.TimeActivityEnd,
                 TimeActivityStart = x.TimeActivityStart,
-                TimeRestEnd = x.TimeRestEnd,
                 TypeActivityBuild = x.TypeActivityBuild
             }).AsQueryable();
 

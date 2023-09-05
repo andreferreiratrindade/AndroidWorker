@@ -44,11 +44,10 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 
             return new UpdateTimeStartAndTimeEndActivityCommandOutput
             {
-                ActivityId = activity.Id,
+                ActivityId = activity.AggregateId,
                 TimeActivityStart = activity.TimeActivityStart,
                 TimeActivityEnd = activity.TimeActivityEnd,
                 TypeActivityBuild = activity.TypeActivityBuild,
-                TimeRestEnd = activity.TimeRestEnd
             };
         }
 
@@ -59,7 +58,7 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
             return BusinessRuleValidation.Check(new WorkerInActivityRule(_activityValidatorService,
                                           activity.GetWorkers().Select(x => x.WorkerId).ToList(),
                                           activity.TimeActivityStart,
-                                          activity.TimeActivityEnd, activity.Id));
+                                          activity.TimeActivityEnd, activity.AggregateId));
         }
 
     }

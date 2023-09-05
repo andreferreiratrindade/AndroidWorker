@@ -25,8 +25,7 @@ namespace Activities.Application.DomainServices
             const string sql = @"SELECT ActivityId = activities.Id,
                                         workersActivity.WorkerId,
                                         activities.TimeActivityStart,
-                                        activities.TimeActivityEnd,
-                                        activities.TimeRestEnd
+                                        activities.TimeActivityEnd
                                FROM Activities activities 
                                 inner join WorkersActivity workersActivity on activities.Id = workersActivity.ActivityId
                                 where 

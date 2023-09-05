@@ -19,7 +19,6 @@ namespace Activities.Infra.Migrations
                     TypeActivityBuild = table.Column<byte>(type: "tinyint", nullable: false),
                     TimeActivityStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TimeActivityEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TimeRestEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsAlive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -32,8 +31,7 @@ namespace Activities.Infra.Migrations
                 columns: table => new
                 {
                     ActivityId = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: false),
-                    WorkerId = table.Column<string>(type: "char(1)", nullable: false),
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    WorkerId = table.Column<string>(type: "char(1)", nullable: false)
                 },
                 constraints: table =>
                 {
