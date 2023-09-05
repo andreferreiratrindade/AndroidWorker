@@ -43,8 +43,8 @@ namespace Activities.Tests.Activits
                                     request.TimeActivityStart,
                                     request.TimeActivityEnd, activityValidatorService);
 
-            Assert.AreEqual(1, activity.Notificacoes.Count);
-            Assert.AreEqual("ActivityCreatedEvent", activity.Notificacoes.First().MessageType);
+            Assert.AreEqual(1, activity.Notifications.Count);
+            Assert.AreEqual("ActivityCreatedEvent", activity.Notifications.First().MessageType);
         }
 
 

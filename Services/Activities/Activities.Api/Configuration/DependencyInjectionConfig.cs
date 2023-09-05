@@ -14,21 +14,22 @@ using Activities.Domain.Models.Repositories;
 using Activities.Domain.DomainEvents;
 using Activities.Application.Events;
 using Activities.Infra.Data.Queries;
-using HotChocolate.Execution.Processing;
 using Activities.Infra;
+using Framework.Core.Data;
+using Framework.Core.MongoDb;
 
 namespace Activities.Api.Configuration
 {
     public static class DependencyInjectionConfig
     {
-        public static void RegisterServices(this IServiceCollection services)
+        public static void RegisterServices(this WebApplicationBuilder builder)
         {
 
-            services.AddMediatR(typeof(Program).Assembly);
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IMediatorHandler, MediatorHandler>();
-            ApiConfigurationWebApiCore.RegisterServices(services);
-            services.AddGraphQLServer()
+            builder.Services.AddMediatR(typeof(Program).Assembly);
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddScoped<IMediatorHandler, MediatorHandler>();
+            ApiConfigurationWebApiCore.RegisterServices(builder.Services);
+            builder.Services.AddGraphQLServer()
                 .AddQueryType<Query>()
                 .RegisterDbContext<ActivityContext>()
                 .AddFiltering()
@@ -36,12 +37,13 @@ namespace Activities.Api.Configuration
 
             //.AddSubscriptionType<ActivityQuerySubscription>()
             //.AddInMemorySubscriptions();
-            services.RegisterRepositories();
-            services.RegisterCommands();
-            services.RegisterRules();
-            services.RegisterQueries();
-            services.RegisterIntegrationService();
-            services.RegisterEvents();
+            builder.Services.RegisterRepositories();
+            builder.Services.RegisterCommands();
+            builder.Services.RegisterRules();
+            builder.Services.RegisterQueries();
+            builder.Services.RegisterIntegrationService();
+            builder.Services.RegisterEvents();
+            builder.RegisterEventStored();
         }
 
         public static void RegisterRepositories(this IServiceCollection services)
@@ -84,6 +86,14 @@ namespace Activities.Api.Configuration
             services.AddScoped<INotificationHandler<ActivityInativatedEvent>, ActivityInativatedEventHandler>();
             services.AddScoped<INotificationHandler<ActivityUptatedTimeStartAndTimeEndEvent>, ActivityUptatedTimeStartAndTimeEndEventHandler>();
 
+        }
+
+        public static void RegisterEventStored(this WebApplicationBuilder builder)
+        {
+            builder.Services.Configure<MongoDbConfig>(builder.Configuration.GetSection(nameof(MongoDbConfig)));
+
+            builder.Services.AddScoped<IEventStored, EventStored>();
+            builder.Services.AddScoped<IEventStoredRepository, EventStoredRepository>();
         }
     }
 }

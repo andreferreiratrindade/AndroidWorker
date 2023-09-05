@@ -20,25 +20,15 @@ namespace Framework.Core.Mediator
             return await _mediator.Send(comando);
         }
 
-        public async Task PublishEvent<T>(T e) where T : Event
+        public async Task PublishEvent(IDomainEvent @event)
         {
-            await _mediator.Publish(e);
+            await _mediator.Publish(@event);
         }
 
-        public async Task PublishEventDbContext(DbContext ctx)
+        public async Task PublishEvent(List<IDomainEvent> events)
         {
-            var domainEntities = ctx.ChangeTracker
-                .Entries<Entity>()
-                .Where(x => x.Entity.Notificacoes?.Any() == true);
 
-            var domainEvents = domainEntities
-                .SelectMany(x => x.Entity.Notificacoes)
-                .ToList();
-
-            domainEntities.ToList()
-                .ForEach(entity => entity.Entity.ClearEvent());
-
-            var tasks = domainEvents
+            var tasks = events
                 .Select(async (domainEvent) => await PublishEvent(domainEvent));
             await Task.WhenAll(tasks);
         }

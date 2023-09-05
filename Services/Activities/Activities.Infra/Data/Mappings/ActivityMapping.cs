@@ -12,7 +12,8 @@ namespace Activities.Infra.Data.Mappings
         {
             builder.ToTable("Activities");
             
-            builder.HasKey(c => c.Id);
+            builder.HasKey(c => c.AggregateId);
+            builder.Property(c => c.AggregateId).HasColumnName("Id");
 
             builder.Property(c => c.TimeActivityStart)
                 .IsRequired()
@@ -22,10 +23,6 @@ namespace Activities.Infra.Data.Mappings
                 .IsRequired()
                 .HasColumnType("datetime2");
             
-                        
-            builder.Property(c => c.TimeRestEnd)
-                .IsRequired()
-                .HasColumnType("datetime2");
 
             builder.Property(c => c.IsAlive)
                 .IsRequired()

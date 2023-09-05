@@ -8,7 +8,7 @@ using Framework.Core.Messages;
 
 namespace Activities.Domain.Models.Entities
 {
-    public class WorkActivity : Entity
+    public class WorkActivity 
     {
         public WorkActivity(string workerId){
             this.WorkerId = workerId;

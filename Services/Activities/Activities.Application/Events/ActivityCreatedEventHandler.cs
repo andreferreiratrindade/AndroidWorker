@@ -15,12 +15,14 @@ namespace Activities.Application.Events
 
         public async Task Handle(ActivityCreatedEvent message, CancellationToken cancellationToken)
         {
-             await   _bus.PublishAsync( 
-                        new ActivityCreatedIntegrationEvent(message.ActivityId,
-                                                       message.Workers,
-                                                       message.TypeActivityBuild.GetHashCode(),
-                                                       message.TimeActivityStart,
-                                                       message.TimeActivityEnd));
+            await Task.CompletedTask;
+
+            //await   _bus.PublishAsync( 
+            //           new ActivityCreatedIntegrationEvent(message.ActivityId,
+            //                                          new List<string>(),
+            //                                          message.TypeActivityBuild.GetHashCode(),
+            //                                          message.TimeActivityStart,
+            //                                          message.TimeActivityEnd));
         }
     }
 }

@@ -72,7 +72,7 @@ namespace Framework.WebApi.Core.Exceptions
                     json.DeveloperMessage = context.Exception;
                 }
 
-                // context.Result = new InternalServerErrorObjectResult(json);
+                context.Result = new BadRequestObjectResult(context.Exception.ToString());
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
             context.ExceptionHandled = true;

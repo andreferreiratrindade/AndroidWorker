@@ -23,7 +23,7 @@ namespace Activities.Api.Configuration
             });
             builder.Services.AddMessageBusConfiguration(builder.Configuration);
             
-            builder.Services.RegisterServices();
+            builder.RegisterServices();
             return builder;
 
         }

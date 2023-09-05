@@ -10,19 +10,20 @@ using Activities.Domain.Rules;
 using Activities.Domain.ValidatorServices;
 using Framework.Core.Notifications;
 using FluentValidation.Results;
+using System.Diagnostics;
+using Activities.Domain.DTO;
+using Microsoft.Extensions.Logging;
 
 namespace Activities.Domain.Models.Entities
 {
-    public class Activity : Entity, IAggregateRoot
+    public class Activity : AggregateRoot, IAggregateRoot
     {
 
-        private readonly List<WorkActivity> _workers;
+        private List<WorkActivity> _workers { get; set; } = new List<WorkActivity>();
         public List<WorkActivity> GetWorkers() { return _workers; }
-        public TypeActivityBuild TypeActivityBuild { get; }
+        public TypeActivityBuild TypeActivityBuild { get; private set; }
         public DateTime TimeActivityStart { get; private set; }
         public DateTime TimeActivityEnd { get; private set; }
-        public DateTime TimeRestEnd { get; private set; }
-        
         public bool IsAlive { get; private set; }
         protected Activity()
         {
@@ -35,48 +36,73 @@ namespace Activities.Domain.Models.Entities
                                       DateTime timeActivityEnd)
         {
             var workersActivity = workers.Select(x => new WorkActivity(x)).ToList();
-            var activity = new Activity(workersActivity, typeActivityBuild, timeActivityStart, timeActivityEnd);
+            var activity = new Activity(workers, typeActivityBuild, timeActivityStart, timeActivityEnd);
 
-
-            activity.AddEvent(new ActivityCreatedEvent(activity.Id,
-                                                       workers,
-                                                       activity.TypeActivityBuild,
-                                                       activity.TimeActivityStart,
-                                                       activity.TimeActivityEnd));
             return activity;
         }
 
 
 
 
-        private Activity(List<WorkActivity> workers, TypeActivityBuild typeActivityBuild, DateTime timeActivityStart, DateTime timeActivityEnd)
+        private Activity(List<string> workers,
+                         TypeActivityBuild typeActivityBuild,
+                         DateTime timeActivityStart,
+                         DateTime timeActivityEnd)
         {
-            _workers = workers;
-            TypeActivityBuild = typeActivityBuild;
-            TimeActivityStart = timeActivityStart;
-            TimeActivityEnd = timeActivityEnd;
-            TimeRestEnd = DateTime.Now;
-            IsAlive = true;
 
-            //Apply
+            var @event = new ActivityCreatedEvent(Guid.NewGuid(),
+                                                    typeActivityBuild,
+                                                    timeActivityStart,
+                                                    timeActivityEnd);
+            this.RaiseEvent(@event);
+
+            var @eventsWorkers = workers.Select(x=> new WorkerActivityCreatedEvent(@event.ActivityId, x)).ToList();
+            @eventsWorkers.ForEach(x =>
+            {
+                this.RaiseEvent(x);
+            });
         }
 
-     
+        protected override void When(IDomainEvent @event)
+        {
+            switch (@event)
+            {
+                case ActivityCreatedEvent x: OnActivityCreatedEvent(x); break;
+                case WorkerActivityCreatedEvent x: OnWorkerActivityCreatedEvent(x); break;
+            }
+        }
+
+        private void OnActivityCreatedEvent(ActivityCreatedEvent @event)
+        {
+            AggregateId = @event.ActivityId;
+            TypeActivityBuild = @event.TypeActivityBuild;
+            TimeActivityStart = @event.TimeActivityStart;
+            TimeActivityEnd = @event.TimeActivityEnd;
+            IsAlive = true;
+        }
+
+        private void OnWorkerActivityCreatedEvent(WorkerActivityCreatedEvent @event)
+        {
+            _workers.Add(new WorkActivity(@event.WorkerId));
+        }
+
 
         public void Inactivate()
         {
             this.IsAlive = false;
-            AddEvent(new ActivityInativatedEvent(Id));
+            this.RaiseEvent(new ActivityInativatedEvent(this.AggregateId));
+
         }
 
-        public void UpdateTimeStartAndTimeEnd(DateTime timeActivityStart, DateTime timeActivityEnd, IActivityValidatorService activityValidatorService, IDomainNotification domainNotification)
+        public void UpdateTimeStartAndTimeEnd(DateTime timeActivityStart, DateTime timeActivityEnd,
+            IActivityValidatorService activityValidatorService, IDomainNotification domainNotification)
         {
             TimeActivityEnd = timeActivityEnd;
             TimeActivityStart = timeActivityStart;
 
-            AddEvent(new ActivityUptatedTimeStartAndTimeEndEvent(Id,
-                                                       TimeActivityStart,
+            this.RaiseEvent(new ActivityUptatedTimeStartAndTimeEndEvent(AggregateId , TimeActivityStart,
                                                        TimeActivityEnd));
+
         }
 
     }
