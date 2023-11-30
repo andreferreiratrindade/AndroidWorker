@@ -16,6 +16,14 @@ namespace Framework.WebApi.Core.Controllers
 
         }
 
+        protected ActionResult CustomResponseStatusCodeAccepted<T>(T commandHandlerOutput, string urlRedirect) where T : class
+        {
+
+            var obj = new { data = commandHandlerOutput, Link = urlRedirect };
+            return Accepted(urlRedirect, obj);
+
+        }
+
         protected ActionResult CustomResponseStatusCodeOk<T> (T commandHandlerOutput) where T : class
         {
                 var obj = new {data = commandHandlerOutput};

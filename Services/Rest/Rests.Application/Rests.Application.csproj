@@ -7,6 +7,7 @@
   </PropertyGroup>
       <ItemGroup>
       <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Core\Framework.Core.csproj" />
+      <ProjectReference Include="..\..\..\Framework.Shared.IntegrationEvent\Framework.Shared.IntegrationEvent.csproj" />
       <ProjectReference Include="..\Rests.Domain\Rests.Domain.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Message.Bus\Framework.Message.Bus.csproj" />
 

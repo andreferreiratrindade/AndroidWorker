@@ -6,6 +6,7 @@ using Activities.Domain.ValidatorServices;
 using Activities.Application.Commands.DeleteActivity;
 using Framework.Core.DomainObjects;
 using Framework.Core.Notifications;
+using Framework.Core.Mediator;
 
 namespace Activities.Application.Commands.DelteActivity
 {
@@ -14,7 +15,7 @@ namespace Activities.Application.Commands.DelteActivity
     {
         private readonly IActivityRepository _activitytRepository;
 
-        public DeleteActivityCommandHandler(IActivityRepository activitytRepository, IDomainNotification domainNotification): base(domainNotification) 
+        public DeleteActivityCommandHandler(IActivityRepository activitytRepository, IMediatorHandler mediatorHandler, IDomainNotification domainNotification) : base(domainNotification, mediatorHandler)
         {
             _activitytRepository = activitytRepository;
         }

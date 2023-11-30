@@ -12,8 +12,8 @@ using Rests.Infra;
 namespace Rests.Infra.Migrations
 {
     [DbContext(typeof(RestContext))]
-    [Migration("20230815133738_initials")]
-    partial class initials
+    [Migration("20231130161329_tempCreate")]
+    partial class tempCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace Rests.Infra.Migrations
 
             modelBuilder.Entity("Rests.Domain.Models.Entities.Rest", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("AggregateId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -50,7 +50,7 @@ namespace Rests.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("char(1)");
 
-                    b.HasKey("Id");
+                    b.HasKey("AggregateId");
 
                     b.ToTable("Rests", (string)null);
                 });

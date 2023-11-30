@@ -24,7 +24,7 @@ namespace Rests.Infra.Migrations
 
             modelBuilder.Entity("Rests.Domain.Models.Entities.Rest", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("AggregateId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -47,7 +47,7 @@ namespace Rests.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("char(1)");
 
-                    b.HasKey("Id");
+                    b.HasKey("AggregateId");
 
                     b.ToTable("Rests", (string)null);
                 });

@@ -30,16 +30,18 @@ namespace Activities.Tests
         }
         public ActivityContext  GetContext()
         {
-            var options = new DbContextOptionsBuilder<ActivityContext>()
-                .UseSqlite(_sqlConnection)
-                .Options;
+            //var options = new DbContextOptionsBuilder<ActivityContext>()
+            //    .UseSqlite(_sqlConnection)
+            //    .Options;
 
-            var mediatorHandler = Substitute.For<IMediatorHandler>();
+            //var mediatorHandler = Substitute.For<IMediatorHandler>();
 
-            var context = new ActivityContext(options, mediatorHandler);
-            context.Database.EnsureCreated();
+            //var context = new ActivityContext(options, mediatorHandler);
+            //context.Database.EnsureCreated();
 
-            return context;
+            //return context;
+
+            return null;
 
         }
     }

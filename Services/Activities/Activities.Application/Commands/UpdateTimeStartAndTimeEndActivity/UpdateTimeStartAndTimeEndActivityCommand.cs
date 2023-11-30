@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Framework.Core.Messages;
 using Activities.Domain.Enums;
+using FluentValidation;
 
 namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 {
@@ -9,11 +10,11 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
     {
 
         [Required]
-        public Guid ActivityId {get;set;}
+        public Guid ActivityId { get; set; }
         [Required]
-        public DateTime TimeActivityStart { get;set;}
+        public DateTime TimeActivityStart { get; set; }
         [Required]
-        public DateTime TimeActivityEnd { get; set;}
+        public DateTime TimeActivityEnd { get; set; }
 
 
         public UpdateTimeStartAndTimeEndActivityCommand(Guid activityId, DateTime timeActivityStart, DateTime timeActivityEnd)

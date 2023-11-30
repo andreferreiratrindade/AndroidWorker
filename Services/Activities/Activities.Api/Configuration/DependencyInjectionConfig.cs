@@ -17,6 +17,9 @@ using Activities.Infra.Data.Queries;
 using Activities.Infra;
 using Framework.Core.Data;
 using Framework.Core.MongoDb;
+using MassTransit;
+using Activities.Api.IntegrationServices;
+using MassTransit.Configuration;
 
 namespace Activities.Api.Configuration
 {
@@ -24,6 +27,7 @@ namespace Activities.Api.Configuration
     {
         public static void RegisterServices(this WebApplicationBuilder builder)
         {
+            builder.Services.AddMessageBusConfiguration(builder.Configuration);
 
             builder.Services.AddMediatR(typeof(Program).Assembly);
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -45,7 +49,38 @@ namespace Activities.Api.Configuration
             builder.Services.RegisterEvents();
             builder.RegisterEventStored();
         }
+        public static void AddMessageBusConfiguration(this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            var messageQueueConnection = new
+            {
+                Host = configuration.GetSection("MessageQueueConnection").GetSection("host").Value,
+                Username = configuration.GetSection("MessageQueueConnection").GetSection("username").Value,
+                Passwoord = configuration.GetSection("MessageQueueConnection").GetSection("password").Value,
+            };
+            services.AddMassTransit(config =>
+            {
+                config.AddEntityFrameworkOutbox<ActivityContext>(o =>
+                {
+                    // configure which database lock provider to use (Postgres, SqlServer, or MySql)
+                    o.UseSqlServer();
 
+                    // enable the bus outbox
+                    o.UseBusOutbox();
+                });
+                config.AddConsumer<RestAddedIntegrationHandle>();
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(messageQueueConnection.Host, x =>
+                    {
+                        x.Username(messageQueueConnection.Username);
+                        x.Password(messageQueueConnection.Passwoord);
+
+                        cfg.ConfigureEndpoints(ctx);
+                    });
+                });
+            });
+        }
         public static void RegisterRepositories(this IServiceCollection services)
         {
             services.AddScoped<IActivityRepository, ActivityRepository>();
@@ -55,7 +90,7 @@ namespace Activities.Api.Configuration
         {
             services.AddScoped<IRequestHandler<AddActivityCommand, AddActivityCommandOutput>, AddActivityCommandHandler>();
             services.AddScoped<IRequestHandler<DeleteActivityCommand, Framework.Core.Messages.Result>, DeleteActivityCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateTimeStartAndTimeEndActivityCommand, UpdateTimeStartAndTimeEndActivityCommandOutput>, UpdateTimeStartAndTimeEndActivityCommandHandler>();
+            services.AddScoped<IRequestHandler<ConfirmActivityWorkerCommand, ConfirmActivityWorkerCommandOutput>, ConfirmActivityWorkerCommandHandler>();
 
 
             services.AddScoped<IRequestHandler<GetWorkersActiveNext7DaysQuery, List<WorkActiveReportDto>>, GetWorkersActiveNext7DaysQueryHandler>();
@@ -85,7 +120,6 @@ namespace Activities.Api.Configuration
             services.AddScoped<INotificationHandler<ActivityCreatedEvent>, ActivityCreatedEventHandler>();
             services.AddScoped<INotificationHandler<ActivityInativatedEvent>, ActivityInativatedEventHandler>();
             services.AddScoped<INotificationHandler<ActivityUptatedTimeStartAndTimeEndEvent>, ActivityUptatedTimeStartAndTimeEndEventHandler>();
-
         }
 
         public static void RegisterEventStored(this WebApplicationBuilder builder)

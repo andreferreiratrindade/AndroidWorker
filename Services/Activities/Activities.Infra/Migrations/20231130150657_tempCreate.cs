@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Activities.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class tempCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,7 @@ namespace Activities.Infra.Migrations
                     TypeActivityBuild = table.Column<byte>(type: "tinyint", nullable: false),
                     TimeActivityStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TimeActivityEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsAlive = table.Column<bool>(type: "bit", nullable: false)
+                    Status = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {

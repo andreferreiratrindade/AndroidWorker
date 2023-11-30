@@ -2,7 +2,7 @@ using Framework.Core.DomainObjects;
 
 namespace Worker.Domain.Models.Entities
 {
-    public class Worker : Entity, IAggregateRoot
+    public class Worker : AggregateRoot, IAggregateRoot
     {
 
         protected Worker()
@@ -14,6 +14,10 @@ namespace Worker.Domain.Models.Entities
             this.WorkerId = workerId;
         }
         public string WorkerId { get; private set; }
-       
+
+        protected override void When(IDomainEvent @event)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

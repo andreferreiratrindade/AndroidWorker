@@ -21,7 +21,6 @@ namespace Activities.Api.Configuration
                            .AllowAnyMethod()
                            .AllowAnyHeader());
             });
-            builder.Services.AddMessageBusConfiguration(builder.Configuration);
             
             builder.RegisterServices();
             return builder;

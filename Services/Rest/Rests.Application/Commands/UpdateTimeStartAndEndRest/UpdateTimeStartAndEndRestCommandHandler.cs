@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Framework.Core.Mediator;
 using Framework.Core.Messages;
 using Framework.Core.Notifications;
 using MediatR;
@@ -15,7 +16,7 @@ namespace Rests.Application.Commands.UpdateTimeStartAndEndRest
     {
         private readonly IRestRepository _restRepository;
 
-        public UpdateTimeStartAndEndRestCommandHandler(IRestRepository restRepository, IDomainNotification domainNotification): base(domainNotification)
+        public UpdateTimeStartAndEndRestCommandHandler(IRestRepository restRepository, IMediatorHandler mediatorHandler, IDomainNotification domainNotification): base(domainNotification, mediatorHandler)
         {
             this._restRepository = restRepository;
         }

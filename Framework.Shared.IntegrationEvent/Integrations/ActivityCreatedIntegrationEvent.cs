@@ -3,7 +3,7 @@ using Framework.Core.Messages.Integration;
 namespace Framework.Shared.IntegrationEvent.Integration
 {
 
-    [Queue("ActivityUptatedTimeStartAndTimeEnd", ExchangeName = "ActivityExchange")]
+    [Queue("ActivityCreated", ExchangeName = "ActivityCreated")]
 
     public class ActivityCreatedIntegrationEvent : Framework.Core.Messages.Integration.IntegrationEvent
     {
@@ -11,8 +11,11 @@ namespace Framework.Shared.IntegrationEvent.Integration
                                                List<string> workers,
                                                int typeActivityBuild,
                                                DateTime timeActivityStart,
-                                               DateTime timeActivityEnd)
+                                               DateTime timeActivityEnd,
+                                               Guid correlationId
+           )
         {
+            CorrelationId = correlationId;
             ActivityId = activityId;
             Workers = workers;
             TypeActivityBuild = typeActivityBuild;

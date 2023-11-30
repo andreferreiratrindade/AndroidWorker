@@ -1,9 +1,5 @@
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Rests.Infra;
-using System.ComponentModel.DataAnnotations;
-using Autofac.Core;
-using Polly;
 
 namespace Rests.Api.Configuration
 {
@@ -11,11 +7,9 @@ namespace Rests.Api.Configuration
     {
         public static WebApplicationBuilder AddApiConfiguration(this WebApplicationBuilder builder)
         {
-            builder.Services.AddDbContext<RestContext>(options => {
-                options.UseSqlServer(builder.Configuration["ConnectionStringSql"]);
-            });
-
-            //builder.Services.AddDbContext<RestContext>(ServiceLifetime.Transient);
+            builder.Services.AddDbContext<RestContext>(options =>
+       options.UseSqlServer(builder.Configuration["ConnectionStringSql"]));
+            builder.Services.AddDbContext<RestContext>();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddCors(options =>
@@ -27,9 +21,9 @@ namespace Rests.Api.Configuration
                            .AllowAnyMethod()
                            .AllowAnyHeader());
             });
-            builder.Services.AddMessageBusConfiguration(builder.Configuration);
-            
-            builder.Services.RegisterServices();
+           
+
+            builder.RegisterServices();
             return builder;
 
         }
