@@ -44,8 +44,8 @@ namespace Activities.Infra.Data.Repository
             _context.Activities.Where(x => x.AggregateId == activityId).ExecuteDelete();
         }
 
-        public Activity? GetById(Guid activityId) => _context.Activities.AsNoTracking().FirstOrDefault(x => x.AggregateId == activityId && x.IsAlive);
-        public async Task<Activity?> GetByIdAsync(Guid activityId) => await _context.Activities.AsNoTracking().FirstOrDefaultAsync(x => x.AggregateId == activityId && x.IsAlive );
+        public Activity? GetById(Guid activityId) => _context.Activities.AsNoTracking().FirstOrDefault(x => x.AggregateId == activityId && x.Status != Domain.Enums.TypeActivityStatus.Deleted);
+        public async Task<Activity?> GetByIdAsync(Guid activityId) => await _context.Activities.AsNoTracking().FirstOrDefaultAsync(x => x.AggregateId == activityId && x.Status != Domain.Enums.TypeActivityStatus.Deleted);
     }
 
 }

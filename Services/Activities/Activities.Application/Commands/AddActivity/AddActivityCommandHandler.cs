@@ -15,6 +15,7 @@ using Activities.Application.DomainServices;
 using System.ComponentModel.DataAnnotations;
 using Activities.Domain.Rules;
 using System.Net;
+using Framework.Core.Mediator;
 
 namespace Activities.Application.Commands.AddActivity
 {
@@ -24,14 +25,13 @@ namespace Activities.Application.Commands.AddActivity
     {
         private readonly IActivityRepository _activitytRepository;
         private readonly IActivityValidatorService _activityValidatorService;
-        private readonly IMessageBus _messageBus;
 
         public AddActivityCommandHandler(IActivityRepository activitytRepository,
                                          IActivityValidatorService activityValidatorService,
-                                         IMessageBus messageBus,
-                                         IDomainNotification domainNotification):base(domainNotification)
+                                         IDomainNotification domainNotification,
+                                         IMediatorHandler mediatorHandler) : base(domainNotification, mediatorHandler)
+
         {
-            _messageBus = messageBus;
             _activitytRepository = activitytRepository;
             _activityValidatorService = activityValidatorService;
         }
@@ -41,23 +41,14 @@ namespace Activities.Application.Commands.AddActivity
             var activity = Activity.Create(request.Workers,
                                     request.TypeActivityBuild,
                                     request.TimeActivityStart,
-                                    request.TimeActivityEnd);
+                                    request.TimeActivityEnd,
+                                    request.CorrelationId);
 
             _domainNotification.AddNotifications(CheckCreateActivityRules(activity));
 
-            if (_domainNotification.HasNotifications) return new AddActivityCommandOutput();
-
             _activitytRepository.Add(activity);
 
-            //var addRestResult = await _messageBus.RequestAsync<AddRestIntegrationEvent, ResponseMessage>(new(activity.Id,
-            //                                   request.Workers,
-            //                                   request.TypeActivityBuild.GetHashCode(),
-            //                                   request.TimeActivityStart,
-            //                                   request.TimeActivityEnd));
-            
-            //_domainNotification.AddNotifications(addRestResult.Notifications);
-
-            await PersistData(_activitytRepository.UnitOfWork);
+            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork, new ActivityNotCreatedEvent(request.CorrelationId));
 
             if (_domainNotification.HasNotifications)
             {

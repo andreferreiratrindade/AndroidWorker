@@ -25,6 +25,11 @@ namespace Framework.Core.Mediator
             await _mediator.Publish(@event);
         }
 
+        public async Task PublishEvent(RollBackEvent @event)
+        {
+            await _mediator.Publish(@event);
+        }
+
         public async Task PublishEvent(List<IDomainEvent> events)
         {
 
@@ -35,6 +40,7 @@ namespace Framework.Core.Mediator
 
 
 
-        public async Task<object> Send(object request, CancellationToken cancellationToken = default) => await _mediator.Send(request);
+        public async Task<object> Send(object request, CancellationToken cancellationToken = default) 
+            => await _mediator.Send(request);
     }
 }

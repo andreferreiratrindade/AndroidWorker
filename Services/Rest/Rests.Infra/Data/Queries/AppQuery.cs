@@ -17,7 +17,7 @@ namespace Rests.Domain.Models.Data.Queries
             var repo = new RestRepository(context);
             var query =  repo.GetQueryable().Where(x => x.WorkerId == workerId).Select(x => new RestDto
             {
-                RestId = x.Id,
+                RestId = x.AggregateId,
                 ActivityId = x.ActivityId,
                 TimeRestEnd = x.TimeRestEnd,
                 TimeRestStart = x.TimeRestStart,

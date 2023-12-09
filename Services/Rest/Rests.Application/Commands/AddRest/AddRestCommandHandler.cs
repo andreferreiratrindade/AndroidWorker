@@ -1,8 +1,11 @@
 using FluentValidation.Results;
 using Framework.Core.DomainObjects;
+using Framework.Core.Mediator;
 using Framework.Core.Messages;
 using Framework.Core.Notifications;
+using MassTransit;
 using MediatR;
+using Rests.Domain.DomainEvents;
 using Rests.Domain.Models.Entities;
 using Rests.Domain.Models.Repositories;
 using Rests.Domain.Rules;
@@ -11,35 +14,42 @@ using Rests.Domain.ValidationServices;
 namespace Rests.Application.Commands.AddRest
 {
     public class AddRestCommandHandler : CommandHandler,
-    IRequestHandler<AddRestCommand, AddRestCommandOutput>
+    IRequestHandler<AddRestIntegratedCommand, AddRestCommandOutput>
     {
         private readonly IRestRepository _restRepository;
         private readonly IRestValidatorService _restValidatorService;
 
-        public AddRestCommandHandler(IRestRepository restRepository, IDomainNotification domainNotification, IRestValidatorService restValidatorService) :base(domainNotification)
+
+        public AddRestCommandHandler(IRestRepository restRepository,
+                                     IDomainNotification domainNotification,
+                                     IRestValidatorService restValidatorService,
+                                     IMediatorHandler _mediatorHandler) : base(domainNotification, _mediatorHandler)
         {
             this._restRepository = restRepository;
             this._restValidatorService = restValidatorService;
         }
-        public async Task<AddRestCommandOutput> Handle(AddRestCommand request, CancellationToken cancellationToken)
+        public async Task<AddRestCommandOutput> Handle(AddRestIntegratedCommand request, CancellationToken cancellationToken)
         {
-
 
             request.Workers.ForEach(x =>
             {
-                var rest = Rest.Create(request.ActivityId, x, request.TypeActivityBuild, request.TimeRestStart);
-                _domainNotification.AddNotifications(CheckCreateRules(rest,request.TimeActivityStart));
+                var rest = Rest.Create(request.ActivityId,
+                                       x,
+                                       request.TypeActivityBuild,
+                                       request.TimeRestStart,
+                                       request.CorrelationId);
+
+                _domainNotification.AddNotifications(CheckCreateRules(rest, request.TimeActivityStart));
                 _restRepository.Add(rest);
             });
 
-            await PersistData(_restRepository.UnitOfWork);
 
-            if(_domainNotification.HasNotifications) return new AddRestCommandOutput();
+            await PersistDataOrRollBackEvent(_restRepository.UnitOfWork, new RestNotAddedEvent(request.CorrelationId));
 
             return new AddRestCommandOutput();
         }
 
-        public  List<NotificationMessage> CheckCreateRules(Rest rest, DateTime timeActivityStart)
+        public List<NotificationMessage> CheckCreateRules(Rest rest, DateTime timeActivityStart)
         {
             var notifications = new List<NotificationMessage>();
             notifications.AddRange(BusinessRuleValidation.Check(new WorkerInRestRule(_restValidatorService,

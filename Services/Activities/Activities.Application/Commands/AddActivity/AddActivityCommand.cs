@@ -3,10 +3,11 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Framework.Core.Messages;
 using Activities.Domain.Enums;
+using MassTransit;
 
 namespace Activities.Application.Commands.AddActivity
 {
-    public class AddActivityCommand : Command<AddActivityCommandOutput>
+    public class AddActivityCommand : Command<AddActivityCommandOutput>, CorrelatedBy<Guid>
     {
 
         /// <summary>
@@ -22,15 +23,17 @@ namespace Activities.Application.Commands.AddActivity
         [Required]
         public DateTime TimeActivityEnd { get; set; }
         [Required]
-        // [RegularExpression(@"^[A-Za-z]$"), StringLength(1)]
         public List<string> Workers { get; set; }
 
-        public AddActivityCommand(TypeActivityBuild typeActivityBuild, DateTime timeActivityStart, DateTime timeActivityEnd, List<string> workers)
+        public Guid CorrelationId { get; }
+
+        public AddActivityCommand(TypeActivityBuild typeActivityBuild, DateTime timeActivityStart, DateTime timeActivityEnd, List<string> workers, Guid correlationId)
         {
             this.TypeActivityBuild = typeActivityBuild;
             this.TimeActivityStart = timeActivityStart;
             this.TimeActivityEnd = timeActivityEnd;
-            this.Workers = workers.Select(x=>x.ToUpper()).ToList();
+            this.Workers = workers.Select(x => x.ToUpper()).ToList();
+            CorrelationId = correlationId;
 
             ValidCommand(new AddActivityCommandValidation().Validate(this));
         }

@@ -3,27 +3,30 @@ using Framework.Core.Messages.Integration;
 namespace Framework.Shared.IntegrationEvent.Integration
 {
 
-    [Queue("AddRest", ExchangeName = "RestExchange")]
+    [Queue("ActivityConfirmed", ExchangeName = "ActivityConfirmed")]
 
-    public class AddRestIntegrationEvent : Framework.Core.Messages.Integration.IntegrationEvent
+    public class ActivityConfirmedIntegrationEvent : Framework.Core.Messages.Integration.IntegrationEvent
     {
-       public AddRestIntegrationEvent(Guid activityId,
+       public ActivityConfirmedIntegrationEvent(Guid activityId,
                                                List<string> workers,
                                                int typeActivityBuild,
                                                DateTime timeActivityStart,
-                                               DateTime timeRestStart)
+                                               DateTime timeActivityEnd,
+                                               Guid correlationId
+           )
         {
+            CorrelationId = correlationId;
             ActivityId = activityId;
             Workers = workers;
             TypeActivityBuild = typeActivityBuild;
-            TimeRestStart = timeRestStart;
             TimeActivityStart = timeActivityStart;
+            TimeActivityEnd = timeActivityEnd;
         }
 
         public Guid ActivityId { get; private set; }
         public List<string> Workers { get; private set; }
         public int TypeActivityBuild { get; private set; }
-        public DateTime TimeRestStart { get; private set; }
         public DateTime TimeActivityStart { get; private set; }
+        public DateTime TimeActivityEnd { get; private set; }
     }
 }

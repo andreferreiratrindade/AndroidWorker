@@ -13,6 +13,7 @@ using FluentValidation.Results;
 using System.Diagnostics;
 using Activities.Domain.DTO;
 using Microsoft.Extensions.Logging;
+using MassTransit.NewIdProviders;
 
 namespace Activities.Domain.Models.Entities
 {
@@ -24,7 +25,7 @@ namespace Activities.Domain.Models.Entities
         public TypeActivityBuild TypeActivityBuild { get; private set; }
         public DateTime TimeActivityStart { get; private set; }
         public DateTime TimeActivityEnd { get; private set; }
-        public bool IsAlive { get; private set; }
+        public TypeActivityStatus Status { get; private set; }
         protected Activity()
         {
 
@@ -33,10 +34,11 @@ namespace Activities.Domain.Models.Entities
         public static Activity Create(List<string> workers,
                                       TypeActivityBuild typeActivityBuild,
                                       DateTime timeActivityStart,
-                                      DateTime timeActivityEnd)
+                                      DateTime timeActivityEnd,
+                                      Guid? correlationId)
         {
             var workersActivity = workers.Select(x => new WorkActivity(x)).ToList();
-            var activity = new Activity(workers, typeActivityBuild, timeActivityStart, timeActivityEnd);
+            var activity = new Activity(workers, typeActivityBuild, timeActivityStart, timeActivityEnd, correlationId);
 
             return activity;
         }
@@ -47,13 +49,16 @@ namespace Activities.Domain.Models.Entities
         private Activity(List<string> workers,
                          TypeActivityBuild typeActivityBuild,
                          DateTime timeActivityStart,
-                         DateTime timeActivityEnd)
+                         DateTime timeActivityEnd,
+                         Guid? correlationId)
         {
 
             var @event = new ActivityCreatedEvent(Guid.NewGuid(),
+                                                    workers,
                                                     typeActivityBuild,
                                                     timeActivityStart,
-                                                    timeActivityEnd);
+                                                    timeActivityEnd,
+                                                    (correlationId ?? Guid.NewGuid()));
             this.RaiseEvent(@event);
 
             var @eventsWorkers = workers.Select(x=> new WorkerActivityCreatedEvent(@event.ActivityId, x)).ToList();
@@ -69,6 +74,9 @@ namespace Activities.Domain.Models.Entities
             {
                 case ActivityCreatedEvent x: OnActivityCreatedEvent(x); break;
                 case WorkerActivityCreatedEvent x: OnWorkerActivityCreatedEvent(x); break;
+                case ActivityInativatedEvent x: OnActivityInativatedEvent(x); break;
+                case ActivityUptatedTimeStartAndTimeEndEvent x: OnActivityUptatedTimeStartAndTimeEndEvent(x); break;
+                case ActivityConfirmedEvent x: OnActivityConfirmedEvent(x); break;
             }
         }
 
@@ -78,7 +86,7 @@ namespace Activities.Domain.Models.Entities
             TypeActivityBuild = @event.TypeActivityBuild;
             TimeActivityStart = @event.TimeActivityStart;
             TimeActivityEnd = @event.TimeActivityEnd;
-            IsAlive = true;
+            Status = TypeActivityStatus.Created;
         }
 
         private void OnWorkerActivityCreatedEvent(WorkerActivityCreatedEvent @event)
@@ -86,10 +94,25 @@ namespace Activities.Domain.Models.Entities
             _workers.Add(new WorkActivity(@event.WorkerId));
         }
 
+        private void OnActivityInativatedEvent(ActivityInativatedEvent @event)
+        {
+            Status = TypeActivityStatus.Deleted;
+        }
+
+        private void OnActivityUptatedTimeStartAndTimeEndEvent(ActivityUptatedTimeStartAndTimeEndEvent @event)
+        {
+            TimeActivityEnd = @event.TimeActivityEnd;
+            TimeActivityStart = @event.TimeActivityStart;
+        }
+
+        private void OnActivityConfirmedEvent(ActivityConfirmedEvent @event)
+        {
+            Status = TypeActivityStatus.Confirmmed;
+        }
+
 
         public void Inactivate()
         {
-            this.IsAlive = false;
             this.RaiseEvent(new ActivityInativatedEvent(this.AggregateId));
 
         }
@@ -97,13 +120,19 @@ namespace Activities.Domain.Models.Entities
         public void UpdateTimeStartAndTimeEnd(DateTime timeActivityStart, DateTime timeActivityEnd,
             IActivityValidatorService activityValidatorService, IDomainNotification domainNotification)
         {
-            TimeActivityEnd = timeActivityEnd;
-            TimeActivityStart = timeActivityStart;
-
             this.RaiseEvent(new ActivityUptatedTimeStartAndTimeEndEvent(AggregateId , TimeActivityStart,
                                                        TimeActivityEnd));
-
         }
 
+        public void ConfirmActivity(Guid restId, string workId, IDomainNotification domainNotification)
+        {
+            
+            this.RaiseEvent(new ActivityConfirmedEvent(this.AggregateId,
+                                                    workId,
+                                                    TypeActivityBuild,
+                                                    TimeActivityStart,
+                                                    TimeActivityEnd, restId));
+
+        }
     }
 }

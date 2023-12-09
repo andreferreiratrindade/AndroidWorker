@@ -33,8 +33,7 @@ namespace Activities.Application.Queries
                                 FROM  Activities activities
                                 inner join WorkersActivity workersActivity on activities.Id = workersActivity.ActivityId
 
-                                where  activities.IsAlive = 1
-                                and
+                                where  
                                 not(
                                         
                                         ( @DateReference < activities.TimeActivityStart and @dateNext7Days < activities.TimeActivityStart)

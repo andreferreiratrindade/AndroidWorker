@@ -12,16 +12,21 @@ namespace Activities.Domain.DomainEvents
     public class ActivityCreatedEvent : DomainEvent
     {
         public  Guid ActivityId {get;set;}
+        public List<string> Workers { get; set;}
         public  TypeActivityBuild TypeActivityBuild {get;set;}
         public  DateTime TimeActivityStart {get;set;}
         public  DateTime TimeActivityEnd{get;set;}
 
         public ActivityCreatedEvent(Guid activityId,
+                                    List<string> workers,
                                     TypeActivityBuild typeActivityBuild,
                                     DateTime timeActivityStart,
-                                    DateTime timeActivityEnd)
+                                    DateTime timeActivityEnd,
+                                    Guid correlationId)
         {
+            this.CorrelationId = correlationId;
             this.AggregateId = activityId;
+            this.Workers = workers;
             this.ActivityId = activityId;
             this.TypeActivityBuild = typeActivityBuild;
             this.TimeActivityStart = timeActivityStart;

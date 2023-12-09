@@ -12,7 +12,7 @@ namespace Rests.Infra.Data.Mappings
         {
             builder.ToTable("Rests");
 
-            builder.HasKey(c => c.Id);
+            builder.HasKey(c => c.AggregateId);
 
             builder.Property(c => c.TimeRestStart)
             .IsRequired()

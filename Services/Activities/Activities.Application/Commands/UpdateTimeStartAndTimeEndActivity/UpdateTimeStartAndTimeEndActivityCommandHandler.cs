@@ -7,6 +7,7 @@ using Activities.Domain.ValidatorServices;
 using Framework.Core.DomainObjects;
 using Framework.Core.Notifications;
 using Activities.Domain.Rules;
+using Framework.Core.Mediator;
 
 namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 {
@@ -16,7 +17,7 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
         private readonly IActivityRepository _activitytRepository;
         private readonly IActivityValidatorService _activityValidatorService;
 
-        public UpdateTimeStartAndTimeEndActivityCommandHandler(IActivityRepository activitytRepository, IActivityValidatorService activityValidatorService, IDomainNotification domainNotification):base(domainNotification)
+        public UpdateTimeStartAndTimeEndActivityCommandHandler(IActivityRepository activitytRepository, IActivityValidatorService activityValidatorService, IMediatorHandler mediatorHandler, IDomainNotification domainNotification) : base(domainNotification, mediatorHandler)
         {
             _activitytRepository = activitytRepository;
             _activityValidatorService = activityValidatorService;
@@ -38,7 +39,8 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 
             _activitytRepository.Update(activity);
 
-            await PersistData(_activitytRepository.UnitOfWork);
+            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork, new ActivityNotCreatedEvent(request.ActivityId));
+
 
             if (_domainNotification.HasNotifications) return new UpdateTimeStartAndTimeEndActivityCommandOutput();
 

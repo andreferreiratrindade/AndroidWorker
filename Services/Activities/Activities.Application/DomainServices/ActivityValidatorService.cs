@@ -29,8 +29,7 @@ namespace Activities.Application.DomainServices
                                FROM Activities activities 
                                 inner join WorkersActivity workersActivity on activities.Id = workersActivity.ActivityId
                                 where 
-                                    activities.IsAlive = 1
-                                    and activities.Id <> @ignoreActivityId
+                                     activities.Id <> @ignoreActivityId
                                     and 
                                     not(
                                         

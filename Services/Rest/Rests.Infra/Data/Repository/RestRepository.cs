@@ -43,11 +43,11 @@ namespace Rests.Infra.Data.Repository
 
         public void Delete(Guid restId)
         {
-            _context.Rests.Where(x => x.Id ==restId).ExecuteDelete();
+            _context.Rests.Where(x => x.AggregateId ==restId).ExecuteDelete();
         }
 
-        public Rest? GetById(Guid restId) => _context.Rests.AsNoTracking().FirstOrDefault(x => x.Id == restId && x.IsAlive);
-        public async Task<Rest?> GetByIdAsync(Guid restId) => await _context.Rests.AsNoTracking().FirstOrDefaultAsync(x => x.Id == restId && x.IsAlive );
+        public Rest? GetById(Guid restId) => _context.Rests.AsNoTracking().FirstOrDefault(x => x.AggregateId == restId && x.IsAlive);
+        public async Task<Rest?> GetByIdAsync(Guid restId) => await _context.Rests.AsNoTracking().FirstOrDefaultAsync(x => x.AggregateId == restId && x.IsAlive );
 
         public IList<Rest> GetByActivityId(Guid activityId)
         {

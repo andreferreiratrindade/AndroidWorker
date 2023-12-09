@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Rests.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class initials : Migration
+    public partial class tempCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace Rests.Infra.Migrations
                 name: "Rests",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AggregateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ActivityId = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: false),
                     WorkerId = table.Column<string>(type: "char(1)", nullable: false),
                     TimeRestStart = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -25,7 +25,7 @@ namespace Rests.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rests", x => x.Id);
+                    table.PrimaryKey("PK_Rests", x => x.AggregateId);
                 });
         }
 

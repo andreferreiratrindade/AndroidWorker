@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Activities.Infra.Migrations
 {
     [DbContext(typeof(ActivityContext))]
-    [Migration("20230809190116_initial2")]
-    partial class initial2
+    [Migration("20231130150657_tempCreate")]
+    partial class tempCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,12 +27,13 @@ namespace Activities.Infra.Migrations
 
             modelBuilder.Entity("Activities.Domain.Models.Entities.Activity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("AggregateId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
 
-                    b.Property<bool>("IsAlive")
-                        .HasColumnType("bit");
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<DateTime>("TimeActivityEnd")
                         .HasColumnType("datetime2");
@@ -40,13 +41,10 @@ namespace Activities.Infra.Migrations
                     b.Property<DateTime>("TimeActivityStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("TimeRestEnd")
-                        .HasColumnType("datetime2");
-
                     b.Property<byte>("TypeActivityBuild")
                         .HasColumnType("tinyint");
 
-                    b.HasKey("Id");
+                    b.HasKey("AggregateId");
 
                     b.ToTable("Activities", (string)null);
                 });
@@ -60,9 +58,6 @@ namespace Activities.Infra.Migrations
 
                             b1.Property<string>("WorkerId")
                                 .HasColumnType("char(1)");
-
-                            b1.Property<Guid>("Id")
-                                .HasColumnType("uniqueidentifier");
 
                             b1.HasKey("ActivityId", "WorkerId");
 

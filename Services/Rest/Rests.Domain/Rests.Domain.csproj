@@ -9,8 +9,5 @@
    <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Core\Framework.Core.csproj" />
 
     </ItemGroup>
-   <ItemGroup>
-     <Folder Include="NewFolder\" />
-   </ItemGroup>
 
 </Project>

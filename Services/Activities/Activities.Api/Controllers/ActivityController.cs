@@ -33,10 +33,7 @@ namespace Activities.Api.Controllers
         [HttpPost]
     [ProducesResponseType(
   typeof(AddActivityCommandOutput),
-  (int)HttpStatusCode.Created)]
-    [ProducesResponseType(
-  typeof(ValidationProblemDetails),
-  (int)HttpStatusCode.Conflict)]
+  (int)HttpStatusCode.Accepted)]
     [ProducesResponseType(
   typeof(ValidationProblemDetails),
   (int)HttpStatusCode.BadRequest)]
@@ -46,7 +43,7 @@ namespace Activities.Api.Controllers
     public async Task<IActionResult> AddActivityAsync([FromBody]AddActivityCommand command)
     {
       var commandHandlerOutput = await _mediatorHandler.SendCommand<AddActivityCommand, AddActivityCommandOutput>(command);
-      return CustomResponseStatusCodeCreated(commandHandlerOutput, $"activity/{commandHandlerOutput.ActivityId}");
+      return CustomResponseStatusCodeAccepted(commandHandlerOutput, $"activity/{commandHandlerOutput.ActivityId}");
     }
 
     /// <summary>
@@ -66,7 +63,7 @@ namespace Activities.Api.Controllers
     [ProducesResponseType(
         typeof(ValidationProblemDetails),
         (int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> AddActivityAsync( [FromBody]UpdateTimeStartAndTimeEndActivityCommand command)
+    public async Task<IActionResult> AddActivityAsync( [FromBody] UpdateTimeStartAndTimeEndActivityCommand command)
     {
       return CustomResponseStatusCodeOk(
           await _mediatorHandler.SendCommand<UpdateTimeStartAndTimeEndActivityCommand, UpdateTimeStartAndTimeEndActivityCommandOutput>(command));

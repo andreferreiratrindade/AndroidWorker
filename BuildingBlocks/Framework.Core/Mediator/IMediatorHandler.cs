@@ -10,6 +10,7 @@ namespace Framework.Core.Mediator
     public interface IMediatorHandler
     {
         Task PublishEvent(IDomainEvent @event);
+        Task PublishEvent(RollBackEvent @event);
         Task PublishEvent(List<IDomainEvent> events);
         Task<R> SendCommand<T,R>(T comando)
             where T : Command<R>
