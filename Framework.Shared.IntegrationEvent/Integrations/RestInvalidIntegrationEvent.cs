@@ -6,10 +6,10 @@ namespace Framework.Shared.IntegrationEvent.Integration
 
     [Queue("RestNotAdded", ExchangeName = "RestExchange")]
 
-    public class RestNotAddedIntegrationEvent : Framework.Core.Messages.Integration.IntegrationEvent
+    public class RestInvalidIntegrationEvent : Framework.Core.Messages.Integration.IntegrationEvent
     {
        public List<NotificationMessage> Notifications { get; }
-       public RestNotAddedIntegrationEvent(Guid correlationId, List<NotificationMessage> notifications)
+       public RestInvalidIntegrationEvent(Guid correlationId, List<NotificationMessage> notifications)
         {
             
             CorrelationId = correlationId;

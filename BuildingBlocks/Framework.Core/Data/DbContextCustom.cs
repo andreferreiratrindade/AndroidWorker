@@ -29,10 +29,6 @@ namespace Framework.Core.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
-            //    e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
-            //    property.SetColumnType("varchar(100)");
-
             modelBuilder.Ignore<DomainEvent>();
             modelBuilder.Ignore<AggregateRoot>();
 
@@ -73,7 +69,7 @@ namespace Framework.Core.Data
                     var events = GetEventsByContext();
                     CleanEventsByContext();
 
-                   // await _eventStored.SaveAsync(events, aggregate.Entity.AggregateId, "aggregateTemp");
+                    // await _eventStored.SaveAsync(events, aggregate.Entity.AggregateId, "aggregateTemp");
                     await _mediatorHandler.PublishEvent(events);
                     await base.SaveChangesAsync();
                 }
