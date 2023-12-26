@@ -69,7 +69,7 @@ namespace Framework.Core.Data
                     var events = GetEventsByContext();
                     CleanEventsByContext();
 
-                    // await _eventStored.SaveAsync(events, aggregate.Entity.AggregateId, "aggregateTemp");
+                    await _eventStored.SaveAsync(events, aggregate.Entity.AggregateId, "aggregateTemp");
                     await _mediatorHandler.PublishEvent(events);
                     await base.SaveChangesAsync();
                 }
@@ -78,13 +78,12 @@ namespace Framework.Core.Data
             return sucesso;
         }
 
-        private List<IDomainEvent> GetEventsByContext()
+        private IEnumerable<IDomainEvent> GetEventsByContext()
         {
             var domainEntities = ChangeTracker.Entries<AggregateRoot>().Where(x => x.Entity.GetUncommittedChanges().Any());
 
             var domainEvents = domainEntities
-                .SelectMany(x => x.Entity.GetUncommittedChanges())
-                .ToList();
+                .SelectMany(x => x.Entity.GetUncommittedChanges());
 
             return domainEvents;
         }

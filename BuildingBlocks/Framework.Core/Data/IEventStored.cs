@@ -11,6 +11,6 @@ namespace Framework.Core.Data
     public interface IEventStored
     {
         Task<T> Get<T>(Guid aggregateId, CancellationToken cancellationToken = default) where T : AggregateRoot;
-        Task SaveAsync(List<IDomainEvent> events, Guid aggregateId, string aggregateType);
+        Task SaveAsync(IEnumerable<IDomainEvent> events, Guid aggregateId, string aggregateType);
     }
 }

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+      <ItemGroup>
+      <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Core\Framework.Core.csproj" />
+      <ProjectReference Include="..\..\..\Framework.Shared.IntegrationEvent\Framework.Shared.IntegrationEvent.csproj" />
+      <ProjectReference Include="..\ActivityValidationResult.Domain\ActivityValidationResult.Domain.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Message.Bus\Framework.Message.Bus.csproj" />
+
+    </ItemGroup>
+      <ItemGroup>
+        <Folder Include="Services\" />
+      </ItemGroup>
+</Project>

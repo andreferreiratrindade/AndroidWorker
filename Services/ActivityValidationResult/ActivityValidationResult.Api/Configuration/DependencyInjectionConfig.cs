@@ -1,25 +1,20 @@
 using Framework.Core.Mediator;
-using Rests.Infra.Data.Repository;
-using Rests.Domain.Models.Repositories;
+using ActivityValidationResult.Infra.Data.Repository;
+using ActivityValidationResult.Domain.Models.Repositories;
 using MediatR;
 using Framework.WebApi.Core.Configuration;
-using Rests.Application.Commands.AddRest;
-using Framework.Core.Messages;
-using Rests.Application.Commands.UpdateTimeStartAndEndRest;
-using Framework.Core.Notifications;
-using Rests.Domain.ValidationServices;
-using Rests.Application.Services;
-using Rests.Domain.Models.Data.Queries;
-using Rests.Infra;
-using Framework.Core.Data;
+using ActivityValidationResult.Application.Commands.AddActivityValidationResult;
 using Framework.Core.MongoDb;
-using Autofac.Core;
-using Rests.Api.IntegrationService;
+using ActivityValidationResult.Api.IntegrationService;
 using MassTransit;
-using Rests.Application.Events;
-using Rests.Domain.DomainEvents;
+using ActivityValidationResult.Application.Events;
+using ActivityValidationResult.Domain.DomainEvents;
+using MongoDB.Driver;
+using ActivityValidationResult.Infra.Data.Mappings;
+using ActivityValidationResult.Application.Commands.AddRestAcceptedActivityValidationResult;
+using Framework.Shared.IntegrationEvent.Integration;
 
-namespace Rests.Api.Configuration
+namespace ActivityValidationResult.Api.Configuration
 {
     public static class DependencyInjectionConfig
     {
@@ -31,11 +26,7 @@ namespace Rests.Api.Configuration
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddScoped<IMediatorHandler, MediatorHandler>();
             ApiConfigurationWebApiCore.RegisterServices(builder.Services);
-            builder.Services.AddGraphQLServer()
-                .AddQueryType<Query>()
-                .RegisterDbContext<RestContext>()
-                .AddFiltering()
-                .AddSorting();
+   
 
             //.AddSubscriptionType<ActivityQuerySubscription>()
             //.AddInMemorySubscriptions();
@@ -45,7 +36,7 @@ namespace Rests.Api.Configuration
             builder.Services.RegisterQueries();
             builder.Services.RegisterIntegrationService();
             builder.Services.RegisterEvents();
-            builder.RegisterEventStored();
+            builder.RegisterMongoDB();
         }
         public static void AddMessageBusConfiguration(this IServiceCollection services,
              IConfiguration configuration)
@@ -59,6 +50,7 @@ namespace Rests.Api.Configuration
             services.AddMassTransit(config =>
             {
                 config.AddConsumer<ActivityCreatedEventHandler>();
+                config.AddConsumer<RestAddedEventHandler>();
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(messageQueueConnection.Host, x =>
@@ -73,25 +65,23 @@ namespace Rests.Api.Configuration
         }
         public static void RegisterIntegrationService(this IServiceCollection services)
         {
-            services.AddScoped<IRequestHandler<UpdateTimeStartAndEndRestCommand, Result>, UpdateTimeStartAndEndRestCommandHandler>();
-            services.AddScoped<IRequestHandler<AddRestIntegratedCommand, AddRestCommandOutput>, AddRestCommandHandler>();
+            services.AddScoped<IRequestHandler<AddActivityValidationResultCommand, AddActivityValidationResultCommandOutput>, AddActivityValidationResultCommandHandler>();
+            services.AddScoped<IRequestHandler<AddRestAcceptedActivityValidationResultCommand, AddRestAcceptedActivityValidationResultCommandOutput>, AddRestAcceptedActivityValidationResultCommandHandler>();
 
         }
 
         public static void RegisterRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IRestRepository, RestRepository>();
+            services.AddScoped<IActivityValidationResultRepository, ActivityValidationResultRepository>();
         }
 
         public static void RegisterCommands(this IServiceCollection services)
         {
-            services.AddScoped<IRequestHandler<UpdateTimeStartAndEndRestCommand, Result>, UpdateTimeStartAndEndRestCommandHandler>();
 
         }
 
         public static void RegisterRules(this IServiceCollection services)
         {
-            services.AddScoped<IRestValidatorService, RestValidatorService>();
 
         }
 
@@ -102,18 +92,27 @@ namespace Rests.Api.Configuration
 
         public static void RegisterEvents(this IServiceCollection services)
         {
-            services.AddScoped<INotificationHandler<RestAddedEvent>, RestAddedEventHandler>();
-            services.AddScoped<INotificationHandler<RestRejectedEvent>, RestRejectedEventHandler>();
-            
+            //services.AddScoped<INotificationHandler<ActivityValidationResultAddedEvent>, ActivityValidationResultAddedEventHandler>();
+            services.AddScoped<INotificationHandler<ActivityAcceptedEvent>, ActivityAcceptedEventHandler>();
+            services.AddScoped<INotificationHandler<ActivityRejectedEvent>, ActivityRejectedEventHandler>();
+
         }
 
 
-        public static void RegisterEventStored(this WebApplicationBuilder builder)
+        public static void RegisterMongoDB(this WebApplicationBuilder builder)
         {
             builder.Services.Configure<MongoDbConfig>(builder.Configuration.GetSection(nameof(MongoDbConfig)));
 
-            builder.Services.AddScoped<IEventStored, EventStored>();
-            builder.Services.AddScoped<IEventStoredRepository, EventStoredRepository>();
+            builder.Services.AddSingleton<IMongoClient>(_ => {
+                var connectionString =
+                    builder
+                        .Configuration
+                        .GetSection("MongoDbConfig:ConnectionString")?
+                        .Value;
+                return new MongoClient(connectionString);
+            });
+
+            ActivityValidationResultMapping.Configure();
         }
     }
 }

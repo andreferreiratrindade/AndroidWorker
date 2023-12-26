@@ -4,12 +4,12 @@ using Framework.Core.Notifications;
 namespace Framework.Shared.IntegrationEvent.Integration
 {
 
-    [Queue("RestNotAdded", ExchangeName = "RestExchange")]
+    [Queue("RestRejected", ExchangeName = "RestExchange")]
 
-    public class RestInvalidIntegrationEvent : Framework.Core.Messages.Integration.IntegrationEvent
+    public class RestRejectedIntegrationEvent : Framework.Core.Messages.Integration.IntegrationEvent
     {
        public List<NotificationMessage> Notifications { get; }
-       public RestInvalidIntegrationEvent(Guid correlationId, List<NotificationMessage> notifications)
+       public RestRejectedIntegrationEvent(Guid correlationId, List<NotificationMessage> notifications)
         {
             
             CorrelationId = correlationId;

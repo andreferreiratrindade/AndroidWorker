@@ -44,7 +44,7 @@ namespace Rests.Application.Commands.AddRest
             });
 
 
-            await PersistDataOrRollBackEvent(_restRepository.UnitOfWork, new RestNotAddedEvent(request.CorrelationId));
+            await PersistDataOrRollBackEvent(_restRepository.UnitOfWork, new RestRejectedEvent(request.CorrelationId));
 
             return new AddRestCommandOutput();
         }
