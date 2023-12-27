@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+   <ItemGroup>
+   <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Core\Framework.Core.csproj" />
+
+    </ItemGroup>
+   <ItemGroup>
+     <Folder Include="Rules\" />
+     <Folder Include="ValidationServices\" />
+   </ItemGroup>
+
+</Project>

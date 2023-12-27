@@ -6,12 +6,12 @@ using MassTransit;
 
 namespace Activities.Api.IntegrationServices
 {
-    public class RestAddedIntegrationHandle : IConsumer<RestAddedIntegrationEvent>
+    public class ActivityAcceptedIntegrationHandle : IConsumer<RestAddedIntegrationEvent>
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public RestAddedIntegrationHandle(IServiceProvider serviceProvider, IPublishEndpoint publishEndpoint)
+        public ActivityAcceptedIntegrationHandle(IServiceProvider serviceProvider, IPublishEndpoint publishEndpoint)
         {
             _serviceProvider = serviceProvider;
             _publishEndpoint = publishEndpoint;

@@ -20,7 +20,7 @@ namespace Framework.Core.Data
         }
 
 
-        public async Task SaveAsync(List<IDomainEvent> events, Guid aggregateId, string aggregateType)
+        public async Task SaveAsync(IEnumerable<IDomainEvent> events, Guid aggregateId, string aggregateType)
         {
             var version = 0;
 

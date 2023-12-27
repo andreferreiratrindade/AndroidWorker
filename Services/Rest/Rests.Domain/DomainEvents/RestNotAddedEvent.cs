@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Rests.Domain.DomainEvents
 {
-    public class RestNotAddedEvent : RollBackEvent
+    public class RestRejectedEvent : RollBackEvent
     {
 
-        public RestNotAddedEvent(Guid correlationId)
+        public RestRejectedEvent(Guid correlationId)
         {
             CorrelationId = correlationId;
         }

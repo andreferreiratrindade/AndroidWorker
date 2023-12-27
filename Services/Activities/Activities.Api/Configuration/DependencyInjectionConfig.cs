@@ -68,7 +68,7 @@ namespace Activities.Api.Configuration
                     // enable the bus outbox
                     o.UseBusOutbox();
                 });
-                config.AddConsumer<RestAddedIntegrationHandle>();
+                config.AddConsumer<ActivityAcceptedIntegrationHandle>();
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(messageQueueConnection.Host, x =>
