@@ -31,17 +31,14 @@ namespace Rests.Application.Commands.AddRest
         public async Task<AddRestCommandOutput> Handle(AddRestIntegratedCommand request, CancellationToken cancellationToken)
         {
 
-            request.Workers.ForEach(x =>
-            {
-                var rest = Rest.Create(request.ActivityId,
-                                       x,
+            var rest = Rest.Create(request.ActivityId,
+                                       request.WorkerId,
                                        request.TypeActivityBuild,
                                        request.TimeRestStart,
                                        request.CorrelationId);
 
-                _domainNotification.AddNotifications(CheckCreateRules(rest, request.TimeActivityStart));
-                _restRepository.Add(rest);
-            });
+            _domainNotification.AddNotifications(CheckCreateRules(rest, request.TimeActivityStart));
+            _restRepository.Add(rest);
 
 
             await PersistDataOrRollBackEvent(_restRepository.UnitOfWork, new RestRejectedEvent(request.CorrelationId));
