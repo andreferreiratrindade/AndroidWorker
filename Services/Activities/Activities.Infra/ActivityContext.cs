@@ -17,8 +17,8 @@ namespace Activities.Infra
     public class ActivityContext : DbContextCustom<ActivityContext>
     {
 
-        public ActivityContext(DbContextOptions<ActivityContext> options, IMediatorHandler mediatorHandler,IEventStored eventStored)
-           : base(options, mediatorHandler, eventStored)
+        public ActivityContext(DbContextOptions<ActivityContext> options, IEventStored eventStored)
+           : base(options,  eventStored)
         {
         }
 

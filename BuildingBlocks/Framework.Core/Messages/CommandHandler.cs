@@ -37,11 +37,31 @@ namespace Framework.Core.Messages
             }
         }
 
-        protected async Task PersistDataOrRollBackEvent(IUnitOfWork uow, RollBackEvent @event)
+        protected async Task PublishEventsOrRollBackEvent(IAggregateRoot aggregateRoot, RollBackEvent @event)
+        {
+            await PublishEvents(aggregateRoot);
+
+            await RollBackEvent(@event);
+
+        }
+
+        private async Task PublishEvents(IAggregateRoot aggregateRoot)
+        {
+            if (!_domainNotification.HasNotifications)
+            {
+
+                await _mediatorHandler.PublishEvent(aggregateRoot.GetUncommittedChanges());
+
+                aggregateRoot.MarkChangesAsCommitted();
+
+            }
+        }
+
+        protected async Task PersistDataOrRollBackEvent(IUnitOfWork uow, IAggregateRoot aggregateRoot, RollBackEvent @event)
         {
             await PersistData(uow);
 
-            await RollBackEvent(@event);
+            await PublishEventsOrRollBackEvent(aggregateRoot, @event);
         }
     }
 }

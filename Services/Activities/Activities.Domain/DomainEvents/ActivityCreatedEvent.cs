@@ -16,12 +16,14 @@ namespace Activities.Domain.DomainEvents
         public  TypeActivityBuild TypeActivityBuild {get;set;}
         public  DateTime TimeActivityStart {get;set;}
         public  DateTime TimeActivityEnd{get;set;}
+        public TypeActivityStatus Status { get; }
 
         public ActivityCreatedEvent(Guid activityId,
                                     List<string> workers,
                                     TypeActivityBuild typeActivityBuild,
                                     DateTime timeActivityStart,
                                     DateTime timeActivityEnd,
+                                    TypeActivityStatus status,
                                     Guid correlationId)
         {
             this.CorrelationId = correlationId;
@@ -31,6 +33,7 @@ namespace Activities.Domain.DomainEvents
             this.TypeActivityBuild = typeActivityBuild;
             this.TimeActivityStart = timeActivityStart;
             this.TimeActivityEnd = timeActivityEnd;
+            Status = status;
         }
     }
 }

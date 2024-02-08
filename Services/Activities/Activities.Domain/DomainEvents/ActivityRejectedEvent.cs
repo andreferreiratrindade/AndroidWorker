@@ -8,7 +8,7 @@ using Framework.Core.DomainObjects;
 
 namespace Activities.Domain.DomainEvents
 {
-    public class ActivityConfirmedEvent : DomainEvent
+    public class ActivityRejectedEvent : DomainEvent
     {
         public Guid ActivityId { get; private set; }
         public List<string> Workers { get; private set; }
@@ -17,7 +17,7 @@ namespace Activities.Domain.DomainEvents
         public DateTime TimeActivityEnd { get; private set; }
         public TypeActivityStatus Status { get; private set; }
 
-        public ActivityConfirmedEvent(Guid activityId,
+        public ActivityRejectedEvent(Guid activityId,
                                     List<string> workers,
                                     TypeActivityBuild typeActivityBuild,
                                     DateTime timeActivityStart,

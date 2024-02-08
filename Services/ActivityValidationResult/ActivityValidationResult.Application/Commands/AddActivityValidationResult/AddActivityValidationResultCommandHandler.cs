@@ -31,7 +31,7 @@ namespace ActivityValidationResult.Application.Commands.AddActivityValidationRes
             await _activityValidationResultRepository.Add(activity);
 
 
-           // await PersistDataOrRollBackEvent(_activityValidationResultRepository.UnitOfWork, new ActivityRejectedEvent(request.ActivityId,request.CorrelationId));
+            await PublishEventsOrRollBackEvent(activity, null);
 
             return new AddActivityValidationResultCommandOutput();
         }

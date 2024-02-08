@@ -25,22 +25,22 @@ namespace Activities.Api.Controllers
       _activityQuery = activityQuery;
     }
 
-        /// <summary>
-        /// Add an activity for worker
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
-        [HttpPost]
+    /// <summary>
+    /// Add an activity for worker
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost]
     [ProducesResponseType(
-  typeof(AddActivityCommandOutput),
-  (int)HttpStatusCode.Accepted)]
+typeof(AddActivityCommandOutput),
+(int)HttpStatusCode.Accepted)]
     [ProducesResponseType(
-  typeof(ValidationProblemDetails),
-  (int)HttpStatusCode.BadRequest)]
+typeof(ValidationProblemDetails),
+(int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(
-        typeof(ValidationProblemDetails),
-        (int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> AddActivityAsync([FromBody]AddActivityCommand command)
+    typeof(ValidationProblemDetails),
+    (int)HttpStatusCode.InternalServerError)]
+    public async Task<IActionResult> AddActivityAsync([FromBody] AddActivityCommand command)
     {
       var commandHandlerOutput = await _mediatorHandler.SendCommand<AddActivityCommand, AddActivityCommandOutput>(command);
       return CustomResponseStatusCodeAccepted(commandHandlerOutput, $"activity/{commandHandlerOutput.ActivityId}");
@@ -53,7 +53,7 @@ namespace Activities.Api.Controllers
     [HttpPatch]
     [ProducesResponseType(
       typeof(UpdateTimeStartAndTimeEndActivityCommandOutput),
-      (int)HttpStatusCode.OK)]
+      (int)HttpStatusCode.Accepted)]
     [ProducesResponseType(
       typeof(ValidationProblemDetails),
       (int)HttpStatusCode.BadRequest)]
@@ -63,10 +63,11 @@ namespace Activities.Api.Controllers
     [ProducesResponseType(
         typeof(ValidationProblemDetails),
         (int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> AddActivityAsync( [FromBody] UpdateTimeStartAndTimeEndActivityCommand command)
+    public async Task<IActionResult> UpdateActivityAsync([FromBody] UpdateTimeStartAndTimeEndActivityCommand command)
     {
-      return CustomResponseStatusCodeOk(
-          await _mediatorHandler.SendCommand<UpdateTimeStartAndTimeEndActivityCommand, UpdateTimeStartAndTimeEndActivityCommandOutput>(command));
+      var commandHandlerOutput = await _mediatorHandler.SendCommand<UpdateTimeStartAndTimeEndActivityCommand, UpdateTimeStartAndTimeEndActivityCommandOutput>(command);
+
+      return CustomResponseStatusCodeAccepted(commandHandlerOutput, $"activity/{commandHandlerOutput.ActivityId}");
     }
 
     /// <summary>

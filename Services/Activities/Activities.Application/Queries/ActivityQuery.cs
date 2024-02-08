@@ -13,24 +13,14 @@ namespace Activities.Application.Queries
     public class ActivityQuery : IActivityQuery
     {
         private readonly IActivityRepository _activityRepository;
-        private readonly IEventStored _eventStored;
-
-        public ActivityQuery(IActivityRepository activityRepository, IEventStored eventStored)
+        public ActivityQuery(IActivityRepository activityRepository)
         {
             _activityRepository = activityRepository;
-            _eventStored = eventStored;
         }
 
         public async Task<ActivityDto> GetActivityById(Guid activityId){
             var activity = await _activityRepository.GetByIdAsync(activityId) ??  throw new DomainException($"The Activity {activityId} not exists");
-            Activity activityRoot;
-            //try
-            //{
-            //    activityRoot = await _eventStored.Get<Activity>(activityId);
-            //}catch(Exception ex)
-            //{
-
-            //}
+            
             return new ActivityDto{
                 ActivityId = activity.AggregateId,
                 TimeActivityEnd = activity.TimeActivityEnd,

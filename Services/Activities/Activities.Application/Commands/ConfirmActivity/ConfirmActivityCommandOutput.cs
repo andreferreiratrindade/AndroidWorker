@@ -7,7 +7,7 @@ using Activities.Domain.Enums;
 
 namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 {
-    public class ConfirmActivityWorkerCommandOutput
+    public class ConfirmActivityCommandOutput
     {
         public Guid ActivityId {get;set;}
         public TypeActivityBuild TypeActivityBuild { get;set; }

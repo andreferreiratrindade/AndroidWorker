@@ -7,9 +7,9 @@ using Activities.Domain.Enums;
 
 namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 {
-    public class ConfirmActivityWorkerCommandValidation : AbstractValidator<ConfirmActivityWorkerCommand>
+    public class ConfirmActivityCommandValidation : AbstractValidator<ConfirmActivityCommand>
     {
-        public ConfirmActivityWorkerCommandValidation()
+        public ConfirmActivityCommandValidation()
         {
            
         }

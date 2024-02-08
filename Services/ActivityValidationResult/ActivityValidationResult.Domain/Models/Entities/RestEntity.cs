@@ -16,11 +16,10 @@ namespace ActivityValidationResult.Domain.Models.Entities
         public TypeStatus TypeStatus { get; set; }
         public List<string> DescriptionErrors { get; }
 
-        public RestEntity( Guid restId, string workerId, TypeStatus typeStatus, List<string> descriptionErrors)
+        public RestEntity( string workerId, TypeStatus typeStatus, List<string> descriptionErrors)
         {
             this.DescriptionErrors = descriptionErrors;
             this.WorkerId = workerId;
-            this.RestId = restId;
             this.TypeStatus = typeStatus;
         }
 

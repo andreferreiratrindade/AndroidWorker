@@ -15,7 +15,7 @@ namespace Rests.Application.Events
         }
         public async Task Handle(RestRejectedEvent @event, CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(new RestRejectedIntegrationEvent(@event.CorrelationId, @event.Notifications), cancellationToken);
+            await _publishEndpoint.Publish(new RestRejectedIntegrationEvent(@event.ActivityId, @event.WorkerId, @event.Notifications.Select(x=> x.Value).ToList()), cancellationToken);
         }
     }
 }

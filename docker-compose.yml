@@ -29,36 +29,38 @@ services:
       - '27017:27017'
     volumes:
       - dbdata6:/data/db
-volumes:
-  dbdata6:      
-  # restapi:
-  #   image: restapi
-  #   build:
-  #     context: .
-  #     dockerfile: Services/Rest/Rests.Api/Dockerfile
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ConnectionStringSql=Server=database;Database=RestDb;User ID=SA;Password=Change123!@#;TrustServerCertificate=True;
-  #     - MessageQueueConnection=host=rabbitmq;username=guest;password=guest
-  #   ports:
-  #     - 5212:80 #Swagger
-  #     - 5112:443 #API      
+   
+  rest:
+    image: rest
+    build:
+      context: .
+      dockerfile: Services/Rest/Rests.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStringSql=Server=database;Database=RestDb;User ID=SA;Password=Change123!@#;TrustServerCertificate=True;
+      - MessageQueueConnection__host=rabbitmq
+      - MessageQueueConnection__username=guest
+      - MessageQueueConnection__password=guest
+    ports:
+      - 5212:80 #Swagger
+      - 5112:443 #API      
 
-  # activityapi:
-  #   image: activityapi
-  #   build:
-  #     context: .
-  #     dockerfile: Services/Activities/Activities.Api/Dockerfile
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ConnectionStringSql=Server=database;Database=ActivityDb;User ID=SA;Password=Change123!@#;TrustServerCertificate=True;
-  #     - MessageQueueConnection=host=rabbitmq;username=guest;password=guest
-  #   ports:
-  #     - 4212:80 #Swagger
-  #     - 4112:443 #API
-
-  # workerapi:
-  #   image: workerapi
+  activity:
+    image: activity
+    build:
+      context: .
+      dockerfile: Services/Activities/Activities.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStringSql=Server=database;Database=ActivityDb;User ID=SA;Password=Change123!@#;TrustServerCertificate=True;
+      - MessageQueueConnection__host=rabbitmq
+      - MessageQueueConnection__username=guest
+      - MessageQueueConnection__password=guest
+    ports:
+      - 4212:80 #Swagger
+      - 4112:443 #API
+  # worker:
+  #   image: worker
   #   build:
   #     context: .
   #     dockerfile: Services/Worker/Worker.Api/Dockerfile
@@ -67,6 +69,25 @@ volumes:
   #   ports:
   #     - 6212:80 #Swagger
   #     - 6112:443 #API
+    
+  activity-validation-result:
+    image: activity-validation-result
+    build:
+      context: .
+      dockerfile: Services/ActivityValidationResult/ActivityValidationResult.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MongoDbConfig__ConnectionString=mongodb://mongodb:27017
+      - MessageQueueConnection__host=rabbitmq
+      - MessageQueueConnection__username=guest
+      - MessageQueueConnection__password=guest
+    ports:
+      - 6212:80 #Swagger
+      - 6112:443 #API
+    depends_on:
+      - mongodb
+      - rabbitmq
+
 
   # apigatewayqueryapi:
   #   image: apigatewayqueryapi
@@ -85,3 +106,6 @@ volumes:
   #     - workerapi
   #     - activityapi
   #     - restapi
+
+volumes:
+  dbdata6:   

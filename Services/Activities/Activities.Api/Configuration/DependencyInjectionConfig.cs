@@ -60,15 +60,16 @@ namespace Activities.Api.Configuration
             };
             services.AddMassTransit(config =>
             {
-                config.AddEntityFrameworkOutbox<ActivityContext>(o =>
-                {
-                    // configure which database lock provider to use (Postgres, SqlServer, or MySql)
-                    o.UseSqlServer();
+                // config.AddEntityFrameworkOutbox<ActivityContext>(o =>
+                // {
+                //     // configure which database lock provider to use (Postgres, SqlServer, or MySql)
+                //    o.UsePostgres();
 
-                    // enable the bus outbox
-                    o.UseBusOutbox();
-                });
-                config.AddConsumer<ActivityAcceptedIntegrationHandle>();
+                //     // enable the bus outbox
+                //     o.UseBusOutbox();
+                // });
+                config.AddConsumer<Activity_ActivityAcceptedIntegrationHandle>();
+                config.AddConsumer<Activity_ActivityRejectedIntegrationHandle>();
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(messageQueueConnection.Host, x =>
@@ -90,7 +91,7 @@ namespace Activities.Api.Configuration
         {
             services.AddScoped<IRequestHandler<AddActivityCommand, AddActivityCommandOutput>, AddActivityCommandHandler>();
             services.AddScoped<IRequestHandler<DeleteActivityCommand, Framework.Core.Messages.Result>, DeleteActivityCommandHandler>();
-            services.AddScoped<IRequestHandler<ConfirmActivityWorkerCommand, ConfirmActivityWorkerCommandOutput>, ConfirmActivityWorkerCommandHandler>();
+            services.AddScoped<IRequestHandler<ConfirmActivityCommand, ConfirmActivityCommandOutput>, ConfirmActivityCommandHandler>();
 
 
             services.AddScoped<IRequestHandler<GetWorkersActiveNext7DaysQuery, List<WorkActiveReportDto>>, GetWorkersActiveNext7DaysQueryHandler>();

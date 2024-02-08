@@ -92,7 +92,7 @@ namespace ActivityValidationResult.Domain.Models.Entities
 
         private void OnAddedRestRejectedEvent(AddedRestRejectedEvent x)
         {
-            Rests.Add(new RestEntity(x.RestId, x.WorkerId, x.Status, x.DescriptionErros));
+            Rests.Add(new RestEntity( x.WorkerId, x.Status, x.DescriptionErros));
         }
 
         private void OnActivityRejectedEvent(ActivityRejectedEvent x)
@@ -131,6 +131,12 @@ namespace ActivityValidationResult.Domain.Models.Entities
         private bool ExistsRestRejected()
         {
             return Rests.Any(x => x.TypeStatus == TypeStatus.Rejected);
+        }
+
+        public void AddRestRejected(string workerId, List<string> descriptionErrors)
+        {
+           var @event = new AddedRestRejectedEvent(workerId,TypeStatus.Rejected,this.ActivityId,descriptionErrors);
+           this.RaiseEvent(@event);
         }
     }
 }

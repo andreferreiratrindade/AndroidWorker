@@ -11,39 +11,36 @@ using Framework.Core.Mediator;
 
 namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 {
-    public class ConfirmActivityWorkerCommandHandler : CommandHandler,
-    IRequestHandler<ConfirmActivityWorkerCommand, ConfirmActivityWorkerCommandOutput>
+    public class ConfirmActivityCommandHandler : CommandHandler,
+    IRequestHandler<ConfirmActivityCommand, ConfirmActivityCommandOutput>
     {
         private readonly IActivityRepository _activitytRepository;
         private readonly IActivityValidatorService _activityValidatorService;
 
-        public ConfirmActivityWorkerCommandHandler(IActivityRepository activitytRepository, IActivityValidatorService activityValidatorService, IMediatorHandler mediatorHandler, IDomainNotification domainNotification) : base(domainNotification, mediatorHandler)
+        public ConfirmActivityCommandHandler(IActivityRepository activitytRepository, IActivityValidatorService activityValidatorService, IMediatorHandler mediatorHandler, IDomainNotification domainNotification) : base(domainNotification, mediatorHandler)
         {
             _activitytRepository = activitytRepository;
             _activityValidatorService = activityValidatorService;
         }
-        public async Task<ConfirmActivityWorkerCommandOutput> Handle(ConfirmActivityWorkerCommand request, CancellationToken cancellationToken)
+        public async Task<ConfirmActivityCommandOutput> Handle(ConfirmActivityCommand request, CancellationToken cancellationToken)
         {
             var activity = _activitytRepository.GetById(request.ActivityId);
 
             if(activity == null)
             {
                 _domainNotification.AddNotifications("Id Not Exists", $"The Activity {request.ActivityId} not exists");
-                return new ConfirmActivityWorkerCommandOutput();
+                return new ConfirmActivityCommandOutput();
             }
 
-            activity.ConfirmActivity(request.RestId, request.WorkId,  _domainNotification);
-            //_domainNotification.AddNotifications(CheckConfirmStatus(activity));
-
+            activity.ConfirmActivity();
 
             _activitytRepository.Update(activity);
 
-            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork, new ActivityNotCreatedEvent(request.ActivityId));
+            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork,activity, new ActivityNotCreatedEvent(request.ActivityId));
 
+            if (_domainNotification.HasNotifications) return new ConfirmActivityCommandOutput();
 
-            if (_domainNotification.HasNotifications) return new ConfirmActivityWorkerCommandOutput();
-
-            return new ConfirmActivityWorkerCommandOutput
+            return new ConfirmActivityCommandOutput
             {
                 ActivityId = activity.AggregateId,
                 TimeActivityStart = activity.TimeActivityStart,

@@ -32,13 +32,13 @@ namespace Activities.Application.Commands.RejectActivity
                 return new RejectActivityCommandOutput();
             }
 
-            activity.ConfirmActivity(request.RestId, request.WorkId,  _domainNotification);
+            activity.RejectActivity();
             //_domainNotification.AddNotifications(CheckConfirmStatus(activity));
 
 
             _activitytRepository.Update(activity);
 
-            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork, new ActivityNotCreatedEvent(request.ActivityId));
+            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork, activity,new ActivityNotCreatedEvent(request.ActivityId));
 
 
             if (_domainNotification.HasNotifications) return new RejectActivityCommandOutput();

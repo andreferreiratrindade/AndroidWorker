@@ -30,7 +30,7 @@ namespace Framework.Core.Mediator
             await _mediator.Publish(@event);
         }
 
-        public async Task PublishEvent(List<IDomainEvent> events)
+        public async Task PublishEvent(IEnumerable<IDomainEvent> events)
         {
 
             var tasks = events

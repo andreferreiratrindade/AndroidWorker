@@ -58,6 +58,7 @@ namespace Activities.Domain.Models.Entities
                                                     typeActivityBuild,
                                                     timeActivityStart,
                                                     timeActivityEnd,
+                                                    TypeActivityStatus.Created,
                                                     (correlationId ?? Guid.NewGuid()));
             this.RaiseEvent(@event);
 
@@ -86,7 +87,7 @@ namespace Activities.Domain.Models.Entities
             TypeActivityBuild = @event.TypeActivityBuild;
             TimeActivityStart = @event.TimeActivityStart;
             TimeActivityEnd = @event.TimeActivityEnd;
-            Status = TypeActivityStatus.Created;
+            Status = @event.Status;
         }
 
         private void OnWorkerActivityCreatedEvent(WorkerActivityCreatedEvent @event)
@@ -107,7 +108,7 @@ namespace Activities.Domain.Models.Entities
 
         private void OnActivityConfirmedEvent(ActivityConfirmedEvent @event)
         {
-            Status = TypeActivityStatus.Confirmmed;
+            Status = @event.Status;
         }
 
 
@@ -117,22 +118,36 @@ namespace Activities.Domain.Models.Entities
 
         }
 
-        public void UpdateTimeStartAndTimeEnd(DateTime timeActivityStart, DateTime timeActivityEnd,
-            IActivityValidatorService activityValidatorService, IDomainNotification domainNotification)
+        public void UpdateTimeStartAndTimeEnd(DateTime timeActivityStart, DateTime timeActivityEnd, IActivityValidatorService activityValidatorService)
         {
             this.RaiseEvent(new ActivityUptatedTimeStartAndTimeEndEvent(AggregateId , TimeActivityStart,
                                                        TimeActivityEnd));
         }
 
-        public void ConfirmActivity(Guid restId, string workId, IDomainNotification domainNotification)
+        public void ConfirmActivity()
         {
             
             this.RaiseEvent(new ActivityConfirmedEvent(this.AggregateId,
-                                                    workId,
+                                                    _workers.Select(x=> x.WorkerId).ToList(),
                                                     TypeActivityBuild,
                                                     TimeActivityStart,
-                                                    TimeActivityEnd, restId));
+                                                    TimeActivityEnd,
+                                                    TypeActivityStatus.Confirmmed));
 
         }
+
+        public void RejectActivity()
+        {
+
+            this.RaiseEvent(new ActivityRejectedEvent(this.AggregateId,
+                                                    _workers.Select(x => x.WorkerId).ToList(),
+                                                    TypeActivityBuild,
+                                                    TimeActivityStart,
+                                                    TimeActivityEnd,
+                                                    TypeActivityStatus.Rejected));
+
+        }
+
+        
     }
 }

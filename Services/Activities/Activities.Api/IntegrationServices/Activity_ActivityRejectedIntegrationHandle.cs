@@ -7,12 +7,12 @@ using MassTransit;
 
 namespace Activities.Api.IntegrationServices
 {
-    public class ActivityRejectedIntegrationHandle : IConsumer<ActivityRejectedIntegratedEvent>
+    public class Activity_ActivityRejectedIntegrationHandle : IConsumer<ActivityRejectedIntegratedEvent>
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public ActivityRejectedIntegrationHandle(IServiceProvider serviceProvider, IPublishEndpoint publishEndpoint)
+        public Activity_ActivityRejectedIntegrationHandle(IServiceProvider serviceProvider, IPublishEndpoint publishEndpoint)
         {
             _serviceProvider = serviceProvider;
             _publishEndpoint = publishEndpoint;

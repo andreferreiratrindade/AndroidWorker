@@ -5,5 +5,6 @@ namespace Activities.Domain.Enums
         Created = 1,
         Confirmmed = 2,
         Deleted = 3,
+        Rejected = 4,
     }
 }
