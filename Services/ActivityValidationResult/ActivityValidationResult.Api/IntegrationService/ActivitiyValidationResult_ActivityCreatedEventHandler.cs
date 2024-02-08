@@ -5,12 +5,12 @@ using MassTransit;
 
 namespace ActivityValidationResult.Api.IntegrationService
 {
-    public class ActivityCreatedEventHandler : IConsumer<ActivityCreatedIntegrationEvent>
+    public class ActivitiyValidationResult_ActivityCreatedEventHandler : IConsumer<ActivityCreatedIntegrationEvent>
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public ActivityCreatedEventHandler(IServiceProvider serviceProvider, IPublishEndpoint publishEndpoint)
+        public ActivitiyValidationResult_ActivityCreatedEventHandler(IServiceProvider serviceProvider, IPublishEndpoint publishEndpoint)
         {
             _serviceProvider = serviceProvider;
             _publishEndpoint = publishEndpoint;

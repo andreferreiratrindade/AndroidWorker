@@ -18,7 +18,7 @@ namespace Activities.Application.Events
         {
             await _publishEndpoint.Publish(
                        new ActivityCreatedIntegrationEvent(message.ActivityId,
-                                                      new List<string>() { message.WorkId },
+                                                     message.Workers ,
                                                       message.TypeActivityBuild.GetHashCode(),
                                                       message.TimeActivityStart,
                                                       message.TimeActivityEnd,

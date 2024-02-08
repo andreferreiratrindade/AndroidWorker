@@ -32,15 +32,14 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
                 return new UpdateTimeStartAndTimeEndActivityCommandOutput();
             }
 
-            activity.UpdateTimeStartAndTimeEnd(request.TimeActivityStart, request.TimeActivityEnd,_activityValidatorService, _domainNotification);
+            activity.UpdateTimeStartAndTimeEnd(request.TimeActivityStart, request.TimeActivityEnd,_activityValidatorService);
             
             _domainNotification.AddNotifications(CheckUpdateTimeStartAndTimeEnd(activity));
 
 
             _activitytRepository.Update(activity);
 
-            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork, new ActivityNotCreatedEvent(request.ActivityId));
-
+            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork,activity, new ActivityNotCreatedEvent(request.ActivityId));
 
             if (_domainNotification.HasNotifications) return new UpdateTimeStartAndTimeEndActivityCommandOutput();
 

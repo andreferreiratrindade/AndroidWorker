@@ -3,9 +3,9 @@ using ActivityValidationResult.Domain.Models.Entities;
 
 namespace ActivityValidationResult.Domain.Models.Repositories
 {
-    public interface IActivityValidationResultRepository : IRepository<ActivityValidationResultEntity>
+    public interface IActivityValidationResultRepository
     {
-        void Update(ActivityValidationResultEntity ActivityValidationResult);
+        Task Update(ActivityValidationResultEntity ActivityValidationResult);
         Task Add(ActivityValidationResultEntity ActivityValidationResult);
         void Delete(Guid ActivityValidationResultId);
 

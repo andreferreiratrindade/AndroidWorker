@@ -48,13 +48,9 @@ namespace Activities.Application.Commands.AddActivity
 
             _activitytRepository.Add(activity);
 
-            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork, new ActivityNotCreatedEvent(request.CorrelationId));
+            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork,activity, new ActivityNotCreatedEvent(request.CorrelationId));
 
-            if (_domainNotification.HasNotifications)
-            {
-                // TODO: Rollback in rest integrationEvent
-                return new AddActivityCommandOutput();
-            }
+            if (_domainNotification.HasNotifications)return new AddActivityCommandOutput();
 
             return new AddActivityCommandOutput
             {

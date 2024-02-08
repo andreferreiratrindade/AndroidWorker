@@ -14,6 +14,7 @@ namespace ActivityValidationResult.Infra.Data.Repository
     {
         private readonly IMongoCollection<ActivityValidationResultEntity> _collection;
 
+
         public ActivityValidationResultRepository(IOptions<MongoDbConfig> mongoOptions, IMongoClient mongoClient)
         {
             //var mongoClient = new MongoClient(config.Value.ConnectionString);
@@ -23,7 +24,11 @@ namespace ActivityValidationResult.Infra.Data.Repository
 
             var database = mongoClient.GetDatabase(mongoOptions.Value.Database);
             _collection = database.GetCollection<ActivityValidationResultEntity>(mongoOptions.Value.Collection);
+
+
         }
+
+
 
         public IUnitOfWork UnitOfWork => throw new NotImplementedException();
 
@@ -39,7 +44,7 @@ namespace ActivityValidationResult.Infra.Data.Repository
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+           
         }
 
         public async Task<List<ActivityValidationResultEntity>> FindByAggregateId(Guid aggregateId)
@@ -81,9 +86,10 @@ namespace ActivityValidationResult.Infra.Data.Repository
             await _collection.InsertOneAsync(model).ConfigureAwait(false);
         }
 
-        public void Update(ActivityValidationResultEntity ActivityValidationResult)
+        public async Task Update(ActivityValidationResultEntity activityValidationResult)
         {
-            throw new NotImplementedException();
+          var filter = Builders<ActivityValidationResultEntity>.Filter.Eq(s => s.ActivityId, activityValidationResult.ActivityId);
+           await _collection.ReplaceOneAsync(filter, activityValidationResult);
         }
     }
 }

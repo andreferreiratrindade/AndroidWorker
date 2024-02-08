@@ -11,8 +11,8 @@ namespace Rests.Domain.Models.Entities
 {
     public class Rest : AggregateRoot, IAggregateRoot
     {
-        public const int TIME_IN_HOUR_TAKE_REST_TYPE_COMPONENT = 2;
-        public const int TIME_IN_HOUR_TAKE_REST_TYPE_MACHINE = 4;
+        public const int TIME_IN_HOUR_TAKE_REST_TYPE_COMPONENT = 48;
+        public const int TIME_IN_HOUR_TAKE_REST_TYPE_MACHINE = 48;
 
         public Guid ActivityId { get; private set; }
         public string WorkerId { get; private set; }

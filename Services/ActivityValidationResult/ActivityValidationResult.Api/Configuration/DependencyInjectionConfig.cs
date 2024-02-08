@@ -13,6 +13,7 @@ using MongoDB.Driver;
 using ActivityValidationResult.Infra.Data.Mappings;
 using ActivityValidationResult.Application.Commands.AddRestAcceptedActivityValidationResult;
 using Framework.Shared.IntegrationEvent.Integration;
+using ActivityValidationResult.Application.Commands.AddRestRejectedActivityValidationResult;
 
 namespace ActivityValidationResult.Api.Configuration
 {
@@ -49,8 +50,9 @@ namespace ActivityValidationResult.Api.Configuration
             };
             services.AddMassTransit(config =>
             {
-                config.AddConsumer<ActivityCreatedEventHandler>();
-                config.AddConsumer<RestAddedEventHandler>();
+                config.AddConsumer<ActivitiyValidationResult_ActivityCreatedEventHandler>();
+                config.AddConsumer<ActivityValidationResult_RestAddedEventHandler>();
+                config.AddConsumer<ActivityValidationResult_RestRejectedEventHandler>();
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(messageQueueConnection.Host, x =>
@@ -67,6 +69,7 @@ namespace ActivityValidationResult.Api.Configuration
         {
             services.AddScoped<IRequestHandler<AddActivityValidationResultCommand, AddActivityValidationResultCommandOutput>, AddActivityValidationResultCommandHandler>();
             services.AddScoped<IRequestHandler<AddRestAcceptedActivityValidationResultCommand, AddRestAcceptedActivityValidationResultCommandOutput>, AddRestAcceptedActivityValidationResultCommandHandler>();
+            services.AddScoped<IRequestHandler<AddRestRejectedActivityValidationResultCommand, AddRestRejectedActivityValidationResultCommandOutput>, AddRestRejectedActivityValidationResultCommandHandler>();
 
         }
 

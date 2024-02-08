@@ -58,7 +58,7 @@ namespace Rests.Api.Configuration
             };
             services.AddMassTransit(config =>
             {
-                config.AddConsumer<ActivityCreatedEventHandler>();
+                config.AddConsumer<Rest_ActivityCreatedEventHandler>();
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(messageQueueConnection.Host, x =>

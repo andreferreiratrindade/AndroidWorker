@@ -1,0 +1,29 @@
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+COPY ["Services/ActivityValidationResult/ActivityValidationResult.Api/ActivityValidationResult.Api.csproj", "Services/ActivityValidationResult/ActivityValidationResult.Api/"]
+COPY ["BuildingBlocks/Framework.Core/Framework.Core.csproj", "BuildingBlocks/Framework.Core/"]
+COPY ["BuildingBlocks/Framework.WebApi.Core/Framework.WebApi.Core.csproj", "BuildingBlocks/Framework.WebApi.Core/"]
+COPY ["Framework.Shared.IntegrationEvent/Framework.Shared.IntegrationEvent.csproj", "Framework.Shared.IntegrationEvent/"]
+COPY ["BuildingBlocks/Framework.Message.Bus/Framework.Message.Bus.csproj", "BuildingBlocks/Framework.Message.Bus/"]
+COPY ["Services/ActivityValidationResult/ActivityValidationResult.Application/ActivityValidationResult.Application.csproj", "Services/ActivityValidationResult/ActivityValidationResult.Application/"]
+COPY ["Services/ActivityValidationResult/ActivityValidationResult.Domain/ActivityValidationResult.Domain.csproj", "Services/ActivityValidationResult/ActivityValidationResult.Domain/"]
+COPY ["Services/ActivityValidationResult/ActivityValidationResult.Infra/ActivityValidationResult.Infra.csproj", "Services/ActivityValidationResult/ActivityValidationResult.Infra/"]
+RUN dotnet restore "Services/ActivityValidationResult/ActivityValidationResult.Api/ActivityValidationResult.Api.csproj"
+COPY . .
+WORKDIR "/src/Services/ActivityValidationResult/ActivityValidationResult.Api"
+RUN dotnet build "ActivityValidationResult.Api.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "ActivityValidationResult.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "ActivityValidationResult.Api.dll"]

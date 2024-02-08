@@ -6,11 +6,12 @@ using ActivityValidationResult.Application.Commands.AddRestAcceptedActivityValid
 
 namespace ActivityValidationResult.Api.IntegrationService
 {
-    public class RestAddedEventHandler : IConsumer<RestAddedIntegrationEvent>
+    public class ActivityValidationResult_RestAddedEventHandler : 
+            IConsumer<RestAddedIntegrationEvent>
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public RestAddedEventHandler(IServiceProvider serviceProvider)
+        public ActivityValidationResult_RestAddedEventHandler(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
@@ -27,5 +28,6 @@ namespace ActivityValidationResult.Api.IntegrationService
                                         context.Message.TimeRestEnd,
                                         context.Message.CorrelationId));
         }
+
     }
 }

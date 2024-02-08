@@ -9,10 +9,14 @@ namespace Rests.Domain.DomainEvents
 {
     public class RestRejectedEvent : RollBackEvent
     {
+        public Guid ActivityId { get; }
+        public string WorkerId { get;  }
 
-        public RestRejectedEvent(Guid correlationId)
+        public RestRejectedEvent(Guid activityId, string workerId)
         {
-            CorrelationId = correlationId;
+            this.WorkerId = workerId;
+            this.ActivityId = activityId;
+            CorrelationId = activityId;
         }
     }
 }
