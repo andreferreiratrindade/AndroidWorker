@@ -33,5 +33,8 @@ namespace Framework.Core.Notifications
             }
         }
 
-    }    
+        public ValidationResult GetValidationResult(){
+            return new ValidationResult( _notifications.Select(x=> new ValidationFailure("",x.Value)).ToList());
+        }
+    }
 }

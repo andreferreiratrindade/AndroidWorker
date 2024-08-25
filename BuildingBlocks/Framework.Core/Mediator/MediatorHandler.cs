@@ -40,7 +40,7 @@ namespace Framework.Core.Mediator
 
 
 
-        public async Task<object> Send(object request, CancellationToken cancellationToken = default) 
+        public async Task<object> Send(object request, CancellationToken cancellationToken = default)
             => await _mediator.Send(request);
     }
 }

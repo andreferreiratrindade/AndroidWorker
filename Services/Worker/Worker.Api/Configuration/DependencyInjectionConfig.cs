@@ -1,6 +1,7 @@
 using Framework.Core.Mediator;
 using Framework.Core.Messages;
 using Framework.Core.Notifications;
+using Framework.Core.OpenTelemetry;
 using Framework.WebApi.Core.Configuration;
 using MediatR;
 using Worker.Domain.Models.Data.Queries;
@@ -11,22 +12,24 @@ namespace Worker.Api.Configuration
 {
     public static class DependencyInjectionConfig
     {
-        public static void RegisterServices(this IServiceCollection services)
+        public static void RegisterServices(this WebApplicationBuilder builder)
         {
 
-            services.AddScoped<IDomainNotification, DomainNotification>();
-            services.AddMediatR(typeof(Program).Assembly);
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddScoped<IDomainNotification, DomainNotification>();
+                   builder.Services.RegisterMediatorBehavior(typeof(Program).Assembly);
 
-            services.AddScoped<IMediatorHandler, MediatorHandler>();
-            ApiConfigurationWebApiCore.RegisterServices(services);
-            services.AddGraphQLServer()
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            ApiConfigurationWebApiCore.RegisterServices(builder.Services);
+            builder.Services.AddGraphQLServer()
                      .AddQueryType<Query>();
-            services.RegisterIntegrationService();
-            services.RegisterRepositories();
-            services.RegisterCommands();
-            services.RegisterRules();
-            services.RegisterQueries();
+            builder.Services.RegisterIntegrationService();
+            builder.Services.RegisterRepositories();
+            builder.Services.RegisterCommands();
+            builder.Services.RegisterRules();
+            builder.Services.RegisterQueries();
+            builder.Services.RegisterOpenTelemetry(builder.Configuration);
+
         }
         public static void RegisterIntegrationService(this IServiceCollection services)
         {

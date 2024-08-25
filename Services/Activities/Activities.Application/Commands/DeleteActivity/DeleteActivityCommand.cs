@@ -14,7 +14,9 @@ namespace Activities.Application.Commands.DeleteActivity
         public DeleteActivityCommand(Guid activityId)
         {
              ActivityId = activityId;
-            ValidCommand(new DeleteActivityCommandValidation().Validate(this));
+             this.AddValidCommand(new DeleteActivityCommandValidation().Validate(this));
+            this.AddCommandOutput(new Result());
+
         }
     }
 }

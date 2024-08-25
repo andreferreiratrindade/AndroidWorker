@@ -21,7 +21,7 @@ namespace Activities.Application.Commands.AddActivity
 {
     public class AddActivityCommandHandler : CommandHandler,
     IRequestHandler<AddActivityCommand, AddActivityCommandOutput>
-        
+
     {
         private readonly IActivityRepository _activitytRepository;
         private readonly IActivityValidatorService _activityValidatorService;
@@ -49,8 +49,6 @@ namespace Activities.Application.Commands.AddActivity
             _activitytRepository.Add(activity);
 
             await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork,activity, new ActivityNotCreatedEvent(request.CorrelationId));
-
-            if (_domainNotification.HasNotifications)return new AddActivityCommandOutput();
 
             return new AddActivityCommandOutput
             {

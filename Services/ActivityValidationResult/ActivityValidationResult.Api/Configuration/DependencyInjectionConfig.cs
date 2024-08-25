@@ -14,6 +14,7 @@ using ActivityValidationResult.Infra.Data.Mappings;
 using ActivityValidationResult.Application.Commands.AddRestAcceptedActivityValidationResult;
 using Framework.Shared.IntegrationEvent.Integration;
 using ActivityValidationResult.Application.Commands.AddRestRejectedActivityValidationResult;
+using Framework.Core.OpenTelemetry;
 
 namespace ActivityValidationResult.Api.Configuration
 {
@@ -23,11 +24,12 @@ namespace ActivityValidationResult.Api.Configuration
         {
             builder.Services.AddMessageBusConfiguration(builder.Configuration);
 
-            builder.Services.AddMediatR(typeof(Program).Assembly);
+            builder.Services.RegisterMediatorBehavior(typeof(Program).Assembly);
+
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            builder.Services.AddScoped<IMediatorHandler, MediatorHandler>();
+
             ApiConfigurationWebApiCore.RegisterServices(builder.Services);
-   
+
 
             //.AddSubscriptionType<ActivityQuerySubscription>()
             //.AddInMemorySubscriptions();
@@ -38,6 +40,8 @@ namespace ActivityValidationResult.Api.Configuration
             builder.Services.RegisterIntegrationService();
             builder.Services.RegisterEvents();
             builder.RegisterMongoDB();
+            builder.Services.RegisterOpenTelemetry(builder.Configuration);
+
         }
         public static void AddMessageBusConfiguration(this IServiceCollection services,
              IConfiguration configuration)

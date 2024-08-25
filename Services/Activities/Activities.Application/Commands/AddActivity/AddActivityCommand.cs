@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using Framework.Core.Messages;
 using Activities.Domain.Enums;
 using MassTransit;
+using System.Text.Json.Serialization;
+using Microsoft.Extensions.Options;
+using Framework.Core.Notifications;
 
 namespace Activities.Application.Commands.AddActivity
 {
@@ -25,17 +28,20 @@ namespace Activities.Application.Commands.AddActivity
         [Required]
         public List<string> Workers { get; set; }
 
-        public Guid CorrelationId { get; }
+        [JsonIgnore]
+        public Guid CorrelationId { get; set; }
 
-        public AddActivityCommand(TypeActivityBuild typeActivityBuild, DateTime timeActivityStart, DateTime timeActivityEnd, List<string> workers, Guid correlationId)
+        public AddActivityCommand(TypeActivityBuild typeActivityBuild,
+        DateTime timeActivityStart, DateTime timeActivityEnd,
+        List<string> workers)
         {
             this.TypeActivityBuild = typeActivityBuild;
             this.TimeActivityStart = timeActivityStart;
             this.TimeActivityEnd = timeActivityEnd;
             this.Workers = workers.Select(x => x.ToUpper()).ToList();
-            CorrelationId = correlationId;
-
-            ValidCommand(new AddActivityCommandValidation().Validate(this));
+            this.CorrelationId = Guid.NewGuid();
+            this.AddValidCommand(new AddActivityCommandValidation().Validate(this));
+            this.AddCommandOutput(new AddActivityCommandOutput());
         }
     }
 }

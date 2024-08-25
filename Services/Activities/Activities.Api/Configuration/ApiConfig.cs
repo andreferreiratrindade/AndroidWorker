@@ -8,8 +8,7 @@ namespace Activities.Api.Configuration
         public static WebApplicationBuilder AddApiConfiguration(this WebApplicationBuilder builder)
         {
             builder.Services.AddDbContext<ActivityContext>(options =>
-                options.UseSqlServer(builder.Configuration["ConnectionStringSql"], 
-                sql));
+                options.UseSqlServer(builder.Configuration["ConnectionStringSql"]));
             builder.Services.AddDbContext<ActivityContext>();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

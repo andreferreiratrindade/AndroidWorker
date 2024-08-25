@@ -18,6 +18,7 @@ using Rests.Api.IntegrationService;
 using MassTransit;
 using Rests.Application.Events;
 using Rests.Domain.DomainEvents;
+using Framework.Core.OpenTelemetry;
 
 namespace Rests.Api.Configuration
 {
@@ -27,9 +28,9 @@ namespace Rests.Api.Configuration
         {
             builder.Services.AddMessageBusConfiguration(builder.Configuration);
 
-            builder.Services.AddMediatR(typeof(Program).Assembly);
+                       builder.Services.RegisterMediatorBehavior(typeof(Program).Assembly);
+
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            builder.Services.AddScoped<IMediatorHandler, MediatorHandler>();
             ApiConfigurationWebApiCore.RegisterServices(builder.Services);
             builder.Services.AddGraphQLServer()
                 .AddQueryType<Query>()
@@ -46,6 +47,8 @@ namespace Rests.Api.Configuration
             builder.Services.RegisterIntegrationService();
             builder.Services.RegisterEvents();
             builder.RegisterEventStored();
+            builder.Services.RegisterOpenTelemetry(builder.Configuration);
+
         }
         public static void AddMessageBusConfiguration(this IServiceCollection services,
              IConfiguration configuration)
@@ -104,7 +107,7 @@ namespace Rests.Api.Configuration
         {
             services.AddScoped<INotificationHandler<RestAddedEvent>, RestAddedEventHandler>();
             services.AddScoped<INotificationHandler<RestRejectedEvent>, RestRejectedEventHandler>();
-            
+
         }
 
 

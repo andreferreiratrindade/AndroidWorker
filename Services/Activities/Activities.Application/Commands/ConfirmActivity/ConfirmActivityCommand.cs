@@ -10,15 +10,15 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 
         [Required]
         public Guid ActivityId {get;set;}
-        
+
 
 
         public ConfirmActivityCommand(Guid activityId)
         {
             this.ActivityId = activityId;
 
-            ValidCommand(new ConfirmActivityCommandValidation().Validate(this));
-
+            this.AddValidCommand(new ConfirmActivityCommandValidation().Validate(this));
+            this.AddCommandOutput(new ConfirmActivityCommandOutput());
         }
     }
 }

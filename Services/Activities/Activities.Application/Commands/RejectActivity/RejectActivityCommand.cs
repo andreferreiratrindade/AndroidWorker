@@ -10,10 +10,10 @@ namespace Activities.Application.Commands.RejectActivity
 
         [Required]
         public Guid ActivityId {get;set;}
-        
+
         [Required]
         public Guid RestId { get; set; }
-        
+
         [Required]
         public string WorkId { get; set; }
 
@@ -22,7 +22,8 @@ namespace Activities.Application.Commands.RejectActivity
         {
             this.ActivityId = activityId;
 
-            ValidCommand(new RejectActivityCommandValidation().Validate(this));
+            this.AddValidCommand(new RejectActivityCommandValidation().Validate(this));
+            this.AddCommandOutput(new RejectActivityCommandOutput());
 
         }
     }

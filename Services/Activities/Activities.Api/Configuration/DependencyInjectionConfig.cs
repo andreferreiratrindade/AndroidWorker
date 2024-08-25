@@ -19,7 +19,7 @@ using Framework.Core.Data;
 using Framework.Core.MongoDb;
 using MassTransit;
 using Activities.Api.IntegrationServices;
-using MassTransit.Configuration;
+using Framework.Core.OpenTelemetry;
 
 namespace Activities.Api.Configuration
 {
@@ -28,10 +28,14 @@ namespace Activities.Api.Configuration
         public static void RegisterServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddMessageBusConfiguration(builder.Configuration);
+            builder.Services.RegisterMediatorBehavior(typeof(Program).Assembly);
 
-            builder.Services.AddMediatR(typeof(Program).Assembly);
+
+      //  https://www.linkedin.com/pulse/advanced-features-mediatr-package-pipeline-behaviors/
+        var tt  = typeof(Program).Assembly;
+
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            builder.Services.AddScoped<IMediatorHandler, MediatorHandler>();
+
             ApiConfigurationWebApiCore.RegisterServices(builder.Services);
             builder.Services.AddGraphQLServer()
                 .AddQueryType<Query>()
@@ -48,7 +52,9 @@ namespace Activities.Api.Configuration
             builder.Services.RegisterIntegrationService();
             builder.Services.RegisterEvents();
             builder.RegisterEventStored();
+            builder.Services.RegisterOpenTelemetry(builder.Configuration);
         }
+
         public static void AddMessageBusConfiguration(this IServiceCollection services,
             IConfiguration configuration)
         {

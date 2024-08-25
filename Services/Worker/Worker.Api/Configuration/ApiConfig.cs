@@ -19,7 +19,7 @@ namespace Worker.Api.Configuration
                            .AllowAnyHeader());
             });
 
-            builder.Services.RegisterServices();
+            builder.RegisterServices();
             return builder;
 
         }

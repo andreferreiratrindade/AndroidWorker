@@ -9,5 +9,7 @@ namespace Framework.Core.Notifications
         void AddNotifications(string key, string message);
         void AddNotifications(IEnumerable<NotificationMessage> notifications);
         void AddNotifications(ValidationResult validationResult);
+
+        ValidationResult GetValidationResult();
     }
 }
