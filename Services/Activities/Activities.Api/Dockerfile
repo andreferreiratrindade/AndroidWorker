@@ -6,7 +6,7 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-# ARG BUILD_CONFIGURATION=Release
+ARG BUILD_CONFIGURATION=Release
 
 WORKDIR /src
 COPY ["Services/Activities/Activities.Api/Activities.Api.csproj", "Services/Activities/Activities.Api/"]
@@ -20,10 +20,10 @@ COPY ["Services/Activities/Activities.Infra/Activities.Infra.csproj", "Services/
 RUN dotnet restore "Services/Activities/Activities.Api/Activities.Api.csproj"
 COPY . .
 WORKDIR "/src/Services/Activities/Activities.Api"
-RUN dotnet build "Activities.Api.csproj" -c Release -o /app/build
+RUN dotnet build "Activities.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Activities.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Activities.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
