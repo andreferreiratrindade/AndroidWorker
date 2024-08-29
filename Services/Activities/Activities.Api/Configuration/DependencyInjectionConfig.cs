@@ -52,7 +52,7 @@ namespace Activities.Api.Configuration
             builder.Services.RegisterIntegrationService();
             builder.Services.RegisterEvents();
             builder.RegisterEventStored();
-            builder.Services.RegisterOpenTelemetry(builder.Configuration);
+            builder.RegisterOpenTelemetry();
         }
 
         public static void AddMessageBusConfiguration(this IServiceCollection services,

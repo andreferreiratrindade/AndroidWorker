@@ -21,8 +21,10 @@ namespace ActivityValidationResult.Application.Commands.AddRestRejectedActivityV
         {
             this.DescriptionErrors = descriptionErrors;
             ActivityId = activityId;
-            
+
             WorkerId = workerId;
+              this.AddValidCommand(new FluentValidation.Results.ValidationResult());
+            this.AddCommandOutput(new AddRestRejectedActivityValidationResultCommandOutput());
         }
     }
 }

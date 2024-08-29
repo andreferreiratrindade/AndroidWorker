@@ -40,7 +40,7 @@ namespace ActivityValidationResult.Api.Configuration
             builder.Services.RegisterIntegrationService();
             builder.Services.RegisterEvents();
             builder.RegisterMongoDB();
-            builder.Services.RegisterOpenTelemetry(builder.Configuration);
+            builder.RegisterOpenTelemetry();
 
         }
         public static void AddMessageBusConfiguration(this IServiceCollection services,

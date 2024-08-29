@@ -30,6 +30,8 @@ namespace ActivityValidationResult.Application.Commands.AddRestAcceptedActivityV
             TimeRestStart = timeRestStart;
             TimeRestEnd = timeRestEnd;
             CorrelationById = correlationById;
+                          this.AddValidCommand(new FluentValidation.Results.ValidationResult());
+            this.AddCommandOutput(new AddRestAcceptedActivityValidationResultCommandOutput());
         }
     }
 }

@@ -30,35 +30,35 @@ services:
     volumes:
       - dbdata6:/data/db
 
-  rest:
-    image: rest
-    build:
-      context: .
-      dockerfile: Services/Rest/Rests.Api/Dockerfile
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStringSql=Server=database;Database=RestDb;User ID=SA;Password=Change123!@#;TrustServerCertificate=True;
-      - MessageQueueConnection__host=rabbitmq
-      - MessageQueueConnection__username=guest
-      - MessageQueueConnection__password=guest
-    ports:
-      - 5212:80 #Swagger
-      - 5112:443 #API
-
-  # activity:
-  #   image: activity
+  # rest:
+  #   image: rest
   #   build:
   #     context: .
-  #     dockerfile: Services/Activities/Activities.Api/Dockerfile
+  #     dockerfile: Services/Rest/Rests.Api/Dockerfile
   #   environment:
   #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ConnectionStringSql=Server=database;Database=ActivityDb;User ID=SA;Password=Change123!@#;TrustServerCertificate=True;
+  #     - ConnectionStringSql=Server=database;Database=RestDb;User ID=SA;Password=Change123!@#;TrustServerCertificate=True;
   #     - MessageQueueConnection__host=rabbitmq
   #     - MessageQueueConnection__username=guest
   #     - MessageQueueConnection__password=guest
   #   ports:
-  #     - 4212:80 #Swagger
-  #     - 4112:443 #API
+  #     - 5212:80 #Swagger
+  #     - 5112:443 #API
+
+  activity:
+    image: activity
+    build:
+      context: .
+      dockerfile: Services/Activities/Activities.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStringSql=Server=database;Database=ActivityDb;User ID=SA;Password=Change123!@#;TrustServerCertificate=True;
+      - MessageQueueConnection__host=rabbitmq
+      - MessageQueueConnection__username=guest
+      - MessageQueueConnection__password=guest
+    ports:
+      - 4212:80 #Swagger
+      - 4112:443 #API
 
   # worker:
   #   image: worker

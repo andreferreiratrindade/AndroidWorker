@@ -19,12 +19,13 @@ namespace Rests.Application.Commands.UpdateTimeStartAndEndRest
         public DateTime TimeActivityEnd { get; set; }
 
         public UpdateTimeStartAndEndRestCommand(Guid activityId,   DateTime timeActivityStart, DateTime timeActivityEnd)
-        {   
+        {
             this.ActivityId = activityId;
             this.TimeActivityStart = timeActivityStart;
             this.TimeActivityEnd = timeActivityEnd;
 
-            // ValidCommand(new AddActivityCommandValidation().Validate(this));
+            this.AddValidCommand(new FluentValidation.Results.ValidationResult());
+            this.AddCommandOutput(new Result());
         }
     }
 }

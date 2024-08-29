@@ -28,7 +28,7 @@ namespace Worker.Api.Configuration
             builder.Services.RegisterCommands();
             builder.Services.RegisterRules();
             builder.Services.RegisterQueries();
-            builder.Services.RegisterOpenTelemetry(builder.Configuration);
+            builder.RegisterOpenTelemetry();
 
         }
         public static void RegisterIntegrationService(this IServiceCollection services)

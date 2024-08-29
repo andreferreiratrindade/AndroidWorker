@@ -22,15 +22,15 @@ namespace Rests.Application.Commands.AddRest
                                         DateTime timeRestStart,
                                         string workerId,
                                         Guid correlationId)
-        {   
+        {
             this.ActivityId = activityId;
             this.TypeActivityBuild = typeActivityBuild;
             this.TimeRestStart = timeRestStart;
             this.TimeActivityStart = timeActivityStart;
             this.WorkerId = workerId;
             this.CorrelationId = correlationId;
-
-            // ValidCommand(new AddActivityCommandValidation().Validate(this));
+            this.AddValidCommand(new FluentValidation.Results.ValidationResult());
+            this.AddCommandOutput(new AddRestCommandOutput());
         }
     }
 }

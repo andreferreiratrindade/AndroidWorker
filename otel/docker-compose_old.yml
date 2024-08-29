@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+ # Jaeger
+ jaeger:
+   container_name: jaeger-tracing
+   image: jaegertracing/all-in-one:latest
+   ports:
+     - "16686:16686"
+ # Collector
+ collector:
+   container_name: otel-collector
+   image: otel/opentelemetry-collector
+   volumes:
+     - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+   command: [ "--config=/etc/otel-collector-config.yaml" ]
+   ports:
+     - "4317:4317"   # OTLP gRPC receiver - Jaeger
+     - "4318:4318"   # OTLP HTTP receiver - Jaeger
+   depends_on:
+     - jaeger
+
+ postgres:
+    container_name: postgresql
+    environment:
+        - POSTGRES_PASSWORD=suasenha
+    ports:
+        - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    image: postgres
+
+ loki:
+    container_name: loki-logs
+    image: grafana/loki:3.0.0
+    volumes:
+      - ./loki-config.yaml:/conf/loki-config.yaml
+    command: [ "--config.file=/conf/loki-config.yaml" ]
+    ports:
+      - 3100:3100
+      
+volumes:
+    C:
+        external: true
+        name: C
