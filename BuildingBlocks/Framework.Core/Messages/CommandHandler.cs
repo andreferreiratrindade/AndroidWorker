@@ -1,12 +1,7 @@
-﻿using System.Diagnostics.Tracing;
-using System.Threading.Tasks;
-using FluentValidation.Results;
-using Framework.Core.Data;
+﻿using Framework.Core.Data;
 using Framework.Core.DomainObjects;
 using Framework.Core.Mediator;
 using Framework.Core.Notifications;
-using MediatR;
-using SharpCompress.Common;
 
 namespace Framework.Core.Messages
 {
@@ -41,7 +36,7 @@ namespace Framework.Core.Messages
         {
             await PublishEvents(aggregateRoot);
 
-            await RollBackEvent(@event);
+           // await RollBackEvent(@event);
 
         }
 
@@ -61,7 +56,9 @@ namespace Framework.Core.Messages
         {
             await PersistData(uow);
 
-            await PublishEventsOrRollBackEvent(aggregateRoot, @event);
+            await PublishEvents(aggregateRoot);
+
         }
+
     }
 }

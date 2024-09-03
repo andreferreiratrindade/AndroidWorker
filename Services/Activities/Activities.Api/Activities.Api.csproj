@@ -38,12 +38,6 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Message.Bus\Framework.Message.Bus.csproj" />
 
   </ItemGroup>
-  	<ItemGroup>
-	  <Content Update="log4net.config">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
-
   <PropertyGroup>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		  <NoWarn>$(NoWarn);1591</NoWarn>

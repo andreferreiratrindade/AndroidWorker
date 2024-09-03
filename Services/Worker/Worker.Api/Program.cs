@@ -1,4 +1,5 @@
 
+using Serilog;
 using Worker.Api.Configuration;
 public static class Program
 {
@@ -22,13 +23,13 @@ public static class Program
     private static void ConfigureServices()
     {
         _builder.AddApiConfiguration();
-        _builder.Logging.AddLog4Net("log4net.config");
         _builder.AddSwaggerConfiguration();
     }
 
     private static void ConfigureRequestsPipeline()
     {
         _app.UseApiConfiguration();
+       // _app.UseSerilogRequestLogging();
 
         //  _app.UseProblemDetails();
 

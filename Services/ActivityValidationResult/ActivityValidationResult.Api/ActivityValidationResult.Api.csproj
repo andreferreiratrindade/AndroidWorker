@@ -32,13 +32,7 @@
     <ProjectReference Include="..\ActivityValidationResult.Infra\ActivityValidationResult.Infra.csproj" />
     <ProjectReference Include="..\ActivityValidationResult.Domain\ActivityValidationResult.Domain.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Message.Bus\Framework.Message.Bus.csproj" />
-
   </ItemGroup>
-  	<ItemGroup>
-	  <Content Update="log4net.config">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
 
   <PropertyGroup>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>

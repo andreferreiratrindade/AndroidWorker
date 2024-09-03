@@ -3,9 +3,9 @@ using Worker.Domain.Models.Entities;
 
 namespace Worker.Domain.Models.Repositories
 {
-    public interface IWorkerRepository 
+    public interface IWorkerRepository
     {
-
-        IQueryable<Worker.Domain.Models.Entities.Worker> GetQueryable();
+        IQueryable<WorkerEntity> GetQueryable();
+        Task Add(WorkerEntity entity);
     }
 }

@@ -16,7 +16,10 @@ namespace Activities.Api.Configuration
                 var _db = scope.ServiceProvider.GetRequiredService<ActivityContext>();
 
                 _db.Database.Migrate();
+
             }
+
+            
         }
     }
 }

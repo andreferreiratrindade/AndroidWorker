@@ -9,6 +9,7 @@
     <ItemGroup>
 		<PackageReference Include="MassTransit" Version="8.2.4" />
 		<PackageReference Include="MassTransit.EntityFrameworkCore" Version="8.2.4" />
+            <PackageReference Include="MassTransit.MongoDb" Version="8.2.4" />
 		<PackageReference Include="MongoDB.Driver" Version="2.28.0" />
     <PackageReference Include="FluentValidation" Version="11.9.2" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2" />
@@ -16,6 +17,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
 		<PackageReference Include="dapper" Version="2.1.44" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.9.0" />
 	<PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.9.0" />
         		<PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0" />
         		<PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta.12" />
@@ -29,6 +31,7 @@
     <PackageReference Include="Npgsql.OpenTelemetry" Version="8.0.3" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
     <PackageReference Include="Serilog.Sinks.OpenTelemetry" Version="4.0.0" />
+    <PackageReference Include="Serilog.Sinks.Grafana.Loki" Version="8.3.0" />
   </ItemGroup>
 
 

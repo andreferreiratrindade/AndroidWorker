@@ -32,13 +32,7 @@
     <ProjectReference Include="..\Rests.Infra\Rests.Infra.csproj" />
     <ProjectReference Include="..\Rests.Domain\Rests.Domain.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Message.Bus\Framework.Message.Bus.csproj" />
-
   </ItemGroup>
-  	<ItemGroup>
-	  <Content Update="log4net.config">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
 
   <PropertyGroup>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>

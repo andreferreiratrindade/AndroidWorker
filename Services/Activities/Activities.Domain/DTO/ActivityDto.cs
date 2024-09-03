@@ -14,5 +14,6 @@ namespace Activities.Domain.DTO
         public DateTime TimeRestEnd{get;  set;}
         public List<string> WorkerId {get;set;}
         public TypeActivityBuild TypeActivityBuild { get; set; }
+        public TypeActivityStatus TypeActivityStatus {get;set;}
     }
 }

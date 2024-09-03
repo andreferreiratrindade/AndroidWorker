@@ -1,26 +1,37 @@
 using System.Data.Common;
-using Worker.Domain.Models.Entities;
 using Framework.Core.Data;
-using Microsoft.EntityFrameworkCore;
+
+using Framework.Core.MongoDb;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+using Worker.Domain.Models.Entities;
 using Worker.Domain.Models.Repositories;
 
 namespace Worker.Infra.Data.Repository
 {
     public class WorkerRepository : IWorkerRepository
     {
-        private readonly List<Worker.Domain.Models.Entities.Worker> _worker = new List<Worker.Domain.Models.Entities.Worker>(){
-                new Worker.Domain.Models.Entities.Worker("A"),
-                new Worker.Domain.Models.Entities.Worker("B")};
+        private readonly IMongoCollection<WorkerEntity> _collection;
 
-        public WorkerRepository()
+
+        public WorkerRepository(IOptions<MongoDbConfig> mongoOptions, IMongoClient mongoClient)
         {
+            var database = mongoClient.GetDatabase(mongoOptions.Value.Database);
+            _collection = database.GetCollection<WorkerEntity>(mongoOptions.Value.Collection);
         }
 
-        public IQueryable<Worker.Domain.Models.Entities.Worker> GetQueryable()
+        public IUnitOfWork UnitOfWork => throw new NotImplementedException();
+
+        public async Task Add(WorkerEntity entity)
         {
-            return _worker.AsQueryable();
+          await _collection.InsertOneAsync(entity).ConfigureAwait(false);
+        }
+
+
+        public IQueryable<WorkerEntity> GetQueryable()
+        {
+            throw new NotImplementedException();
         }
 
     }
-
 }

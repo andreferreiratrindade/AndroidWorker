@@ -8,7 +8,7 @@ namespace Framework.Core.Mediator
 public class RequestResponseLoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
-    private ILogger _logger;
+    private readonly ILogger _logger;
     public RequestResponseLoggingBehavior(ILogger<RequestResponseLoggingBehavior<TRequest, TResponse>> logger)
     {
         _logger =logger;

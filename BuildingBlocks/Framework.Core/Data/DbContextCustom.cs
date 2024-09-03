@@ -16,13 +16,15 @@ namespace Framework.Core.Data
          where TContext : DbContext
     {
         private readonly IEventStored _eventStored;
+        private readonly IMediatorHandler _mediatorHandler;
 
-        public DbContextCustom(DbContextOptions<TContext> options,IEventStored eventStored)
+        public DbContextCustom(DbContextOptions<TContext> options, IEventStored eventStored, IMediatorHandler mediatorHandler)
            : base(options)
         {
             _eventStored = eventStored;
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
+            _mediatorHandler = mediatorHandler;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -58,40 +60,38 @@ namespace Framework.Core.Data
                 }
             }
 
-            var sucesso = await base.SaveChangesAsync() > 0;
-            // if (sucesso)
-            // {
-            //     var aggregate = ChangeTracker.Entries<AggregateRoot>().FirstOrDefault();
-            //     if (aggregate != null)
-            //     {
-            //         var events = GetEventsByContext();
-            //         CleanEventsByContext();
+            bool sucesso = false;
 
-            //         await _eventStored.SaveAsync(events, aggregate.Entity.AggregateId, "aggregateTemp");
-            //         await _mediatorHandler.PublishEvent(events);
-            //         await base.SaveChangesAsync();
-            //     }
-            // }
+            var aggregate = ChangeTracker.Entries<AggregateRoot>().FirstOrDefault();
+            if (aggregate != null)
+            {
+                var events = GetEventsByContext();
+                CleanEventsByContext();
+
+                //await _eventStored.SaveAsync(events, aggregate.Entity.AggregateId, "aggregateTemp");
+                await _mediatorHandler.PublishEvent(events);
+                await base.SaveChangesAsync();
+            }
 
             return sucesso;
         }
 
-        // private IEnumerable<IDomainEvent> GetEventsByContext()
-        // {
-        //     var domainEntities = ChangeTracker.Entries<AggregateRoot>().Where(x => x.Entity.GetUncommittedChanges().Any());
+        private IEnumerable<IDomainEvent> GetEventsByContext()
+        {
+            var domainEntities = ChangeTracker.Entries<AggregateRoot>().Where(x => x.Entity.GetUncommittedChanges().Any());
 
-        //     var domainEvents = domainEntities
-        //         .SelectMany(x => x.Entity.GetUncommittedChanges());
+            var domainEvents = domainEntities
+                .SelectMany(x => x.Entity.GetUncommittedChanges());
 
-        //     return domainEvents.ToList();
-        // }
+            return domainEvents.ToList();
+        }
 
-        // private void CleanEventsByContext()
-        // {
-        //     var domainEntities = ChangeTracker.Entries<AggregateRoot>().Where(x => x.Entity.GetUncommittedChanges().Any()).ToList();
+        private void CleanEventsByContext()
+        {
+            var domainEntities = ChangeTracker.Entries<AggregateRoot>().Where(x => x.Entity.GetUncommittedChanges().Any()).ToList();
 
-        //     domainEntities
-        //         .ForEach(entity => entity.Entity.MarkChangesAsCommitted());
-        // }
+            domainEntities
+                .ForEach(entity => entity.Entity.MarkChangesAsCommitted());
+        }
     }
 }

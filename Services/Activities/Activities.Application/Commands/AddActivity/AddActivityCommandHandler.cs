@@ -48,7 +48,7 @@ namespace Activities.Application.Commands.AddActivity
 
             _activitytRepository.Add(activity);
 
-            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork,activity, new ActivityNotCreatedEvent(request.CorrelationId));
+            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork,activity, new ActivityCreatedCompensationEvent(request.CorrelationId));
 
             return new AddActivityCommandOutput
             {

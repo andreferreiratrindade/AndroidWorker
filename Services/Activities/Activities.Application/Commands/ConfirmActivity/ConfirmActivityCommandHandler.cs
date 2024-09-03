@@ -36,7 +36,7 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 
             _activitytRepository.Update(activity);
 
-            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork,activity, new ActivityNotCreatedEvent(request.ActivityId));
+            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork,activity, new ActivityCreatedCompensationEvent(request.ActivityId));
 
             if (_domainNotification.HasNotifications) return new ConfirmActivityCommandOutput();
 

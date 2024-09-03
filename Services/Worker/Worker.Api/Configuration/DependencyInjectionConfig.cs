@@ -1,12 +1,17 @@
 using Framework.Core.Mediator;
-using Framework.Core.Messages;
-using Framework.Core.Notifications;
-using Framework.Core.OpenTelemetry;
-using Framework.WebApi.Core.Configuration;
 using MediatR;
-using Worker.Domain.Models.Data.Queries;
+using Framework.WebApi.Core.Configuration;
+using Framework.Core.MongoDb;
+using MassTransit;
+using MongoDB.Driver;
+using Framework.Core.OpenTelemetry;
+using Worker.Application.Commands.AddWorker;
 using Worker.Domain.Models.Repositories;
 using Worker.Infra.Data.Repository;
+using ActivityValidationResult.Infra.Data.Mappings;
+using Worker.Domain.DomainEvents;
+using Worker.Application.Events;
+using Worker.Application.IntegrationServices;
 
 namespace Worker.Api.Configuration
 {
@@ -14,26 +19,52 @@ namespace Worker.Api.Configuration
     {
         public static void RegisterServices(this WebApplicationBuilder builder)
         {
+            builder.Services.AddMessageBusConfiguration(builder.Configuration);
 
-            builder.Services.AddScoped<IDomainNotification, DomainNotification>();
-                   builder.Services.RegisterMediatorBehavior(typeof(Program).Assembly);
+            builder.Services.RegisterMediatorBehavior(typeof(Program).Assembly);
 
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             ApiConfigurationWebApiCore.RegisterServices(builder.Services);
-            builder.Services.AddGraphQLServer()
-                     .AddQueryType<Query>();
-            builder.Services.RegisterIntegrationService();
+
             builder.Services.RegisterRepositories();
             builder.Services.RegisterCommands();
             builder.Services.RegisterRules();
             builder.Services.RegisterQueries();
+            builder.Services.RegisterIntegrationService();
+            builder.Services.RegisterEvents();
+            builder.RegisterMongoDB();
             builder.RegisterOpenTelemetry();
 
         }
+        public static void AddMessageBusConfiguration(this IServiceCollection services,
+             IConfiguration configuration)
+        {
+            var messageQueueConnection = new
+            {
+                Host = configuration.GetSection("MessageQueueConnection").GetSection("host").Value,
+                Username = configuration.GetSection("MessageQueueConnection").GetSection("username").Value,
+                Passwoord = configuration.GetSection("MessageQueueConnection").GetSection("password").Value,
+            };
+            services.AddMassTransit(config =>
+            {
+                config.AddConsumer<Worker_ActivityConfirmedIntegrationHandle>();
+
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(messageQueueConnection.Host, x =>
+                    {
+                        x.Username(messageQueueConnection.Username);
+                        x.Password(messageQueueConnection.Passwoord);
+
+                        cfg.ConfigureEndpoints(ctx);
+                    });
+                });
+            });
+        }
         public static void RegisterIntegrationService(this IServiceCollection services)
         {
-
+            services.AddScoped<IRequestHandler<AddWorkerCommand, AddWorkerCommandOutput>, AddWorkerCommandHandler>();
         }
 
         public static void RegisterRepositories(this IServiceCollection services)
@@ -54,6 +85,30 @@ namespace Worker.Api.Configuration
 
         public static void RegisterQueries(this IServiceCollection services)
         {
+        }
+
+        public static void RegisterEvents(this IServiceCollection services)
+        {
+
+            services.AddScoped<INotificationHandler<WorkerAddedEvent>, WorkerAddedEventHandler>();
+
+        }
+
+
+        public static void RegisterMongoDB(this WebApplicationBuilder builder)
+        {
+            builder.Services.Configure<MongoDbConfig>(builder.Configuration.GetSection(nameof(MongoDbConfig)));
+
+            builder.Services.AddSingleton<IMongoClient>(_ => {
+                var connectionString =
+                    builder
+                        .Configuration
+                        .GetSection("MongoDbConfig:ConnectionString")?
+                        .Value;
+                return new MongoClient(connectionString);
+            });
+
+            WorkerMapping.Configure();
         }
     }
 }

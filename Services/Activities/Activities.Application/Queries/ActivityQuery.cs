@@ -20,13 +20,14 @@ namespace Activities.Application.Queries
 
         public async Task<ActivityDto> GetActivityById(Guid activityId){
             var activity = await _activityRepository.GetByIdAsync(activityId) ??  throw new DomainException($"The Activity {activityId} not exists");
-            
+
             return new ActivityDto{
                 ActivityId = activity.AggregateId,
                 TimeActivityEnd = activity.TimeActivityEnd,
                 TimeActivityStart = activity.TimeActivityStart,
                 TypeActivityBuild = activity.TypeActivityBuild,
-                WorkerId = activity.GetWorkers().Select(x=>x.WorkerId).ToList()
+                WorkerId = activity.GetWorkers().Select(x=>x.WorkerId).ToList(),
+                TypeActivityStatus = activity.Status
             };
         }
     }

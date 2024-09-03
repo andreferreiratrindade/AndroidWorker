@@ -10,9 +10,9 @@ using MassTransit;
 
 namespace Activities.Domain.DomainEvents
 {
-    public class ActivityNotCreatedEvent : RollBackEvent
+    public class ActivityConfirmedCompensationEvent : RollBackEvent
     {
-        public ActivityNotCreatedEvent(Guid correlationId)
+        public ActivityConfirmedCompensationEvent(Guid correlationId)
         {
             CorrelationId = correlationId;
         }

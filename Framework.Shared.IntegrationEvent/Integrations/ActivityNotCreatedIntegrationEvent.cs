@@ -3,15 +3,19 @@ using Framework.Core.Messages.Integration;
 namespace Framework.Shared.IntegrationEvent.Integration
 {
 
-    [Queue("ActivityUptatedTimeStartAndTimeEnd", ExchangeName = "ActivityExchange")]
+    [Queue("ActivityConfirmedCompensation", ExchangeName = "ActivityExchange")]
 
-    public class ActivityNotCreatedIntegrationEvent : Framework.Core.Messages.Integration.IntegrationEvent
+    public class ActivityConfirmedCompensationIntegrationEvent : Framework.Core.Messages.Integration.IntegrationEvent
     {
-       public ActivityNotCreatedIntegrationEvent( Guid correlationId)
+       public ActivityConfirmedCompensationIntegrationEvent( Guid correlationId, List<Core.Notifications.NotificationMessage> notifications)
         {
             CorrelationId = correlationId;
+            Notifications = notifications;
+
         }
         public Guid CorrelationById { get { return this.CorrelationId; } }
+
+       List<Core.Notifications.NotificationMessage> Notifications {get;}
 
     }
 }

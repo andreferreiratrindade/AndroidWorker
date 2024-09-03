@@ -7,6 +7,7 @@ using MassTransit;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Framework.Core.Notifications;
+using Activities.Domain.DomainEvents;
 
 namespace Activities.Application.Commands.AddActivity
 {
@@ -41,7 +42,7 @@ namespace Activities.Application.Commands.AddActivity
             this.Workers = workers.Select(x => x.ToUpper()).ToList();
             this.CorrelationId = Guid.NewGuid();
             this.AddValidCommand(new AddActivityCommandValidation().Validate(this));
-            this.AddCommandOutput(new AddActivityCommandOutput());
+            this.AddRollBackEvent(new ActivityCreatedCompensationEvent(this.CorrelationId));
         }
     }
 }

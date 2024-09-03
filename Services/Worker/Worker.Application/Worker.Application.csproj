@@ -9,6 +9,7 @@
       <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Core\Framework.Core.csproj" />
       <ProjectReference Include="..\Worker.Domain\Worker.Domain.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Message.Bus\Framework.Message.Bus.csproj" />
+    <ProjectReference Include="..\..\..\Framework.Shared.IntegrationEvent\Framework.Shared.IntegrationEvent.csproj" />
 
     </ItemGroup>
 </Project>

@@ -17,7 +17,7 @@ namespace Activities.Application.Events
         public async Task Handle(ActivityConfirmedEvent message, CancellationToken cancellationToken)
         {
             await _publishEndpoint.Publish(
-                       new ActivityCreatedIntegrationEvent(message.ActivityId,
+                       new ActivityConfirmedIntegrationEvent(message.ActivityId,
                                                      message.Workers ,
                                                       message.TypeActivityBuild.GetHashCode(),
                                                       message.TimeActivityStart,

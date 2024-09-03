@@ -20,6 +20,7 @@ using Framework.Core.MongoDb;
 using MassTransit;
 using Activities.Api.IntegrationServices;
 using Framework.Core.OpenTelemetry;
+using MongoDB.Driver;
 
 namespace Activities.Api.Configuration
 {
@@ -31,8 +32,8 @@ namespace Activities.Api.Configuration
             builder.Services.RegisterMediatorBehavior(typeof(Program).Assembly);
 
 
-      //  https://www.linkedin.com/pulse/advanced-features-mediatr-package-pipeline-behaviors/
-        var tt  = typeof(Program).Assembly;
+            //  https://www.linkedin.com/pulse/advanced-features-mediatr-package-pipeline-behaviors/
+            var tt = typeof(Program).Assembly;
 
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -66,22 +67,28 @@ namespace Activities.Api.Configuration
             };
             services.AddMassTransit(config =>
             {
-                // config.AddEntityFrameworkOutbox<ActivityContext>(o =>
-                // {
-                //     // configure which database lock provider to use (Postgres, SqlServer, or MySql)
-                //    o.UsePostgres();
+                config.AddEntityFrameworkOutbox<ActivityContext>(o =>
+                {
+                    o.QueryDelay = TimeSpan.FromSeconds(1);
+                    o.DuplicateDetectionWindow = TimeSpan.FromSeconds(30);
 
-                //     // enable the bus outbox
-                //     o.UseBusOutbox();
-                // });
+                    o.UseBusOutbox();
+                });
+
                 config.AddConsumer<Activity_ActivityAcceptedIntegrationHandle>();
                 config.AddConsumer<Activity_ActivityRejectedIntegrationHandle>();
+                config.AddMediator(x =>
+                {
+                    x.AddConsumers(typeof(Program).Assembly);
+                    x.AddRequestClient(typeof(AddActivityCommand));
+                });
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(messageQueueConnection.Host, x =>
                     {
                         x.Username(messageQueueConnection.Username);
                         x.Password(messageQueueConnection.Passwoord);
+                        cfg.UseMessageRetry(r => r.Exponential(10, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(5)));
 
                         cfg.ConfigureEndpoints(ctx);
                     });
@@ -125,8 +132,12 @@ namespace Activities.Api.Configuration
         public static void RegisterEvents(this IServiceCollection services)
         {
             services.AddScoped<INotificationHandler<ActivityCreatedEvent>, ActivityCreatedEventHandler>();
+            services.AddScoped<INotificationHandler<ActivityCreatedCompensationEvent>, ActivityCreatedCompensationEventHandler>();
             services.AddScoped<INotificationHandler<ActivityInativatedEvent>, ActivityInativatedEventHandler>();
             services.AddScoped<INotificationHandler<ActivityUptatedTimeStartAndTimeEndEvent>, ActivityUptatedTimeStartAndTimeEndEventHandler>();
+            services.AddScoped<INotificationHandler<ActivityConfirmedEvent>, ActivityConfirmedEventHandler>();
+            services.AddScoped<INotificationHandler<ActivityConfirmedCompensationEvent>, ActivityConfirmedCompensationEventHandler>();
+
         }
 
         public static void RegisterEventStored(this WebApplicationBuilder builder)

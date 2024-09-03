@@ -1,5 +1,6 @@
 
 using Activities.Api.Configuration;
+using Serilog;
 public static class Program
 {
     private static WebApplicationBuilder _builder;
@@ -22,16 +23,15 @@ public static class Program
     private static void ConfigureServices()
     {
         _builder.AddApiConfiguration();
-         _builder.Logging.AddLog4Net("log4net.config");
         _builder.AddSwaggerConfiguration();
     }
 
     private static void ConfigureRequestsPipeline()
     {
         _app.UseApiConfiguration();
-        
-        //  _app.UseProblemDetails();
 
+        //  _app.UseProblemDetails();
+       // _app.UseSerilogRequestLogging();
         _app.UseSwaggerConfiguration();
 
         _app.MigrationInitialization();
