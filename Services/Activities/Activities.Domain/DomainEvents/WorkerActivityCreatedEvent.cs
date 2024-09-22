@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Framework.Core.Messages;
-using Activities.Domain.Enums;
+
 using Activities.Domain.DTO;
 using Framework.Core.DomainObjects;
 
@@ -15,12 +10,12 @@ namespace Activities.Domain.DomainEvents
         public string WorkerId { get; set; }
 
         public WorkerActivityCreatedEvent(Guid activityId,
-                                   string workerId)
+                                   string workerId,CorrelationIdGuid correlationId):base(correlationId)
         {
             this.AggregateId = activityId;
             this.ActivityId = activityId;
             this.WorkerId = workerId;
-           
+
         }
     }
 }

@@ -5,16 +5,16 @@ using MediatR;
 using Framework.WebApi.Core.Configuration;
 using ActivityValidationResult.Application.Commands.AddActivityValidationResult;
 using Framework.Core.MongoDb;
-using ActivityValidationResult.Api.IntegrationService;
 using MassTransit;
 using ActivityValidationResult.Application.Events;
 using ActivityValidationResult.Domain.DomainEvents;
 using MongoDB.Driver;
 using ActivityValidationResult.Infra.Data.Mappings;
 using ActivityValidationResult.Application.Commands.AddRestAcceptedActivityValidationResult;
-using Framework.Shared.IntegrationEvent.Integration;
 using ActivityValidationResult.Application.Commands.AddRestRejectedActivityValidationResult;
 using Framework.Core.OpenTelemetry;
+using ActivityValidationResult.Application.IntegrationService;
+using Framework.MessageBus;
 
 namespace ActivityValidationResult.Api.Configuration
 {
@@ -41,6 +41,7 @@ namespace ActivityValidationResult.Api.Configuration
             builder.Services.RegisterEvents();
             builder.RegisterMongoDB();
             builder.RegisterOpenTelemetry();
+            builder.Services.AddMessageBus();
 
         }
         public static void AddMessageBusConfiguration(this IServiceCollection services,
@@ -57,12 +58,15 @@ namespace ActivityValidationResult.Api.Configuration
                 config.AddConsumer<ActivitiyValidationResult_ActivityCreatedEventHandler>();
                 config.AddConsumer<ActivityValidationResult_RestAddedEventHandler>();
                 config.AddConsumer<ActivityValidationResult_RestRejectedEventHandler>();
+                config.AddConsumer<ActivitiyValidationResult_ActivityConfirmedEventHandler>();
+
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(messageQueueConnection.Host, x =>
                     {
                         x.Username(messageQueueConnection.Username);
                         x.Password(messageQueueConnection.Passwoord);
+                        cfg.SingleActiveConsumer = true;
 
                         cfg.ConfigureEndpoints(ctx);
                     });
@@ -74,6 +78,7 @@ namespace ActivityValidationResult.Api.Configuration
             services.AddScoped<IRequestHandler<AddActivityValidationResultCommand, AddActivityValidationResultCommandOutput>, AddActivityValidationResultCommandHandler>();
             services.AddScoped<IRequestHandler<AddRestAcceptedActivityValidationResultCommand, AddRestAcceptedActivityValidationResultCommandOutput>, AddRestAcceptedActivityValidationResultCommandHandler>();
             services.AddScoped<IRequestHandler<AddRestRejectedActivityValidationResultCommand, AddRestRejectedActivityValidationResultCommandOutput>, AddRestRejectedActivityValidationResultCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateActivityConfirmedCommand, UpdateActivityConfirmedCommandOutput>, UpdateActivityConfirmedCommandHandler>();
 
         }
 
@@ -99,7 +104,8 @@ namespace ActivityValidationResult.Api.Configuration
 
         public static void RegisterEvents(this IServiceCollection services)
         {
-            //services.AddScoped<INotificationHandler<ActivityValidationResultAddedEvent>, ActivityValidationResultAddedEventHandler>();
+            services.AddScoped<INotificationHandler<ActivityValidationResultAddedEvent>, ActivityValidationAddedEventHandler>();
+            services.AddScoped<INotificationHandler<ActivityValidationResultAddedCompensationEvent>, ActivityValidatioAddedCompensationEventHandler>();
             services.AddScoped<INotificationHandler<ActivityAcceptedEvent>, ActivityAcceptedEventHandler>();
             services.AddScoped<INotificationHandler<ActivityRejectedEvent>, ActivityRejectedEventHandler>();
 

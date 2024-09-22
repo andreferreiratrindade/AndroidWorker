@@ -18,7 +18,7 @@ namespace Worker.Application.IntegrationServices
             var mediator = scope.ServiceProvider.GetRequiredService<IMediatorHandler>();
             _ = await mediator.SendCommand<AddWorkerCommand, AddWorkerCommandOutput>(
                     new AddWorkerCommand(
-                        context.Message.Workers));
+                        context.Message.Workers, context.Message.CorrelationId));
 
         }
     }

@@ -13,6 +13,7 @@
   </ItemGroup>
    <ItemGroup>
    <ProjectReference Include="..\..\..\BuildingBlocks\Framework.Core\Framework.Core.csproj" />
+   <ProjectReference Include="..\..\..\Framework.Shared.IntegrationEvent\Framework.Shared.IntegrationEvent.csproj" />
 
     </ItemGroup>
    <ItemGroup>

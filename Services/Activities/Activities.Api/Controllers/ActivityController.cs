@@ -9,6 +9,7 @@ using Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity;
 using Activities.Domain.DTO;
 using Activities.Application.Queries;
 using NSwag.Annotations;
+using Framework.Core.DomainObjects;
 
 namespace Activities.Api.Controllers
 {
@@ -85,7 +86,7 @@ namespace Activities.Api.Controllers
         public async Task<IActionResult> DeleteActivityAsync(Guid activityId)
         {
 
-            return CustomResponseStatusCodeOk(await _mediatorHandler.SendCommand<DeleteActivityCommand, Result>(new DeleteActivityCommand(activityId)));
+            return CustomResponseStatusCodeOk(await _mediatorHandler.SendCommand<DeleteActivityCommand, Result>(new DeleteActivityCommand(activityId, new CorrelationIdGuid(Guid.NewGuid()))));
         }
 
         /// <summary>

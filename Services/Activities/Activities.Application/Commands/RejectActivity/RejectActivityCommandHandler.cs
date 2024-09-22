@@ -28,17 +28,17 @@ namespace Activities.Application.Commands.RejectActivity
 
             if(activity == null)
             {
-                _domainNotification.AddNotifications("Id Not Exists", $"The Activity {request.ActivityId} not exists");
+                _domainNotification.AddNotification("Id Not Exists", $"The Activity {request.ActivityId} not exists");
                 return new RejectActivityCommandOutput();
             }
 
-            activity.RejectActivity();
-            //_domainNotification.AddNotifications(CheckConfirmStatus(activity));
+            activity.RejectActivity(request.CorrelationId);
+            //_domainNotification.AddNotification(CheckConfirmStatus(activity));
 
 
             _activitytRepository.Update(activity);
 
-            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork, activity,new ActivityCreatedCompensationEvent(request.ActivityId));
+            await PersistData(_activitytRepository.UnitOfWork);
 
 
             if (_domainNotification.HasNotifications) return new RejectActivityCommandOutput();

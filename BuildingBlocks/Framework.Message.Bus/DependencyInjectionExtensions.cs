@@ -1,22 +1,15 @@
-﻿using MassTransit;
+﻿using EasyNetQ;
+using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 namespace Framework.MessageBus
 {
     public static class DependencyInjectionExtensions
     {
-        public static IServiceCollection AddMessageBus(this IServiceCollection services, string connection)
+        public static IServiceCollection AddMessageBus(this IServiceCollection services)
         {
 
-            services.AddMassTransit(x =>
-            {
-                x.UsingRabbitMq((context, cfg) =>
-                {
-                    cfg.Host(connection);
-                });
-            });
 
-            //services.AddSingleton<IMessageBus>(new MessageBus());
-
+            services.AddScoped<IMessageBus, MessageBus>();
 
             return services;
         }

@@ -23,8 +23,8 @@ namespace Activities.Application.Commands.DelteActivity
         public async Task<Result> Handle(DeleteActivityCommand request, CancellationToken cancellationToken)
         {
             var activity = _activitytRepository.GetById(request.ActivityId) ?? throw new DomainException($"The Activity {request.ActivityId} not exists");
-        
-            activity.Inactivate();
+
+            activity.Inactivate(request.CorrelationId);
             _activitytRepository.Update(activity);
             await PersistData(_activitytRepository.UnitOfWork);
 

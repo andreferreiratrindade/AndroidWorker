@@ -27,7 +27,7 @@ namespace Rests.Domain.Models.Entities
                      string workerId,
                      DateTime timeRestStart,
                      TypeActivityBuild typeActivityBuild,
-                     Guid? CorrelationId)
+                     CorrelationIdGuid correlationId)
         {
             var timeRestEnd = CalculateTimeRest(typeActivityBuild, timeRestStart);
             var isAlive = true;
@@ -39,7 +39,7 @@ namespace Rests.Domain.Models.Entities
                                             timeRestEnd,
                                             typeActivityBuild,
                                             isAlive,
-                                            (CorrelationId ?? Guid.Empty));
+                                            correlationId);
             this.RaiseEvent(@event);
         }
 
@@ -47,7 +47,7 @@ namespace Rests.Domain.Models.Entities
                           string workerId,
                           TypeActivityBuild typeActivityBuild,
                           DateTime timeRestStart,
-                          Guid? CorrelationId
+                          CorrelationIdGuid CorrelationId
                           )
         {
 
@@ -74,7 +74,7 @@ namespace Rests.Domain.Models.Entities
             IsAlive = x.IsAlive;
         }
 
-     
+
         public static DateTime CalculateTimeRest(TypeActivityBuild typeActivityBuild, DateTime timeRestStart)
         {
 

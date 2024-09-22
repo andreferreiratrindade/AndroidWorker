@@ -30,7 +30,7 @@ namespace Worker.Infra.Data.Repository
 
         public IQueryable<WorkerEntity> GetQueryable()
         {
-            throw new NotImplementedException();
+           return _collection.AsQueryable();
         }
 
     }

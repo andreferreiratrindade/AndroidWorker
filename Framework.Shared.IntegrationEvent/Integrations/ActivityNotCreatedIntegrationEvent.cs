@@ -1,4 +1,5 @@
 using EasyNetQ;
+using Framework.Core.DomainObjects;
 using Framework.Core.Messages.Integration;
 namespace Framework.Shared.IntegrationEvent.Integration
 {
@@ -7,14 +8,11 @@ namespace Framework.Shared.IntegrationEvent.Integration
 
     public class ActivityConfirmedCompensationIntegrationEvent : Framework.Core.Messages.Integration.IntegrationEvent
     {
-       public ActivityConfirmedCompensationIntegrationEvent( Guid correlationId, List<Core.Notifications.NotificationMessage> notifications)
+       public ActivityConfirmedCompensationIntegrationEvent(  List<Core.Notifications.NotificationMessage> notifications, CorrelationIdGuid correlationId):base(correlationId)
         {
-            CorrelationId = correlationId;
             Notifications = notifications;
 
         }
-        public Guid CorrelationById { get { return this.CorrelationId; } }
-
        List<Core.Notifications.NotificationMessage> Notifications {get;}
 
     }

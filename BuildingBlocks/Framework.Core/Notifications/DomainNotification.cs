@@ -15,17 +15,25 @@ namespace Framework.Core.Notifications
 
         public bool HasNotifications => _notifications.Any();
 
-        public void AddNotifications(string key, string message)
+        public bool HasNotificationWithException => _notifications.Any(x=> x.NotificationMessageType == NotificationMessageType.Excetpion);
+
+        public void AddNotification(string key, string message)
         {
             _notifications.Add(new NotificationMessage(key, message));
         }
 
-        public void AddNotifications(IEnumerable<NotificationMessage> notifications)
+        public void AddNotification(Exception ex){
+            _notifications.Add(new NotificationMessage("Error", "Somenthing inexpeted happened" ));
+            _notifications.Add(new NotificationMessage("Error", "Somenthing inexpeted happened" ));
+
+        }
+
+        public void AddNotification(IEnumerable<NotificationMessage> notifications)
         {
             _notifications.AddRange(notifications);
         }
 
-        public void AddNotifications(ValidationResult validationResult)
+        public void AddNotification(ValidationResult validationResult)
         {
             foreach (var error in validationResult.Errors)
             {

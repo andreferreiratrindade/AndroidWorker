@@ -1,3 +1,5 @@
  dotnet ef migrations add tempCreate --startup-project ..\Activities.api
 
  dotnet ef database update --startup-project ..\Activities.api
+
+  dotnet ef --project Rests.Infra --startup-project Rests.Api migrations add Iniital

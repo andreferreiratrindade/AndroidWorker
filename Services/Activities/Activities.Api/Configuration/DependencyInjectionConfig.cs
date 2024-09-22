@@ -18,9 +18,9 @@ using Activities.Infra;
 using Framework.Core.Data;
 using Framework.Core.MongoDb;
 using MassTransit;
-using Activities.Api.IntegrationServices;
 using Framework.Core.OpenTelemetry;
-using MongoDB.Driver;
+using Activities.Application.IntegrationServices;
+using Framework.MessageBus;
 
 namespace Activities.Api.Configuration
 {
@@ -30,10 +30,6 @@ namespace Activities.Api.Configuration
         {
             builder.Services.AddMessageBusConfiguration(builder.Configuration);
             builder.Services.RegisterMediatorBehavior(typeof(Program).Assembly);
-
-
-            //  https://www.linkedin.com/pulse/advanced-features-mediatr-package-pipeline-behaviors/
-            var tt = typeof(Program).Assembly;
 
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -54,6 +50,8 @@ namespace Activities.Api.Configuration
             builder.Services.RegisterEvents();
             builder.RegisterEventStored();
             builder.RegisterOpenTelemetry();
+            builder.Services.AddMessageBus();
+
         }
 
         public static void AddMessageBusConfiguration(this IServiceCollection services,
@@ -77,11 +75,6 @@ namespace Activities.Api.Configuration
 
                 config.AddConsumer<Activity_ActivityAcceptedIntegrationHandle>();
                 config.AddConsumer<Activity_ActivityRejectedIntegrationHandle>();
-                config.AddMediator(x =>
-                {
-                    x.AddConsumers(typeof(Program).Assembly);
-                    x.AddRequestClient(typeof(AddActivityCommand));
-                });
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(messageQueueConnection.Host, x =>
@@ -89,6 +82,7 @@ namespace Activities.Api.Configuration
                         x.Username(messageQueueConnection.Username);
                         x.Password(messageQueueConnection.Passwoord);
                         cfg.UseMessageRetry(r => r.Exponential(10, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(5)));
+                        cfg.SingleActiveConsumer = true;
 
                         cfg.ConfigureEndpoints(ctx);
                     });

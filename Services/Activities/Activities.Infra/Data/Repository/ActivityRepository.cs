@@ -3,6 +3,7 @@ using Activities.Domain.Models.Entities;
 using Framework.Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Activities.Domain.Models.Repositories;
+using Framework.Shared.IntegrationEvent.Enums;
 
 namespace Activities.Infra.Data.Repository
 {
@@ -44,8 +45,8 @@ namespace Activities.Infra.Data.Repository
             _context.Activities.Where(x => x.AggregateId == activityId).ExecuteDelete();
         }
 
-        public Activity? GetById(Guid activityId) => _context.Activities.AsNoTracking().FirstOrDefault(x => x.AggregateId == activityId && x.Status != Domain.Enums.TypeActivityStatus.Deleted);
-        public async Task<Activity?> GetByIdAsync(Guid activityId) => await _context.Activities.AsNoTracking().FirstOrDefaultAsync(x => x.AggregateId == activityId && x.Status != Domain.Enums.TypeActivityStatus.Deleted);
+        public Activity? GetById(Guid activityId) => _context.Activities.AsNoTracking().FirstOrDefault(x => x.AggregateId == activityId && x.Status != TypeActivityStatus.Deleted);
+        public async Task<Activity?> GetByIdAsync(Guid activityId) => await _context.Activities.AsNoTracking().FirstOrDefaultAsync(x => x.AggregateId == activityId && x.Status != TypeActivityStatus.Deleted);
     }
 
 }

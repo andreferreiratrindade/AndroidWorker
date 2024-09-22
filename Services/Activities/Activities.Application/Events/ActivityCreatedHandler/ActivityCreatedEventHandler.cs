@@ -2,27 +2,29 @@ using MediatR;
 using Activities.Domain.DomainEvents;
 using Framework.Shared.IntegrationEvent.Integration;
 using MassTransit;
+using Framework.MessageBus;
 
 namespace Activities.Application.Events
 {
     public class ActivityCreatedEventHandler : INotificationHandler<ActivityCreatedEvent>
     {
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IMessageBus _messageBus;
 
-        public ActivityCreatedEventHandler(IPublishEndpoint publishEndpoint)
+        public ActivityCreatedEventHandler(IMessageBus messageBus)
         {
-            _publishEndpoint = publishEndpoint;
+            _messageBus = messageBus;
         }
 
         public async Task Handle(ActivityCreatedEvent message, CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(
+                  await _messageBus.PublishAsync(
+
                        new ActivityCreatedIntegrationEvent(message.ActivityId,
                                                       message.Workers,
                                                       message.TypeActivityBuild.GetHashCode(),
                                                       message.TimeActivityStart,
                                                       message.TimeActivityEnd,
-                                                      message.ActivityId));
+                                                      message.CorrelationId),cancellationToken);
         }
     }
 }

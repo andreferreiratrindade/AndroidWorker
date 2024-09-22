@@ -6,9 +6,12 @@ namespace Framework.Core.Notifications
     {
         IReadOnlyCollection<NotificationMessage> Notifications { get; }
         bool HasNotifications { get; }
-        void AddNotifications(string key, string message);
-        void AddNotifications(IEnumerable<NotificationMessage> notifications);
-        void AddNotifications(ValidationResult validationResult);
+
+        bool HasNotificationWithException{get;}
+        void AddNotification(Exception ex);
+        void AddNotification(string key, string message);
+        void AddNotification(IEnumerable<NotificationMessage> notifications);
+        void AddNotification(ValidationResult validationResult);
 
         ValidationResult GetValidationResult();
     }

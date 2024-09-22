@@ -25,9 +25,9 @@ namespace ActivityValidationResult.Application.Commands.AddRestRejectedActivityV
         {
             var model = await _activityValidationResultRepository.GetByActivityId(request.ActivityId);
 
-            model.AddRestRejected(request.WorkerId, request.DescriptionErrors);
+            model.AddRestRejected(request.WorkerId, request.DescriptionErrors, request.CorrelationId);
 
-            model.TryFinishValidation();     
+            model.TryFinishValidation(request.CorrelationId);
 
             if(!_domainNotification.HasNotifications){
                 await _activityValidationResultRepository.Update(model);

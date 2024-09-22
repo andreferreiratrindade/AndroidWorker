@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FluentValidation;
-using Activities.Domain.Enums;
 using System.Text.RegularExpressions;
+using Framework.Shared.IntegrationEvent.Enums;
 
 namespace Activities.Application.Commands.AddActivity
 {

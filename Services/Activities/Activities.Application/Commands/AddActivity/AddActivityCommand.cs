@@ -1,17 +1,14 @@
-
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Framework.Core.Messages;
-using Activities.Domain.Enums;
 using MassTransit;
 using System.Text.Json.Serialization;
-using Microsoft.Extensions.Options;
-using Framework.Core.Notifications;
 using Activities.Domain.DomainEvents;
+using Framework.Shared.IntegrationEvent.Enums;
+using Framework.Core.DomainObjects;
 
 namespace Activities.Application.Commands.AddActivity
 {
-    public class AddActivityCommand : Command<AddActivityCommandOutput>, CorrelatedBy<Guid>
+    public class AddActivityCommand : Command<AddActivityCommandOutput>
     {
 
         /// <summary>
@@ -29,18 +26,14 @@ namespace Activities.Application.Commands.AddActivity
         [Required]
         public List<string> Workers { get; set; }
 
-        [JsonIgnore]
-        public Guid CorrelationId { get; set; }
-
         public AddActivityCommand(TypeActivityBuild typeActivityBuild,
         DateTime timeActivityStart, DateTime timeActivityEnd,
-        List<string> workers)
+        List<string> workers):base(new CorrelationIdGuid(Guid.NewGuid()))
         {
             this.TypeActivityBuild = typeActivityBuild;
             this.TimeActivityStart = timeActivityStart;
             this.TimeActivityEnd = timeActivityEnd;
             this.Workers = workers.Select(x => x.ToUpper()).ToList();
-            this.CorrelationId = Guid.NewGuid();
             this.AddValidCommand(new AddActivityCommandValidation().Validate(this));
             this.AddRollBackEvent(new ActivityCreatedCompensationEvent(this.CorrelationId));
         }

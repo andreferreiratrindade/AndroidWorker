@@ -43,21 +43,21 @@ namespace Framework.Core.OpenTelemetry
         public static void RegisterOpenTelemetry(this WebApplicationBuilder builder)
         {
             var serviceName = builder.Configuration.GetSection("NameApp").Value;
-            CreateLog(serviceName);
-            builder.Host.UseSerilog();
-            // builder.Host.UseSerilog((context, loggerConfiguration) =>
-            // {
-
-            //      loggerConfiguration.Enrich.WithProperty("Application", "Activity_API")
-            //                         .Enrich.WithProperty("Environment", context.HostingEnvironment.EnvironmentName)
-            //                         .Enrich.WithProperty("service.name", "Activity")
-            //                         .WriteTo.Console(new RenderedCompactJsonFormatter())
-            //                         .WriteTo.OpenTelemetry(builder.Configuration.GetSection("OpenTelemetryURL").Value);
-
-            //     // loggerConfiguration.ReadFrom.Configuration(context.Configuration);
-            //     // loggerConfiguration.WriteTo.Console(Serilog.Events.LogEventLevel.Debug);
-            // });
-
+            // CreateLog(serviceName);
+            builder.Host.UseSerilog((context, loggerConfiguration)=>{
+                loggerConfiguration.WriteTo.OpenTelemetry(opts =>
+                                            {
+                                                opts.Endpoint = builder.Configuration.GetSection("OpenTelemetryURL").Value;
+                                                opts.Protocol = OtlpProtocol.Grpc;
+                                                opts.IncludedData = IncludedData.SpecRequiredResourceAttributes;
+                                                opts.ResourceAttributes = new Dictionary<string, object>
+                                                {
+                                                    ["app"] = "web",
+                                                    ["runtime"] = "dotnet",
+                                                    ["service.name"] = serviceName
+                                                };
+                                            });
+            });
             builder.Services
                 .AddOpenTelemetry()
                 .ConfigureResource(resource => resource.AddService(serviceName))
@@ -67,6 +67,7 @@ namespace Framework.Core.OpenTelemetry
 
                     builderOtel.AddOtlpExporter(opts =>
                    {
+
                        opts.Endpoint = new Uri(builder.Configuration.GetSection("OpenTelemetryURL").Value);
                    });
                 })
@@ -79,7 +80,8 @@ namespace Framework.Core.OpenTelemetry
                         .AddRedisInstrumentation()
 
                         .AddNpgsql()
-                        
+                    .AddConsoleExporter()
+
                     .AddOtlpExporter(opts =>
                     {
                         opts.Endpoint = new Uri(builder.Configuration.GetSection("OpenTelemetryURL").Value);

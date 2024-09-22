@@ -21,7 +21,8 @@ namespace Activities.Application.Events
             await _publishEndpoint.Publish(
                        new ActivityUptatedTimeStartAndTimeEndIntegrationEvent(message.ActivityId,
                                                       message.TimeActivityStart,
-                                                      message.TimeActivityEnd));
+                                                      message.TimeActivityEnd,
+                                                      message.CorrelationId));
         }
     }
 }

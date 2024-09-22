@@ -1,4 +1,5 @@
-﻿using Framework.Shared.IntegrationEvent.Integration;
+﻿using Framework.MessageBus;
+using Framework.Shared.IntegrationEvent.Integration;
 using MassTransit;
 using MediatR;
 using Rests.Domain.DomainEvents;
@@ -7,20 +8,20 @@ namespace Rests.Application.Events
 {
     public class RestAddedEventHandler : INotificationHandler<RestAddedEvent>
     {
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IMessageBus _messageBus;
 
-        public RestAddedEventHandler(IPublishEndpoint publishEndpoint)
+        public RestAddedEventHandler(IMessageBus messageBus)
         {
-            _publishEndpoint = publishEndpoint;
+            _messageBus = messageBus;
         }
         public async Task Handle(RestAddedEvent notification, CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(new RestAddedIntegrationEvent(notification.RestId,
+            await _messageBus.PublishAsync(new RestAddedIntegrationEvent(notification.RestId,
                                                                          notification.ActivityId,
                                                                          notification.WorkerId,
                                                                          notification.TimeRestStart,
                                                                          notification.TimeRestEnd,
-                                                                         notification.CorrelationId), cancellationToken);
+                                                                         notification.CorrelationId),cancellationToken);
         }
     }
 }

@@ -1,4 +1,5 @@
 using EasyNetQ;
+using Framework.Core.DomainObjects;
 
 namespace Framework.Shared.IntegrationEvent.Integration
 {
@@ -12,7 +13,7 @@ namespace Framework.Shared.IntegrationEvent.Integration
 
         public ActivityUptatedTimeStartAndTimeEndIntegrationEvent(Guid activityId,
                                     DateTime timeActivityStart,
-                                    DateTime timeActivityEnd)
+                                    DateTime timeActivityEnd, CorrelationIdGuid correlationId): base(correlationId)
         {
             this.ActivityId = activityId;
             this.TimeActivityStart = timeActivityStart;

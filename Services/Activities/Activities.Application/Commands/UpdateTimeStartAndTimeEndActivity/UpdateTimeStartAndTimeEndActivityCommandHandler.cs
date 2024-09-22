@@ -28,18 +28,18 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 
             if(activity == null)
             {
-                _domainNotification.AddNotifications("Id Not Exists", $"The Activity {request.ActivityId} not exists");
+                _domainNotification.AddNotification("Id Not Exists", $"The Activity {request.ActivityId} not exists");
                 return new UpdateTimeStartAndTimeEndActivityCommandOutput();
             }
 
-            activity.UpdateTimeStartAndTimeEnd(request.TimeActivityStart, request.TimeActivityEnd,_activityValidatorService);
+            activity.UpdateTimeStartAndTimeEnd(request.TimeActivityStart, request.TimeActivityEnd,_activityValidatorService, request.CorrelationId);
 
-            _domainNotification.AddNotifications(CheckUpdateTimeStartAndTimeEnd(activity));
+            _domainNotification.AddNotification(CheckUpdateTimeStartAndTimeEnd(activity));
 
 
             _activitytRepository.Update(activity);
 
-            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork,activity, new ActivityCreatedCompensationEvent(request.ActivityId));
+            await PersistData(_activitytRepository.UnitOfWork);
 
             if (_domainNotification.HasNotifications) return new UpdateTimeStartAndTimeEndActivityCommandOutput();
 

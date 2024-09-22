@@ -1,11 +1,8 @@
-using FluentValidation.Results;
 using Framework.Core.DomainObjects;
 using Framework.Core.Mediator;
 using Framework.Core.Messages;
 using Framework.Core.Notifications;
-using MassTransit;
 using MediatR;
-using Rests.Domain.DomainEvents;
 using Rests.Domain.Models.Entities;
 using Rests.Domain.Models.Repositories;
 using Rests.Domain.Rules;
@@ -37,11 +34,13 @@ namespace Rests.Application.Commands.AddRest
                                        request.TimeRestStart,
                                        request.CorrelationId);
 
-            _domainNotification.AddNotifications(CheckCreateRules(rest, request.TimeActivityStart));
+            _domainNotification.AddNotification(CheckCreateRules(rest, request.TimeActivityStart));
             _restRepository.Add(rest);
 
 
-            await PersistDataOrRollBackEvent(_restRepository.UnitOfWork,rest, new RestRejectedEvent(request.ActivityId, request.WorkerId));
+            await PersistData(_restRepository.UnitOfWork);
+
+            if(_domainNotification.HasNotifications) return request.GetCommandOutput();
 
             return new AddRestCommandOutput();
         }

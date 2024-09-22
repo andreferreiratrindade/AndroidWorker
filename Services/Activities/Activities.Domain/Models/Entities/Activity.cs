@@ -1,19 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Framework.Core.DomainObjects;
-using Framework.Core.Messages;
+
 using Activities.Domain.DomainEvents;
-using Activities.Domain.Enums;
-using Activities.Domain.Rules;
+
 using Activities.Domain.ValidatorServices;
-using Framework.Core.Notifications;
-using FluentValidation.Results;
-using System.Diagnostics;
-using Activities.Domain.DTO;
-using Microsoft.Extensions.Logging;
-using MassTransit.NewIdProviders;
+using Framework.Shared.IntegrationEvent.Enums;
+
 
 namespace Activities.Domain.Models.Entities
 {
@@ -35,7 +26,7 @@ namespace Activities.Domain.Models.Entities
                                       TypeActivityBuild typeActivityBuild,
                                       DateTime timeActivityStart,
                                       DateTime timeActivityEnd,
-                                      Guid? correlationId)
+                                      CorrelationIdGuid correlationId)
         {
             var workersActivity = workers.Select(x => new WorkActivity(x)).ToList();
             var activity = new Activity(workers, typeActivityBuild, timeActivityStart, timeActivityEnd, correlationId);
@@ -50,7 +41,7 @@ namespace Activities.Domain.Models.Entities
                          TypeActivityBuild typeActivityBuild,
                          DateTime timeActivityStart,
                          DateTime timeActivityEnd,
-                         Guid? correlationId)
+                         CorrelationIdGuid correlationId)
         {
 
             var @event = new ActivityCreatedEvent(Guid.NewGuid(),
@@ -59,10 +50,10 @@ namespace Activities.Domain.Models.Entities
                                                     timeActivityStart,
                                                     timeActivityEnd,
                                                     TypeActivityStatus.Created,
-                                                    (correlationId ?? Guid.NewGuid()));
+                                                    correlationId );
             this.RaiseEvent(@event);
 
-            var @eventsWorkers = workers.Select(x=> new WorkerActivityCreatedEvent(@event.ActivityId, x)).ToList();
+            var @eventsWorkers = workers.Select(x=> new WorkerActivityCreatedEvent(@event.ActivityId, x,correlationId)).ToList();
             @eventsWorkers.ForEach(x =>
             {
                 this.RaiseEvent(x);
@@ -112,31 +103,34 @@ namespace Activities.Domain.Models.Entities
         }
 
 
-        public void Inactivate()
+        public void Inactivate(CorrelationIdGuid correlationId)
         {
-            this.RaiseEvent(new ActivityInativatedEvent(this.AggregateId));
+            this.RaiseEvent(new ActivityInativatedEvent(this.AggregateId,correlationId));
 
         }
 
-        public void UpdateTimeStartAndTimeEnd(DateTime timeActivityStart, DateTime timeActivityEnd, IActivityValidatorService activityValidatorService)
+        public void UpdateTimeStartAndTimeEnd(DateTime timeActivityStart,
+            DateTime timeActivityEnd,
+            IActivityValidatorService activityValidatorService,
+            CorrelationIdGuid correlationId)
         {
             this.RaiseEvent(new ActivityUptatedTimeStartAndTimeEndEvent(AggregateId , TimeActivityStart,
-                                                       TimeActivityEnd));
+                                                       TimeActivityEnd,correlationId));
         }
 
-        public void ConfirmActivity()
+        public void ConfirmActivity(CorrelationIdGuid correlationId)
         {
-            
+
             this.RaiseEvent(new ActivityConfirmedEvent(this.AggregateId,
                                                     _workers.Select(x=> x.WorkerId).ToList(),
                                                     TypeActivityBuild,
                                                     TimeActivityStart,
                                                     TimeActivityEnd,
-                                                    TypeActivityStatus.Confirmmed));
+                                                    TypeActivityStatus.Confirmmed,correlationId));
 
         }
 
-        public void RejectActivity()
+        public void RejectActivity(CorrelationIdGuid correlationId)
         {
 
             this.RaiseEvent(new ActivityRejectedEvent(this.AggregateId,
@@ -144,10 +138,10 @@ namespace Activities.Domain.Models.Entities
                                                     TypeActivityBuild,
                                                     TimeActivityStart,
                                                     TimeActivityEnd,
-                                                    TypeActivityStatus.Rejected));
+                                                    TypeActivityStatus.Rejected,correlationId));
 
         }
 
-        
+
     }
 }

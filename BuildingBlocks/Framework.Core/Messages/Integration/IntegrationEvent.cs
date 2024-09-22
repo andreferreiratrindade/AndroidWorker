@@ -6,5 +6,6 @@ namespace Framework.Core.Messages.Integration
     public abstract class IntegrationEvent : DomainEvent
     {
 
+         protected IntegrationEvent(CorrelationIdGuid CorrelationId):base(CorrelationId){}
     }
 }

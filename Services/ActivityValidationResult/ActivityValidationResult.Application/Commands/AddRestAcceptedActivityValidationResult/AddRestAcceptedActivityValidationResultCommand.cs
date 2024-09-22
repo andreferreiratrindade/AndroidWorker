@@ -4,6 +4,8 @@ using Framework.Core.Messages;
 using MassTransit;
 using ActivityValidationResult.Domain.Enums;
 using ActivityValidationResult.Application.Commands.AddActivityValidationResult;
+using ActivityValidationResult.Domain.DomainEvents;
+using Framework.Core.DomainObjects;
 
 namespace ActivityValidationResult.Application.Commands.AddRestAcceptedActivityValidationResult
 {
@@ -15,23 +17,20 @@ namespace ActivityValidationResult.Application.Commands.AddRestAcceptedActivityV
         public string WorkerId { get; private set; }
         public DateTime TimeRestStart { get; private set; }
         public DateTime TimeRestEnd { get; private set; }
-        public Guid CorrelationById { get; private set; }
 
         public AddRestAcceptedActivityValidationResultCommand(Guid activityId,
                                                               Guid restId,
                                                               string workerId,
                                                               DateTime timeRestStart,
-                                                              DateTime timeRestEnd,
-                                                              Guid correlationById)
+                                                              DateTime timeRestEnd, CorrelationIdGuid correlationId):base(correlationId)
         {
             ActivityId = activityId;
             RestId = restId;
             WorkerId = workerId;
             TimeRestStart = timeRestStart;
             TimeRestEnd = timeRestEnd;
-            CorrelationById = correlationById;
-                          this.AddValidCommand(new FluentValidation.Results.ValidationResult());
-            this.AddCommandOutput(new AddRestAcceptedActivityValidationResultCommandOutput());
+            this.AddValidCommand(new FluentValidation.Results.ValidationResult());
+            this.AddRollBackEvent(new RestAcceptedCompensationEvent(this.ActivityId, this.WorkerId, correlationId));
         }
     }
 }

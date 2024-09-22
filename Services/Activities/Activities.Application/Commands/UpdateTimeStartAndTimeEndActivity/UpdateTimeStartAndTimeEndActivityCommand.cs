@@ -1,8 +1,7 @@
 
 using System.ComponentModel.DataAnnotations;
+using Framework.Core.DomainObjects;
 using Framework.Core.Messages;
-using Activities.Domain.Enums;
-using FluentValidation;
 
 namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 {
@@ -17,7 +16,10 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
         public DateTime TimeActivityEnd { get; set; }
 
 
-        public UpdateTimeStartAndTimeEndActivityCommand(Guid activityId, DateTime timeActivityStart, DateTime timeActivityEnd)
+        public UpdateTimeStartAndTimeEndActivityCommand(Guid activityId,
+                                                        DateTime timeActivityStart,
+                                                        DateTime timeActivityEnd,
+                                                        CorrelationIdGuid correlationId) :base(correlationId)
         {
             this.TimeActivityStart = timeActivityStart;
             this.TimeActivityEnd = timeActivityEnd;

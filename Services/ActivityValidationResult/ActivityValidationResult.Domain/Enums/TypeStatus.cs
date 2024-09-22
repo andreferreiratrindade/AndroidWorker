@@ -4,7 +4,9 @@ namespace ActivityValidationResult.Domain.Enums
     {
         Pending = 1,
         Accepted = 2,
-        Rejected = 3
+        Rejected = 3,
+
+        Confirmed = 4
 
     }
 }

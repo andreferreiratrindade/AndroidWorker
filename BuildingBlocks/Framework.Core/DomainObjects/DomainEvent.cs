@@ -8,29 +8,32 @@ using System.Threading.Tasks;
 
 namespace Framework.Core.DomainObjects
 {
-    public abstract class DomainEvent : EventSourcingNotification, IDomainEvent, CorrelatedBy<Guid>
+    public abstract class DomainEvent : EventSourcingNotification, IDomainEvent
     {
         public Guid EventId { get; private set; }
         public Guid AggregateId { get; protected set; }
         public long AggregateVersion { get; set; }
         public DateTime TimeStamp { get; }
 
-        public Guid CorrelationId { get; protected set; }
+        public CorrelationIdGuid CorrelationId { get; }
 
-        protected DomainEvent()
+        private DomainEvent()
         {
             EventId = Guid.NewGuid();
             TimeStamp = DateTime.UtcNow;
         }
-
-        protected DomainEvent(Guid aggregateId) : this()
-        {
-            AggregateId = aggregateId;
+        protected DomainEvent(CorrelationIdGuid CorrelationId):this(){
+            this.CorrelationId = CorrelationId;
         }
 
-        protected DomainEvent(Guid aggregateId, long aggregateVersion) : this(aggregateId)
-        {
-            AggregateVersion = aggregateVersion;
-        }
+        // protected DomainEvent(Guid aggregateId) : this()
+        // {
+        //     AggregateId = aggregateId;
+        // }
+
+        // protected DomainEvent(Guid aggregateId, long aggregateVersion) : this(aggregateId)
+        // {
+        //     AggregateVersion = aggregateVersion;
+        // }
     }
 }

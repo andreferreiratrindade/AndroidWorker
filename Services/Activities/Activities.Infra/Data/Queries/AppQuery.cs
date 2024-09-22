@@ -9,9 +9,6 @@ namespace Activities.Infra.Data.Queries
 {
     public class Query
     {
-        [UsePaging]
-        [UseFiltering]
-        [UseSorting]
 
         public IQueryable<ActivityDto> AllActivityOnly(Guid activityId,  ActivityContext context)
         {

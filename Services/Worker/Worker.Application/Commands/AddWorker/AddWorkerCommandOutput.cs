@@ -2,6 +2,11 @@
 
 namespace Worker.Application.Commands.AddWorker
 {
-    public record AddWorkerCommandOutput(List<string> Workers);
+    public class AddWorkerCommandOutput{
+       public List<string> Workers {get;set;}
+        public AddWorkerCommandOutput()
+        {
 
+        }
+    }
 }

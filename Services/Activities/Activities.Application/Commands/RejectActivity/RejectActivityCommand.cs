@@ -1,7 +1,7 @@
 
 using System.ComponentModel.DataAnnotations;
+using Framework.Core.DomainObjects;
 using Framework.Core.Messages;
-using Activities.Domain.Enums;
 
 namespace Activities.Application.Commands.RejectActivity
 {
@@ -18,12 +18,13 @@ namespace Activities.Application.Commands.RejectActivity
         public string WorkId { get; set; }
 
 
-        public RejectActivityCommand(Guid activityId)
+        public RejectActivityCommand(Guid activityId, CorrelationIdGuid correlationId):base(correlationId)
         {
             this.ActivityId = activityId;
 
             this.AddValidCommand(new RejectActivityCommandValidation().Validate(this));
-            this.AddCommandOutput(new RejectActivityCommandOutput());
+                    //    this.AddRollBackEvent(new RejectActivityCCompensationEvent(this.ActivityId));
+
 
         }
     }

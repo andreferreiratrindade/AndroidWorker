@@ -2,7 +2,7 @@ using Activities.Domain.Models.Repositories;
 using Activities.Domain.DTO;
 using Dapper;
 using Framework.Core.Messages;
-using Activities.Domain.Enums;
+using Framework.Shared.IntegrationEvent.Enums;
 
 namespace Activities.Application.Queries
 {
@@ -33,13 +33,13 @@ namespace Activities.Application.Queries
                                 FROM  Activities activities
                                 inner join WorkersActivity workersActivity on activities.Id = workersActivity.ActivityId
 
-                                where  
+                                where
                                 not(
-                                        
+
                                         ( @DateReference < activities.TimeActivityStart and @dateNext7Days < activities.TimeActivityStart)
                                         or
                                         ( @DateReference > activities.TimeRestEnd and @DateReference > activities.TimeRestEnd)
-                                ) 
+                                )
                                 order by  activities.TimeActivityStart
                                 ";
             var lst = await _activityRepository.GetConnection().QueryAsync<dynamic>(

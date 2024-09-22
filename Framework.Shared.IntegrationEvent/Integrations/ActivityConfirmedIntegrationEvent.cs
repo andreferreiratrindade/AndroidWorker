@@ -1,4 +1,5 @@
 using EasyNetQ;
+using Framework.Core.DomainObjects;
 using Framework.Core.Messages.Integration;
 namespace Framework.Shared.IntegrationEvent.Integration
 {
@@ -12,10 +13,9 @@ namespace Framework.Shared.IntegrationEvent.Integration
                                                int typeActivityBuild,
                                                DateTime timeActivityStart,
                                                DateTime timeActivityEnd,
-                                               Guid correlationId
-           )
+                                               CorrelationIdGuid correlationId
+           ):base(correlationId)
         {
-            CorrelationId = correlationId;
             ActivityId = activityId;
             Workers = workers;
             TypeActivityBuild = typeActivityBuild;
