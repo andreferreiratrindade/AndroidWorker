@@ -1,5 +1,6 @@
 
 using System.ComponentModel.DataAnnotations;
+using Framework.Core.DomainObjects;
 using Framework.Core.Messages;
 
 namespace Activities.Application.Commands.DeleteActivity
@@ -11,11 +12,12 @@ namespace Activities.Application.Commands.DeleteActivity
         public Guid ActivityId {get;set;}
 
 
-        public DeleteActivityCommand(Guid activityId)
+        public DeleteActivityCommand(Guid activityId, CorrelationIdGuid correlationId):base(correlationId)
         {
              ActivityId = activityId;
              this.AddValidCommand(new DeleteActivityCommandValidation().Validate(this));
-            this.AddCommandOutput(new Result());
+                        // this.AddRollBackEvent(new DeleteActivityCompensationEvent(this.ActivityId));
+
 
         }
     }

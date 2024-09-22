@@ -1,7 +1,8 @@
 
 using System.ComponentModel.DataAnnotations;
 using Framework.Core.Messages;
-using Activities.Domain.Enums;
+using Activities.Domain.DomainEvents;
+using Framework.Core.DomainObjects;
 
 namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 {
@@ -13,12 +14,13 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 
 
 
-        public ConfirmActivityCommand(Guid activityId)
+        public ConfirmActivityCommand(Guid activityId, CorrelationIdGuid correlationId):base(correlationId)
         {
             this.ActivityId = activityId;
 
             this.AddValidCommand(new ConfirmActivityCommandValidation().Validate(this));
-            this.AddCommandOutput(new ConfirmActivityCommandOutput());
+            this.AddRollBackEvent(new ActivityConfirmedCompensationEvent(activityId, correlationId));
+
         }
     }
 }

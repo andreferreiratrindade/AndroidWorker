@@ -6,19 +6,18 @@ using Framework.WebApi.Core.Configuration;
 using Rests.Application.Commands.AddRest;
 using Framework.Core.Messages;
 using Rests.Application.Commands.UpdateTimeStartAndEndRest;
-using Framework.Core.Notifications;
 using Rests.Domain.ValidationServices;
 using Rests.Application.Services;
 using Rests.Domain.Models.Data.Queries;
 using Rests.Infra;
 using Framework.Core.Data;
 using Framework.Core.MongoDb;
-using Autofac.Core;
-using Rests.Api.IntegrationService;
 using MassTransit;
 using Rests.Application.Events;
 using Rests.Domain.DomainEvents;
 using Framework.Core.OpenTelemetry;
+using Rests.Application.IntegrationService;
+using Framework.MessageBus;
 
 namespace Rests.Api.Configuration
 {
@@ -27,14 +26,12 @@ namespace Rests.Api.Configuration
         public static void RegisterServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddMessageBusConfiguration(builder.Configuration);
-
-                       builder.Services.RegisterMediatorBehavior(typeof(Program).Assembly);
-
+            builder.Services.RegisterMediatorBehavior(typeof(Program).Assembly);
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             ApiConfigurationWebApiCore.RegisterServices(builder.Services);
             builder.Services.AddGraphQLServer()
                 .AddQueryType<Query>()
-                .RegisterDbContext<RestContext>()
+                //.RegisterDbContext<RestContext>()
                 .AddFiltering()
                 .AddSorting();
 
@@ -48,7 +45,7 @@ namespace Rests.Api.Configuration
             builder.Services.RegisterEvents();
             builder.RegisterEventStored();
             builder.RegisterOpenTelemetry();
-
+            builder.Services.AddMessageBus();
 
         }
         public static void AddMessageBusConfiguration(this IServiceCollection services,
@@ -62,13 +59,24 @@ namespace Rests.Api.Configuration
             };
             services.AddMassTransit(config =>
             {
-                config.AddConsumer<Rest_ActivityCreatedEventHandler>();
+                config.AddEntityFrameworkOutbox<RestContext>(o =>
+                {
+                    o.QueryDelay = TimeSpan.FromSeconds(1);
+                    o.DuplicateDetectionWindow = TimeSpan.FromSeconds(30);
+
+                    o.UseBusOutbox();
+                });
+
+                config.AddConsumer<Rest_ActivityValidationResultCreatedHandler>();
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(messageQueueConnection.Host, x =>
                     {
                         x.Username(messageQueueConnection.Username);
                         x.Password(messageQueueConnection.Passwoord);
+
+                        cfg.UseMessageRetry(r => r.Exponential(10, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(5)));
+                        cfg.SingleActiveConsumer = true;
 
                         cfg.ConfigureEndpoints(ctx);
                     });
@@ -107,8 +115,7 @@ namespace Rests.Api.Configuration
         public static void RegisterEvents(this IServiceCollection services)
         {
             services.AddScoped<INotificationHandler<RestAddedEvent>, RestAddedEventHandler>();
-            services.AddScoped<INotificationHandler<RestRejectedEvent>, RestRejectedEventHandler>();
-
+            services.AddScoped<INotificationHandler<RestAddedCompensationEvent>, RestAddedCompensationHandler>();
         }
 
 

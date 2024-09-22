@@ -15,7 +15,7 @@ namespace Rests.Infra
     {
 
         public RestContext(DbContextOptions<RestContext> options, IMediatorHandler mediatorHandler, IEventStored eventStored)
-           : base(options, eventStored)
+           : base(options, eventStored,mediatorHandler)
         {
 
         }

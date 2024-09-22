@@ -11,7 +11,7 @@ namespace ActivityValidationResult.Domain.DomainEvents
     {
         public Guid ActivityId { get;}
 
-        public ActivityRestValidationFinished(Guid activityId)
+        public ActivityRestValidationFinished(Guid activityId, CorrelationIdGuid correlationId) : base(correlationId)
         {
             this.ActivityId = activityId;
         }

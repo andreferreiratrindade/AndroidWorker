@@ -18,8 +18,6 @@ namespace Activities.Api.Configuration
                 _db.Database.Migrate();
 
             }
-
-            
         }
     }
 }

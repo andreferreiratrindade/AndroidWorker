@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Framework.Core.Messages;
-using Activities.Domain.Enums;
+
 using Framework.Core.DomainObjects;
 
 namespace Activities.Domain.DomainEvents
@@ -12,7 +7,7 @@ namespace Activities.Domain.DomainEvents
     {
         private Guid ActivityId;
 
-        public ActivityInativatedEvent(Guid activityId)
+        public ActivityInativatedEvent(Guid activityId,CorrelationIdGuid correlationId):base(correlationId)
         {
             this.ActivityId = activityId;
             this.AggregateId = activityId;

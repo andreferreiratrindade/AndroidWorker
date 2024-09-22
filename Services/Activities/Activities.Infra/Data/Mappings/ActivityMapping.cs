@@ -1,8 +1,9 @@
 using Activities.Domain.Models.Entities;
+using Framework.Shared.IntegrationEvent.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Activities.Domain.Enums;
+
 
 namespace Activities.Infra.Data.Mappings
 {

@@ -50,8 +50,6 @@ namespace Framework.Core.Data
         private async Task<T> LoadAggregate<T>(Guid aggregateId, CancellationToken cancellationToken = default) where T : AggregateRoot
         {
             var persistedEvents = new List<IDomainEvent>();
-            long aggregateVersion = -1;
-
             var eventStream = await _eventStoreRepository.FindByAggregateId(aggregateId);
 
             if (eventStream == null || !eventStream.Any())

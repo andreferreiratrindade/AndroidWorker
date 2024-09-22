@@ -439,13 +439,13 @@ FNDA:0,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification
 DA:20,0
 DA:21,0
 DA:22,0
-FN:24,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotifications(System.Collections.Generic.IEnumerable`1<Framework.Core.DomainObjects.Notifications.NotificationMessage>)
-FNDA:0,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotifications(System.Collections.Generic.IEnumerable`1<Framework.Core.DomainObjects.Notifications.NotificationMessage>)
+FN:24,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotification(System.Collections.Generic.IEnumerable`1<Framework.Core.DomainObjects.Notifications.NotificationMessage>)
+FNDA:0,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotification(System.Collections.Generic.IEnumerable`1<Framework.Core.DomainObjects.Notifications.NotificationMessage>)
 DA:25,0
 DA:26,0
 DA:27,0
-FN:29,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotifications(FluentValidation.Results.ValidationResult)
-FNDA:0,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotifications(FluentValidation.Results.ValidationResult)
+FN:29,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotification(FluentValidation.Results.ValidationResult)
+FNDA:0,System.Void Framework.Core.DomainObjects.Notifications.DomainNotification::AddNotification(FluentValidation.Results.ValidationResult)
 DA:30,0
 DA:31,0
 DA:32,0

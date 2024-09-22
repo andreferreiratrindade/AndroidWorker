@@ -10,10 +10,6 @@ namespace Rests.Domain.DomainEvents
 {
     public class RestAddedEvent : DomainEvent
     {
-        public RestAddedEvent()
-        {
-            
-        }
 
         public RestAddedEvent(Guid aggregateId,
                               Guid activityId,
@@ -22,9 +18,8 @@ namespace Rests.Domain.DomainEvents
                               DateTime timeRestEnd,
                               TypeActivityBuild typeActivityBuild,
                               bool isAlive,
-                              Guid CorrelationId) : base(aggregateId)
+                              CorrelationIdGuid correlationId): base(correlationId)
         {
-            CorrelationId = CorrelationId;
             RestId = aggregateId;
             ActivityId = activityId;
             WorkerId = workerId;

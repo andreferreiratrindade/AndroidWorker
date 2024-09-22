@@ -70,7 +70,7 @@ namespace Framework.Core.Data
 
                 //await _eventStored.SaveAsync(events, aggregate.Entity.AggregateId, "aggregateTemp");
                 await _mediatorHandler.PublishEvent(events);
-                await base.SaveChangesAsync();
+                sucesso = await base.SaveChangesAsync()>0;
             }
 
             return sucesso;

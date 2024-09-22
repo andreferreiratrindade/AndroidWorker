@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Activities.Domain.Enums;
+
+using Framework.Shared.IntegrationEvent.Enums;
 
 namespace Activities.Domain.DTO
 {

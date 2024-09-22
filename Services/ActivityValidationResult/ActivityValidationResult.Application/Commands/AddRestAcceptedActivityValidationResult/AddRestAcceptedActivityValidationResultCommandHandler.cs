@@ -25,9 +25,9 @@ namespace ActivityValidationResult.Application.Commands.AddActivityValidationRes
         {
             var model = await _activityValidationResultRepository.GetByActivityId(request.ActivityId);
 
-            model.AddRestAccepted(request.RestId, request.TimeRestStart, request.TimeRestEnd, request.WorkerId);
+            model.AddRestAccepted(request.RestId, request.TimeRestStart, request.TimeRestEnd, request.WorkerId, request.CorrelationId);
 
-            model.TryFinishValidation();     
+            model.TryFinishValidation(request.CorrelationId);
 
             if(!_domainNotification.HasNotifications){
                 await _activityValidationResultRepository.Update(model);

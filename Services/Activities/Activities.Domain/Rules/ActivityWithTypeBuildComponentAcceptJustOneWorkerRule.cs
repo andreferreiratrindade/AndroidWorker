@@ -1,5 +1,6 @@
 using Framework.Core.DomainObjects;
-using Activities.Domain.Enums;
+
+using Framework.Shared.IntegrationEvent.Enums;
 
 namespace Activities.Domain.Rules
 {
@@ -24,7 +25,7 @@ namespace Activities.Domain.Rules
 
         public bool IsBroken()
         {
-            return _typeActivityBuild == Enums.TypeActivityBuild.Component
+            return _typeActivityBuild == TypeActivityBuild.Component
                 && _workers.Count > 1;
         }
     }

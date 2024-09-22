@@ -3,13 +3,10 @@ using ActivityValidationResult.Infra;
 
 namespace ActivityValidationResult.Api.Configuration
 {
-    public static class ApiConfig 
+    public static class ApiConfig
     {
         public static WebApplicationBuilder AddApiConfiguration(this WebApplicationBuilder builder)
         {
-       //     builder.Services.AddDbContext<ActivityValidationResultContext>(options =>
-       //options.UseSqlServer(builder.Configuration["ConnectionStringSql"]));
-       //     builder.Services.AddDbContext<ActivityValidationResultContext>();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddCors(options =>
@@ -21,7 +18,7 @@ namespace ActivityValidationResult.Api.Configuration
                            .AllowAnyMethod()
                            .AllowAnyHeader());
             });
-           
+
 
             builder.RegisterServices();
             return builder;

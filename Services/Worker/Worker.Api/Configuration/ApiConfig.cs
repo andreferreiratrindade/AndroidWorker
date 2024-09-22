@@ -36,7 +36,7 @@ namespace Worker.Api.Configuration
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             app.MapGraphQL();
 
-            //  app.MapControllers();
+             app.MapControllers();
             return app;
         }
     }

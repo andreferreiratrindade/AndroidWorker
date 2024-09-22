@@ -2,6 +2,7 @@
 using Framework.Core.DomainObjects;
 using Framework.Core.Mediator;
 using Framework.Core.Notifications;
+using MediatR;
 
 namespace Framework.Core.Messages
 {
@@ -15,20 +16,15 @@ namespace Framework.Core.Messages
             _mediatorHandler = mediatorHandler;
         }
 
+        protected CommandHandler()
+        {
+        }
+
         protected async Task PersistData(IUnitOfWork uow)
         {
             if (!_domainNotification.HasNotifications)
             {
-                if (!await uow.Commit()) _domainNotification.AddNotifications(string.Empty, "Error connection database");
-            }
-        }
-
-        protected async Task RollBackEvent(RollBackEvent @event)
-        {
-            if (_domainNotification.HasNotifications)
-            {
-                @event.AddNotifications(_domainNotification.Notifications.ToList());
-                await _mediatorHandler.PublishEvent(@event);
+                if (!await uow.Commit()) _domainNotification.AddNotification(string.Empty, "Error connection database");
             }
         }
 
@@ -48,17 +44,9 @@ namespace Framework.Core.Messages
                 await _mediatorHandler.PublishEvent(aggregateRoot.GetUncommittedChanges());
 
                 aggregateRoot.MarkChangesAsCommitted();
-
             }
         }
 
-        protected async Task PersistDataOrRollBackEvent(IUnitOfWork uow, IAggregateRoot aggregateRoot, RollBackEvent @event)
-        {
-            await PersistData(uow);
-
-            await PublishEvents(aggregateRoot);
-
-        }
 
     }
 }

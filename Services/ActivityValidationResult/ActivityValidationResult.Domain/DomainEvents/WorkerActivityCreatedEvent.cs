@@ -11,9 +11,8 @@ namespace ActivityValidationResult.Domain.DomainEvents
     {
         public string WorkerId { get; }
 
-        public WorkerActivityCreatedEvent( string workerId, Guid correlationId)
+        public WorkerActivityCreatedEvent( string workerId, CorrelationIdGuid correlationId) : base(correlationId)
         {
-            CorrelationId = correlationId;
             WorkerId = workerId;
         }
     }

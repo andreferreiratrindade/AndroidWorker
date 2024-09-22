@@ -5,7 +5,7 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["ApiGateway.Queries/ApiGateway.Queries.csproj", "ApiGateway.Queries/"]
 RUN dotnet restore "ApiGateway.Queries/ApiGateway.Queries.csproj"

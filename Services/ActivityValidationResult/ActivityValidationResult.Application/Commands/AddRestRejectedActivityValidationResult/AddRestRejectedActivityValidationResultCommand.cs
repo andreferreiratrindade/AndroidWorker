@@ -4,6 +4,8 @@ using Framework.Core.Messages;
 using MassTransit;
 using ActivityValidationResult.Domain.Enums;
 using ActivityValidationResult.Application.Commands.AddActivityValidationResult;
+using ActivityValidationResult.Domain.DomainEvents;
+using Framework.Core.DomainObjects;
 
 namespace ActivityValidationResult.Application.Commands.AddRestRejectedActivityValidationResult
 {
@@ -16,15 +18,13 @@ namespace ActivityValidationResult.Application.Commands.AddRestRejectedActivityV
 
         public AddRestRejectedActivityValidationResultCommand(Guid activityId,
                                                               string workerId,
-                                                              List<string> descriptionErrors,
-                                                              Guid correlationById)
+                                                              List<string> descriptionErrors, CorrelationIdGuid correlationId):base(correlationId)
         {
             this.DescriptionErrors = descriptionErrors;
             ActivityId = activityId;
-
             WorkerId = workerId;
-              this.AddValidCommand(new FluentValidation.Results.ValidationResult());
-            this.AddCommandOutput(new AddRestRejectedActivityValidationResultCommandOutput());
+            this.AddValidCommand(new FluentValidation.Results.ValidationResult());
+            this.AddRollBackEvent(new RestRejectedCompensation(this.ActivityId, WorkerId, correlationId));
         }
     }
 }

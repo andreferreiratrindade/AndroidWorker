@@ -12,6 +12,9 @@ using ActivityValidationResult.Infra.Data.Mappings;
 using Worker.Domain.DomainEvents;
 using Worker.Application.Events;
 using Worker.Application.IntegrationServices;
+using Worker.Domain.Models.Data.Queries;
+using Framework.MessageBus;
+
 
 namespace Worker.Api.Configuration
 {
@@ -26,6 +29,10 @@ namespace Worker.Api.Configuration
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             ApiConfigurationWebApiCore.RegisterServices(builder.Services);
+            builder.Services.AddGraphQLServer()
+                .AddQueryType<Query>()
+                .AddFiltering()
+                .AddSorting();
 
             builder.Services.RegisterRepositories();
             builder.Services.RegisterCommands();
@@ -35,6 +42,8 @@ namespace Worker.Api.Configuration
             builder.Services.RegisterEvents();
             builder.RegisterMongoDB();
             builder.RegisterOpenTelemetry();
+            builder.Services.AddMessageBus();
+
 
         }
         public static void AddMessageBusConfiguration(this IServiceCollection services,
@@ -48,6 +57,7 @@ namespace Worker.Api.Configuration
             };
             services.AddMassTransit(config =>
             {
+
                 config.AddConsumer<Worker_ActivityConfirmedIntegrationHandle>();
 
                 config.UsingRabbitMq((ctx, cfg) =>
@@ -56,15 +66,16 @@ namespace Worker.Api.Configuration
                     {
                         x.Username(messageQueueConnection.Username);
                         x.Password(messageQueueConnection.Passwoord);
-
+                        cfg.UseMessageRetry(r => r.Exponential(10, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(5)));
+                        cfg.SingleActiveConsumer = true;
                         cfg.ConfigureEndpoints(ctx);
                     });
                 });
             });
+
         }
         public static void RegisterIntegrationService(this IServiceCollection services)
         {
-            services.AddScoped<IRequestHandler<AddWorkerCommand, AddWorkerCommandOutput>, AddWorkerCommandHandler>();
         }
 
         public static void RegisterRepositories(this IServiceCollection services)
@@ -74,6 +85,7 @@ namespace Worker.Api.Configuration
 
         public static void RegisterCommands(this IServiceCollection services)
         {
+            services.AddScoped<IRequestHandler<AddWorkerCommand, AddWorkerCommandOutput>, AddWorkerCommandHandler>();
 
         }
 

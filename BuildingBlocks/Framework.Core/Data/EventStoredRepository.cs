@@ -23,7 +23,7 @@ namespace Framework.Core.Data
             {
                 //var tt = await _eventStoreCollection.Find(x => x.AggregateIdentifier == aggregateId).ToListAsync();
                 var tt2 = await _eventStoreCollection.FindAsync(x => x.AggregateIdentifier == aggregateId);
-                 
+
                 return tt2.ToList();
             }
             catch (Exception ex)

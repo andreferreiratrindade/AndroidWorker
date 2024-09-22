@@ -8,5 +8,6 @@ namespace Rests.Application.Commands.AddRest
 {
     public class AddRestCommandOutput
     {
+        
     }
 }

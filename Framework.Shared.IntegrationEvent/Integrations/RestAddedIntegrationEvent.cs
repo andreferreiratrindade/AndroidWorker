@@ -1,4 +1,5 @@
 using EasyNetQ;
+using Framework.Core.DomainObjects;
 using Framework.Core.Messages.Integration;
 namespace Framework.Shared.IntegrationEvent.Integration
 {
@@ -7,16 +8,14 @@ namespace Framework.Shared.IntegrationEvent.Integration
 
     public class RestAddedIntegrationEvent : Framework.Core.Messages.Integration.IntegrationEvent
     {
-        public RestAddedIntegrationEvent(Guid restId, 
+        public RestAddedIntegrationEvent(Guid restId,
                                                 Guid activityId,
                                                 string workerId,
                                                 DateTime timeRestStart,
-                                                DateTime timeRestEnd,
-                                                Guid correlationId)
+                                                DateTime timeRestEnd, CorrelationIdGuid correlationId): base(correlationId)
         {
             RestId = restId;
             ActivityId = activityId;
-            CorrelationId = correlationId;
             TimeRestStart = timeRestStart;
             TimeRestEnd = timeRestEnd;
             WorkerId = workerId;
@@ -27,6 +26,5 @@ namespace Framework.Shared.IntegrationEvent.Integration
         public string WorkerId { get; private set; }
         public DateTime TimeRestStart { get; private set; }
         public DateTime TimeRestEnd { get; private set; }
-        public Guid CorrelationById { get { return this.CorrelationId; }  }
     }
 }

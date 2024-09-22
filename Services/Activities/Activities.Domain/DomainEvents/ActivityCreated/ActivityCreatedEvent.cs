@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Framework.Core.Messages;
-using Activities.Domain.Enums;
-using Activities.Domain.DTO;
+
 using Framework.Core.DomainObjects;
+using Framework.Shared.IntegrationEvent.Enums;
 
 namespace Activities.Domain.DomainEvents
 {
@@ -23,10 +18,8 @@ namespace Activities.Domain.DomainEvents
                                     TypeActivityBuild typeActivityBuild,
                                     DateTime timeActivityStart,
                                     DateTime timeActivityEnd,
-                                    TypeActivityStatus status,
-                                    Guid correlationId)
+                                    TypeActivityStatus status,CorrelationIdGuid correlationId):base(correlationId)
         {
-            this.CorrelationId = correlationId;
             this.AggregateId = activityId;
             this.Workers = workers;
             this.ActivityId = activityId;

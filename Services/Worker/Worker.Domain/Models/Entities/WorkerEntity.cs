@@ -1,5 +1,7 @@
 using System.Runtime.InteropServices;
 using Framework.Core.DomainObjects;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using Worker.Domain.DomainEvents;
 
 namespace Worker.Domain.Models.Entities
@@ -11,12 +13,14 @@ namespace Worker.Domain.Models.Entities
         {
 
         }
-        private WorkerEntity(string workerId)
+        private WorkerEntity(string workerId, CorrelationIdGuid correlationId)
         {
-            var @event = new WorkerAddedEvent(workerId);
+            var @event = new WorkerAddedEvent(workerId, correlationId);
             RaiseEvent(@event);
         }
 
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string WorkerId { get; private set; }
 
         protected override void When(IDomainEvent @event)
@@ -29,8 +33,8 @@ namespace Worker.Domain.Models.Entities
         }
 
 
-        public static WorkerEntity Create(string workerId){
-            var workerEntity =  new WorkerEntity(workerId);
+        public static WorkerEntity Create(string workerId,CorrelationIdGuid correlationId){
+            var workerEntity =  new WorkerEntity(workerId,correlationId );
             return workerEntity;
         }
 

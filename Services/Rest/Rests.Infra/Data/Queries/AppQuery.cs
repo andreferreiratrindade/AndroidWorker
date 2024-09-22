@@ -9,9 +9,6 @@ namespace Rests.Domain.Models.Data.Queries
 {
     public class Query
     {
-        [UsePaging]
-        [UseFiltering]
-        [UseSorting]
         public IQueryable<RestDto> AllRestOnly(string workerId, RestContext context)
         {
             var repo = new RestRepository(context);

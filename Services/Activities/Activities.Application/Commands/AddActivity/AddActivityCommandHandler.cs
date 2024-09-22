@@ -44,11 +44,11 @@ namespace Activities.Application.Commands.AddActivity
                                     request.TimeActivityEnd,
                                     request.CorrelationId);
 
-            _domainNotification.AddNotifications(CheckCreateActivityRules(activity));
+            _domainNotification.AddNotification(CheckCreateActivityRules(activity));
 
             _activitytRepository.Add(activity);
 
-            await PersistDataOrRollBackEvent(_activitytRepository.UnitOfWork,activity, new ActivityCreatedCompensationEvent(request.CorrelationId));
+            await PersistData(_activitytRepository.UnitOfWork);
 
             return new AddActivityCommandOutput
             {

@@ -3,7 +3,7 @@ using ActivityValidationResult.Domain.DomainEvents;
 using ActivityValidationResult.Domain.Enums;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
-using System.Diagnostics.CodeAnalysis;
+using Framework.Shared.IntegrationEvent.Enums;
 
 namespace ActivityValidationResult.Domain.Models.Entities
 {
@@ -13,6 +13,8 @@ namespace ActivityValidationResult.Domain.Models.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get { return this.AggregateId.ToString(); } }
         public Guid ActivityId { get; private set; }
+
+
         public TypeStatus Status { get; private set; }
         public List<string> Workers { get; set; } = new List<string>();
         public List<RestEntity> Rests { get; set; } = new List<RestEntity>();
@@ -20,30 +22,39 @@ namespace ActivityValidationResult.Domain.Models.Entities
         protected ActivityValidationResultEntity() { }
 
         private ActivityValidationResultEntity(Guid activityId,
-                     List<string> workers,
-                     Guid? CorrelationId)
+                    TypeActivityBuild typeActivityBuild,
+                    DateTime timeActivityStart,
+                    DateTime timeActivityEnd,
+                    List<string> workers,
+                    CorrelationIdGuid correlationId)
         {
-            Guid correlationId = (CorrelationId ?? Guid.Empty);
 
-            var @event = new ActivityValidationResultAddedEvent(Guid.NewGuid(),
+
+            var @event = new ActivityValidationResultAddedEvent(
+                                            Guid.NewGuid(),
                                             activityId,
+                                            typeActivityBuild,
+                                            timeActivityStart,
+                                            timeActivityEnd,
                                             TypeStatus.Pending,
+                                            workers,
                                             correlationId);
             this.RaiseEvent(@event);
-
-            var @eventsWorkers = workers.Select(x => new WorkerActivityCreatedEvent(x, correlationId)).ToList();
-            @eventsWorkers.ForEach(x =>
-            {
-                this.RaiseEvent(x);
-            });
         }
 
         public static ActivityValidationResultEntity Create(Guid activityId,
-                          List<string> workers,
-                          Guid? CorrelationId
-                          )
+                    TypeActivityBuild typeActivityBuild,
+                    DateTime timeActivityStart,
+                    DateTime timeActivityEnd,
+                    List<string> workers,
+                    CorrelationIdGuid CorrelationId)
         {
-            var ActivityValidationResult = new ActivityValidationResultEntity(activityId, workers, CorrelationId);
+            var ActivityValidationResult = new ActivityValidationResultEntity(activityId,
+                                                typeActivityBuild,
+                                                timeActivityStart,
+                                                timeActivityEnd,
+                                                 workers,
+                                                 CorrelationId);
             return ActivityValidationResult;
         }
 
@@ -52,47 +63,44 @@ namespace ActivityValidationResult.Domain.Models.Entities
             switch (@event)
             {
                 case ActivityValidationResultAddedEvent x: OnActivityValidationResultAddedEvent(x); break;
-                case WorkerActivityCreatedEvent x: OnWorkerActivityCreatedEvent(x); break;
-                case AddedRestAcceptedEvent x: OnAddRestAccepted(x); break;
+                case RestAcceptedEvent x: OnAddRestAccepted(x); break;
                 case ActivityRejectedEvent x: OnActivityRejectedEvent(x); break;
                 case ActivityAcceptedEvent x: OnActivityAcceptedEvent(x); break;
                 case AddedRestRejectedEvent x: OnAddedRestRejectedEvent(x); break;
-
-
+                case UpdatedActivityConfirmedEvent x: OnUpdatedActivityConfirmedEvent(x); break;
             }
         }
-        private void OnWorkerActivityCreatedEvent(WorkerActivityCreatedEvent @event)
-        {
-            Workers.Add(@event.WorkerId);
-        }
+
 
 
         private void OnActivityValidationResultAddedEvent(ActivityValidationResultAddedEvent x)
         {
             AggregateId = x.AggregateId;
             ActivityId = x.ActivityId;
+            Workers = x.Workers;
+            Status = x.TypeStatus;
         }
 
-        public void AddRestAccepted(Guid restId, DateTime timeRestStart, DateTime timeRestEnd, string workerId)
+        public void AddRestAccepted(Guid restId, DateTime timeRestStart, DateTime timeRestEnd, string workerId, CorrelationIdGuid correlationId)
         {
 
-            var @event = new AddedRestAcceptedEvent(restId,
+            var @event = new RestAcceptedEvent(restId,
                                             workerId,
                                             timeRestStart,
                                             timeRestEnd,
                                             TypeStatus.Accepted,
-                                            ActivityId);
+                                            ActivityId, correlationId);
             this.RaiseEvent(@event);
         }
 
-        private void OnAddRestAccepted(AddedRestAcceptedEvent x)
+        private void OnAddRestAccepted(RestAcceptedEvent x)
         {
             Rests.Add(new RestEntity(x.RestId, x.WorkerId, x.Status));
         }
 
         private void OnAddedRestRejectedEvent(AddedRestRejectedEvent x)
         {
-            Rests.Add(new RestEntity( x.WorkerId, x.Status, x.DescriptionErros));
+            Rests.Add(new RestEntity(x.WorkerId, x.Status, x.DescriptionErros));
         }
 
         private void OnActivityRejectedEvent(ActivityRejectedEvent x)
@@ -105,7 +113,7 @@ namespace ActivityValidationResult.Domain.Models.Entities
             this.Status = x.TypeStatus;
         }
 
-        public void TryFinishValidation()
+        public void TryFinishValidation(CorrelationIdGuid correlationId)
         {
             if (HasFinishedValidationRest())
             {
@@ -113,11 +121,11 @@ namespace ActivityValidationResult.Domain.Models.Entities
                 if (ExistsRestRejected())
                 {
                     var restRejectedDescription = Rests.Where(x => x.TypeStatus == TypeStatus.Rejected).SelectMany(x => x.DescriptionErrors).ToList();
-                    @event = new ActivityRejectedEvent(ActivityId, TypeStatus.Rejected, restRejectedDescription);
+                    @event = new ActivityRejectedEvent(ActivityId, TypeStatus.Rejected, restRejectedDescription, correlationId);
                 }
                 else
                 {
-                    @event = new ActivityAcceptedEvent(ActivityId, TypeStatus.Accepted);
+                    @event = new ActivityAcceptedEvent(ActivityId, TypeStatus.Accepted, correlationId);
                 }
                 this.RaiseEvent(@event);
             }
@@ -133,10 +141,22 @@ namespace ActivityValidationResult.Domain.Models.Entities
             return Rests.Any(x => x.TypeStatus == TypeStatus.Rejected);
         }
 
-        public void AddRestRejected(string workerId, List<string> descriptionErrors)
+        public void AddRestRejected(string workerId, List<string> descriptionErrors, CorrelationIdGuid correlationId)
         {
-           var @event = new AddedRestRejectedEvent(workerId,TypeStatus.Rejected,this.ActivityId,descriptionErrors);
-           this.RaiseEvent(@event);
+            var @event = new AddedRestRejectedEvent(workerId, TypeStatus.Rejected, this.ActivityId, descriptionErrors, correlationId);
+            this.RaiseEvent(@event);
         }
+
+        public void UpdateActivityConfirmed(CorrelationIdGuid correlationId)
+        {
+            var @event = new UpdatedActivityConfirmedEvent(this.ActivityId, TypeStatus.Confirmed, correlationId);
+            this.RaiseEvent(@event);
+
+        }
+        private void OnUpdatedActivityConfirmedEvent(UpdatedActivityConfirmedEvent x)
+        {
+            this.Status = x.TypeStatus;
+        }
+
     }
 }

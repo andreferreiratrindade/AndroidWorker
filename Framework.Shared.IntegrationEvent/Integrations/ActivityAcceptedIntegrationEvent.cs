@@ -1,4 +1,5 @@
 using EasyNetQ;
+using Framework.Core.DomainObjects;
 using Framework.Core.Messages.Integration;
 using Framework.Core.Notifications;
 
@@ -12,9 +13,8 @@ namespace Framework.Shared.IntegrationEvent.Integration
         public Guid ActivityId { get; private set; }
 
 
-        public ActivityAcceptedIntegrationEvent(Guid activityId)
+        public ActivityAcceptedIntegrationEvent(Guid activityId, CorrelationIdGuid correlationId):base(correlationId)
         {
-            CorrelationId = activityId;
             ActivityId = activityId;
         }
 
