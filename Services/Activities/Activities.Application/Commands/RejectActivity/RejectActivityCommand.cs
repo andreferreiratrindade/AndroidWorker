@@ -22,7 +22,7 @@ namespace Activities.Application.Commands.RejectActivity
         {
             this.ActivityId = activityId;
 
-            this.AddValidCommand(new RejectActivityCommandValidation().Validate(this));
+          //  this.AddValidCommand(new RejectActivityCommandValidation().Validate(this));
                     //    this.AddRollBackEvent(new RejectActivityCCompensationEvent(this.ActivityId));
 
 

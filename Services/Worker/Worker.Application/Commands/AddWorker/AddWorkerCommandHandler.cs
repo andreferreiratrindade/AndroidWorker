@@ -8,8 +8,7 @@ using Worker.Domain.Models.Repositories;
 
 namespace Worker.Application.Commands.AddWorker
 {
-    public class AddWorkerCommandHandler : CommandHandler,
-    IRequestHandler<AddWorkerCommand, AddWorkerCommandOutput>
+    public class AddWorkerCommandHandler : CommandHandler<AddWorkerCommand, AddWorkerCommandOutput,AddWorkerCommandValidation>
 
     {
         private readonly IWorkerRepository _workerRepository;
@@ -23,7 +22,7 @@ namespace Worker.Application.Commands.AddWorker
         }
 
 
-        public async Task<AddWorkerCommandOutput> Handle(AddWorkerCommand request, CancellationToken cancellationToken)
+        public override async Task<AddWorkerCommandOutput> ExecutCommand(AddWorkerCommand request, CancellationToken cancellationToken)
         {
             var workerFromDataBase = _workerRepository.GetQueryable().Select(x=> x.WorkerId).ToList();
             var workerToCreated = request.Workers.Where(x=> !workerFromDataBase.Any(y=> y == x)).ToList();
@@ -35,9 +34,11 @@ namespace Worker.Application.Commands.AddWorker
             });
 
             workersCreated.ForEach(async x=> {
-                await PublishEventsOrRollBackEvent(x, null);
+                await PublishEvents(x);
             });
 
+            if(_domainNotification.HasNotifications)return request.GetCommandOutput();
+            
            return new AddWorkerCommandOutput{ Workers = workersCreated.Select(x=> x.WorkerId).ToList()};
         }
     }

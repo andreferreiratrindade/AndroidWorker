@@ -15,6 +15,7 @@ using ActivityValidationResult.Application.Commands.AddRestRejectedActivityValid
 using Framework.Core.OpenTelemetry;
 using ActivityValidationResult.Application.IntegrationService;
 using Framework.MessageBus;
+using ActivityValidationResult.Application.Commands.UpdateActivityConfirmed;
 
 namespace ActivityValidationResult.Api.Configuration
 {

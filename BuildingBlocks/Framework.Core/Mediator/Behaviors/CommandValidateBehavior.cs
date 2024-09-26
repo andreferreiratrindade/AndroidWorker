@@ -27,15 +27,14 @@ namespace Framework.Core.Mediator
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
 
-            if (request.GetValidationResult() == null
-                || request.GetRollBackEvent() == null)
+            if (request.GetRollBackEvent() == null)
                 throw new Exception("You need to add ValidationResult and rollBackEvent in your class command's constructor, doing something like that: this.AddValidCommand(new AddActivityCommandValidation().Validate(this)); this.AddCommandOutput(new AddActivityCommandOutput()); ");
 
-            _domainNotification.AddNotification(request.GetValidationResult());
+            // _domainNotification.AddNotification(request.GetValidationResult());
 
-            var response = await CheckNotifications(request, default);
+            TResponse response = default;
 
-            if (response != null) return response;
+            // if (response != null) return response;
 
             try
             {

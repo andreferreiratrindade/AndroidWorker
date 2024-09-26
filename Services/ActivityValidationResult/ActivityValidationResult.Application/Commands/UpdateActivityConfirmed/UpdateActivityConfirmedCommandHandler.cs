@@ -7,10 +7,9 @@ using ActivityValidationResult.Domain.DomainEvents;
 using ActivityValidationResult.Domain.Models.Repositories;
 using ActivityValidationResult.Domain.Models.Entities;
 
-namespace ActivityValidationResult.Application.Commands.AddActivityValidationResult
+namespace ActivityValidationResult.Application.Commands.UpdateActivityConfirmed
 {
-    public class UpdateActivityConfirmedCommandHandler : CommandHandler,
-    IRequestHandler<UpdateActivityConfirmedCommand, UpdateActivityConfirmedCommandOutput>
+    public class UpdateActivityConfirmedCommandHandler : CommandHandler<UpdateActivityConfirmedCommand, UpdateActivityConfirmedCommandOutput,UpdateActivityConfirmedCommandValidation>
     {
         private readonly IActivityValidationResultRepository _activityValidationResultRepository;
 
@@ -21,7 +20,7 @@ namespace ActivityValidationResult.Application.Commands.AddActivityValidationRes
         {
             this._activityValidationResultRepository = ActivityValidationResultRepository;
         }
-        public async Task<UpdateActivityConfirmedCommandOutput> Handle(UpdateActivityConfirmedCommand request, CancellationToken cancellationToken)
+        public override async Task<UpdateActivityConfirmedCommandOutput> ExecutCommand(UpdateActivityConfirmedCommand request, CancellationToken cancellationToken)
         {
             var activityValidator = await _activityValidationResultRepository.GetByActivityId(request.ActivityId);
 
@@ -31,9 +30,9 @@ namespace ActivityValidationResult.Application.Commands.AddActivityValidationRes
             // await _activityValidationResultRepository.Add(activity);
 
 
-            // await PublishEventsOrRollBackEvent(activity, null);
+            // await PublishEvents(activity, null);
 
-            return new UpdateActivityConfirmedCommandOutput();
+            return request.GetCommandOutput();
         }
 
     }

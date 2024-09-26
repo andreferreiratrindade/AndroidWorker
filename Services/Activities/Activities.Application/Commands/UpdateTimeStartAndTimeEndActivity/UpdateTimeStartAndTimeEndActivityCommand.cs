@@ -24,8 +24,8 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
             this.TimeActivityStart = timeActivityStart;
             this.TimeActivityEnd = timeActivityEnd;
             this.ActivityId = activityId;
-            this.AddValidCommand(new UpdateTimeStartAndTimeEndActivityCommandValidation().Validate(this));
-            this.AddCommandOutput(new UpdateTimeStartAndTimeEndActivityCommandOutput());
+         //   this.AddValidCommand(new UpdateTimeStartAndTimeEndActivityCommandValidation().Validate(this));
+         //   this.AddCommandOutput(new UpdateTimeStartAndTimeEndActivityCommandOutput());
         }
     }
 }

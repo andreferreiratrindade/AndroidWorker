@@ -19,8 +19,7 @@ using Framework.Core.Mediator;
 
 namespace Activities.Application.Commands.AddActivity
 {
-    public class AddActivityCommandHandler : CommandHandler,
-    IRequestHandler<AddActivityCommand, AddActivityCommandOutput>
+    public class AddActivityCommandHandler : CommandHandler<AddActivityCommand, AddActivityCommandOutput, AddActivityCommandValidation>
 
     {
         private readonly IActivityRepository _activitytRepository;
@@ -35,9 +34,25 @@ namespace Activities.Application.Commands.AddActivity
             _activitytRepository = activitytRepository;
             _activityValidatorService = activityValidatorService;
         }
-        public async Task<AddActivityCommandOutput> Handle(AddActivityCommand request, CancellationToken cancellationToken)
-        {
 
+        public List<NotificationMessage> CheckCreateActivityRules(Activity activity)
+        {
+            var lstWorkers = activity.GetWorkers().Select(x => x.WorkerId).ToList();
+            var lstNotifications = new List<NotificationMessage>();
+
+            lstNotifications.AddRange(BusinessRuleValidation.Check(new WorkerDuplicatedRule(lstWorkers)));
+            lstNotifications.AddRange(BusinessRuleValidation.Check(new ActivityWithTypeBuildComponentAcceptJustOneWorkerRule(activity.TypeActivityBuild, lstWorkers)));
+            lstNotifications.AddRange(BusinessRuleValidation.Check(new WorkerInActivityRule(_activityValidatorService,
+                                         lstWorkers,
+                                         activity.TimeActivityStart,
+                                         activity.TimeActivityEnd, null)));
+
+            return lstNotifications;
+        }
+
+
+        public override async Task<AddActivityCommandOutput> ExecutCommand(AddActivityCommand request, CancellationToken cancellationToken)
+        {
             var activity = Activity.Create(request.Workers,
                                     request.TypeActivityBuild,
                                     request.TimeActivityStart,
@@ -59,21 +74,5 @@ namespace Activities.Application.Commands.AddActivity
                 Workers = request.Workers
             };
         }
-
-        public List<NotificationMessage> CheckCreateActivityRules(Activity activity)
-        {
-            var lstWorkers = activity.GetWorkers().Select(x => x.WorkerId).ToList();
-            var lstNotifications = new List<NotificationMessage>();
-
-            lstNotifications.AddRange(BusinessRuleValidation.Check(new WorkerDuplicatedRule(lstWorkers)));
-            lstNotifications.AddRange(BusinessRuleValidation.Check(new ActivityWithTypeBuildComponentAcceptJustOneWorkerRule(activity.TypeActivityBuild, lstWorkers)));
-            lstNotifications.AddRange(BusinessRuleValidation.Check(new WorkerInActivityRule(_activityValidatorService,
-                                         lstWorkers,
-                                         activity.TimeActivityStart,
-                                         activity.TimeActivityEnd, null)));
-
-            return lstNotifications;
-        }
-
     }
 }

@@ -11,8 +11,7 @@ using Framework.Core.Mediator;
 
 namespace Activities.Application.Commands.RejectActivity
 {
-    public class RejectActivityCommandHandler : CommandHandler,
-    IRequestHandler<RejectActivityCommand, RejectActivityCommandOutput>
+    public class RejectActivityCommandHandler : CommandHandler<RejectActivityCommand, RejectActivityCommandOutput,RejectActivityCommandValidation>
     {
         private readonly IActivityRepository _activitytRepository;
         private readonly IActivityValidatorService _activityValidatorService;
@@ -22,7 +21,7 @@ namespace Activities.Application.Commands.RejectActivity
             _activitytRepository = activitytRepository;
             _activityValidatorService = activityValidatorService;
         }
-        public async Task<RejectActivityCommandOutput> Handle(RejectActivityCommand request, CancellationToken cancellationToken)
+        public override async Task<RejectActivityCommandOutput> ExecutCommand(RejectActivityCommand request, CancellationToken cancellationToken)
         {
             var activity = _activitytRepository.GetById(request.ActivityId);
 

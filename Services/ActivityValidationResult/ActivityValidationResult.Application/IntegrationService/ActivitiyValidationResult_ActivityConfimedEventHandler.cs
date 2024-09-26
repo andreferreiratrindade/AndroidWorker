@@ -3,6 +3,7 @@ using Framework.Shared.IntegrationEvent.Integration;
 using ActivityValidationResult.Application.Commands.AddActivityValidationResult;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
+using ActivityValidationResult.Application.Commands.UpdateActivityConfirmed;
 
 namespace ActivityValidationResult.Application.IntegrationService
 {
@@ -21,6 +22,7 @@ namespace ActivityValidationResult.Application.IntegrationService
         {
             using var scope = _serviceProvider.CreateScope();
             var mediator = scope.ServiceProvider.GetRequiredService<IMediatorHandler>();
+
             await mediator.SendCommand<UpdateActivityConfirmedCommand, UpdateActivityConfirmedCommandOutput>(
                 new UpdateActivityConfirmedCommand(context.Message.ActivityId,
                                         context.Message.CorrelationId));

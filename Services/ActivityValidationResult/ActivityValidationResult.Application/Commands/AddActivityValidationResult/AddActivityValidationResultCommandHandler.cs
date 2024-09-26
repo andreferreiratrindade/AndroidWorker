@@ -7,8 +7,7 @@ using ActivityValidationResult.Domain.Models.Entities;
 
 namespace ActivityValidationResult.Application.Commands.AddActivityValidationResult
 {
-    public class AddActivityValidationResultCommandHandler : CommandHandler,
-    IRequestHandler<AddActivityValidationResultCommand, AddActivityValidationResultCommandOutput>
+    public class AddActivityValidationResultCommandHandler : CommandHandler<AddActivityValidationResultCommand, AddActivityValidationResultCommandOutput,AddActivityValidationResutCommandValidation>
     {
         private readonly IActivityValidationResultRepository _activityValidationResultRepository;
 
@@ -19,7 +18,7 @@ namespace ActivityValidationResult.Application.Commands.AddActivityValidationRes
         {
             this._activityValidationResultRepository = ActivityValidationResultRepository;
         }
-        public async Task<AddActivityValidationResultCommandOutput> Handle(AddActivityValidationResultCommand request, CancellationToken cancellationToken)
+        public override async Task<AddActivityValidationResultCommandOutput> ExecutCommand(AddActivityValidationResultCommand request, CancellationToken cancellationToken)
         {
 
             var activity = ActivityValidationResultEntity.Create(
@@ -33,7 +32,7 @@ namespace ActivityValidationResult.Application.Commands.AddActivityValidationRes
             await _activityValidationResultRepository.Add(activity);
 
 
-            await PublishEventsOrRollBackEvent(activity, null);
+            await PublishEvents(activity);
 
             return new AddActivityValidationResultCommandOutput();
         }

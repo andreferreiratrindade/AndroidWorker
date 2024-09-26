@@ -29,7 +29,6 @@ namespace Rests.Application.Commands.UpdateTimeStartAndEndRest
             this.TimeActivityEnd = timeActivityEnd;
 
             this.AddValidCommand(new FluentValidation.Results.ValidationResult());
-            this.AddCommandOutput(new Result());
         }
     }
 }

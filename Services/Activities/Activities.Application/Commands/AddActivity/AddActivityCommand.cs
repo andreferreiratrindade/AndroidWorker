@@ -34,7 +34,7 @@ namespace Activities.Application.Commands.AddActivity
             this.TimeActivityStart = timeActivityStart;
             this.TimeActivityEnd = timeActivityEnd;
             this.Workers = workers.Select(x => x.ToUpper()).ToList();
-            this.AddValidCommand(new AddActivityCommandValidation().Validate(this));
+            //this.AddValidCommand(new AddActivityCommandValidation().Validate(this));
             this.AddRollBackEvent(new ActivityCreatedCompensationEvent(this.CorrelationId));
         }
     }

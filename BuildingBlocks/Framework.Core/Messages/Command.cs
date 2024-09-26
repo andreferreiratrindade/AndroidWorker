@@ -22,6 +22,9 @@ namespace Framework.Core.Messages
         [JsonIgnore]
         public CorrelationIdGuid CorrelationId {get;}
 
+        [JsonIgnore]
+        public string MessageType {get;private set;}
+
         public TResult GetCommandOutput() => _commandResult;
 
         public ValidationResult GetValidationResult() => _validationResult;
@@ -30,12 +33,9 @@ namespace Framework.Core.Messages
 
         protected void AddValidCommand(ValidationResult validationResult) => _validationResult = validationResult;
 
-        protected void AddCommandOutput(TResult commandOutput) => this._commandResult = commandOutput;
-
         protected void AddRollBackEvent(RollBackEvent rollBackEvent) => this._rollBackEvent = rollBackEvent;
 
-        [JsonIgnore]
-        public string MessageType {get;private set;}
+
        public Command(CorrelationIdGuid correlationId)
        {
         this.CorrelationId = correlationId;

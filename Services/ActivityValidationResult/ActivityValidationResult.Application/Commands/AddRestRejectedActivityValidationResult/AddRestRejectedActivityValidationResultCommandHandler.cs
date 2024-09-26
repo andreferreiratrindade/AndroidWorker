@@ -10,18 +10,17 @@ using ActivityValidationResult.Application.Commands.AddRestRejectedActivityValid
 
 namespace ActivityValidationResult.Application.Commands.AddRestRejectedActivityValidationResult
 {
-    public class AddRestRejectedActivityValidationResultCommandHandler : CommandHandler,
-    IRequestHandler<AddRestRejectedActivityValidationResultCommand, AddRestRejectedActivityValidationResultCommandOutput>
+    public class AddRestRejectedActivityValidationResultCommandHandler : CommandHandler<AddRestRejectedActivityValidationResultCommand, AddRestRejectedActivityValidationResultCommandOutput,AddRestRejectedActivityValidationResultCommandValidation>
     {
         private readonly IActivityValidationResultRepository _activityValidationResultRepository;
 
         public AddRestRejectedActivityValidationResultCommandHandler(IActivityValidationResultRepository ActivityValidationResultRepository,
                                      IDomainNotification domainNotification,
-                                     IMediatorHandler _mediatorHandler) : base(domainNotification, _mediatorHandler)
+                                     IMediatorHandler mediatorHandler) : base(domainNotification, mediatorHandler)
         {
             this._activityValidationResultRepository = ActivityValidationResultRepository;
         }
-        public async Task<AddRestRejectedActivityValidationResultCommandOutput> Handle(AddRestRejectedActivityValidationResultCommand request, CancellationToken cancellationToken)
+        public override async Task<AddRestRejectedActivityValidationResultCommandOutput> ExecutCommand(AddRestRejectedActivityValidationResultCommand request, CancellationToken cancellationToken)
         {
             var model = await _activityValidationResultRepository.GetByActivityId(request.ActivityId);
 
@@ -33,9 +32,9 @@ namespace ActivityValidationResult.Application.Commands.AddRestRejectedActivityV
                 await _activityValidationResultRepository.Update(model);
             }
 
-            await PublishEventsOrRollBackEvent(model, null);
+            await PublishEvents(model);
 
-            return new AddRestRejectedActivityValidationResultCommandOutput();
+            return request.GetCommandOutput();
         }
 
     }

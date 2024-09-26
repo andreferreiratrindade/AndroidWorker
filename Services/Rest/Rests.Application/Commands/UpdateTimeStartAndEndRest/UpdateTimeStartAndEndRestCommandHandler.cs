@@ -11,8 +11,7 @@ using Rests.Domain.Models.Repositories;
 
 namespace Rests.Application.Commands.UpdateTimeStartAndEndRest
 {
-    public class UpdateTimeStartAndEndRestCommandHandler : CommandHandler,
-    IRequestHandler<UpdateTimeStartAndEndRestCommand, Result>
+    public class UpdateTimeStartAndEndRestCommandHandler : CommandHandler<UpdateTimeStartAndEndRestCommand, Result,UpdateTimeStartAndEndRestCommandValidation>
     {
         private readonly IRestRepository _restRepository;
 
@@ -20,7 +19,7 @@ namespace Rests.Application.Commands.UpdateTimeStartAndEndRest
         {
             this._restRepository = restRepository;
         }
-        public async Task<Result> Handle(UpdateTimeStartAndEndRestCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> ExecutCommand(UpdateTimeStartAndEndRestCommand request, CancellationToken cancellationToken)
         {
 
             var lstRest = _restRepository.GetByActivityId(request.ActivityId);
@@ -31,7 +30,7 @@ namespace Rests.Application.Commands.UpdateTimeStartAndEndRest
             }
             await PersistData(_restRepository.UnitOfWork);
 
-            return new Result();
+            return request.GetCommandOutput();
         }
     }
 }

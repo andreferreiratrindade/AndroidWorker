@@ -11,8 +11,7 @@ using Framework.Core.Mediator;
 
 namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 {
-    public class ConfirmActivityCommandHandler : CommandHandler,
-    IRequestHandler<ConfirmActivityCommand, ConfirmActivityCommandOutput>
+    public class ConfirmActivityCommandHandler : CommandHandler<ConfirmActivityCommand, ConfirmActivityCommandOutput, ConfirmActivityCommandValidation>
     {
         private readonly IActivityRepository _activitytRepository;
         private readonly IActivityValidatorService _activityValidatorService;
@@ -22,7 +21,7 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
             _activitytRepository = activitytRepository;
             _activityValidatorService = activityValidatorService;
         }
-        public async Task<ConfirmActivityCommandOutput> Handle(ConfirmActivityCommand request, CancellationToken cancellationToken)
+        public override async Task<ConfirmActivityCommandOutput> ExecutCommand(ConfirmActivityCommand request, CancellationToken cancellationToken)
         {
             var activity = _activitytRepository.GetById(request.ActivityId);
 

@@ -11,8 +11,7 @@ using Framework.Core.Mediator;
 
 namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 {
-    public class UpdateTimeStartAndTimeEndActivityCommandHandler : CommandHandler,
-    IRequestHandler<UpdateTimeStartAndTimeEndActivityCommand, UpdateTimeStartAndTimeEndActivityCommandOutput>
+    public class UpdateTimeStartAndTimeEndActivityCommandHandler : CommandHandler<UpdateTimeStartAndTimeEndActivityCommand, UpdateTimeStartAndTimeEndActivityCommandOutput, UpdateTimeStartAndTimeEndActivityCommandValidation>
     {
         private readonly IActivityRepository _activitytRepository;
         private readonly IActivityValidatorService _activityValidatorService;
@@ -22,7 +21,7 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
             _activitytRepository = activitytRepository;
             _activityValidatorService = activityValidatorService;
         }
-        public async Task<UpdateTimeStartAndTimeEndActivityCommandOutput> Handle(UpdateTimeStartAndTimeEndActivityCommand request, CancellationToken cancellationToken)
+        public override async Task<UpdateTimeStartAndTimeEndActivityCommandOutput> ExecutCommand(UpdateTimeStartAndTimeEndActivityCommand request, CancellationToken cancellationToken)
         {
             var activity = _activitytRepository.GetById(request.ActivityId);
 
@@ -36,12 +35,11 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
 
             _domainNotification.AddNotification(CheckUpdateTimeStartAndTimeEnd(activity));
 
-
             _activitytRepository.Update(activity);
 
             await PersistData(_activitytRepository.UnitOfWork);
 
-            if (_domainNotification.HasNotifications) return new UpdateTimeStartAndTimeEndActivityCommandOutput();
+            if (_domainNotification.HasNotifications) return request.GetCommandOutput();
 
             return new UpdateTimeStartAndTimeEndActivityCommandOutput
             {

@@ -18,7 +18,7 @@ namespace Activities.Application.Commands.UpdateTimeStartAndTimeEndActivity
         {
             this.ActivityId = activityId;
 
-            this.AddValidCommand(new ConfirmActivityCommandValidation().Validate(this));
+           // this.AddValidCommand(new ConfirmActivityCommandValidation().Validate(this));
             this.AddRollBackEvent(new ActivityConfirmedCompensationEvent(activityId, correlationId));
 
         }

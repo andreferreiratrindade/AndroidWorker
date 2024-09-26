@@ -10,8 +10,7 @@ using Rests.Domain.ValidationServices;
 
 namespace Rests.Application.Commands.AddRest
 {
-    public class AddRestCommandHandler : CommandHandler,
-    IRequestHandler<AddRestIntegratedCommand, AddRestCommandOutput>
+    public class AddRestCommandHandler : CommandHandler<AddRestIntegratedCommand, AddRestCommandOutput,AddRestIntegratedCommandValidation>
     {
         private readonly IRestRepository _restRepository;
         private readonly IRestValidatorService _restValidatorService;
@@ -25,7 +24,7 @@ namespace Rests.Application.Commands.AddRest
             this._restRepository = restRepository;
             this._restValidatorService = restValidatorService;
         }
-        public async Task<AddRestCommandOutput> Handle(AddRestIntegratedCommand request, CancellationToken cancellationToken)
+        public override async Task<AddRestCommandOutput> ExecutCommand(AddRestIntegratedCommand request, CancellationToken cancellationToken)
         {
 
             var rest = Rest.Create(request.ActivityId,
@@ -42,7 +41,7 @@ namespace Rests.Application.Commands.AddRest
 
             if(_domainNotification.HasNotifications) return request.GetCommandOutput();
 
-            return new AddRestCommandOutput();
+            return request.GetCommandOutput();
         }
 
         public List<NotificationMessage> CheckCreateRules(Rest rest, DateTime timeActivityStart)

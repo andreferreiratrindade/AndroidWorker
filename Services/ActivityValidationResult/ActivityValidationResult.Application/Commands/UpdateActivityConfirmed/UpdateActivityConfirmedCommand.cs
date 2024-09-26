@@ -2,7 +2,7 @@ using Framework.Core.Messages;
 using ActivityValidationResult.Domain.DomainEvents;
 using Framework.Core.DomainObjects;
 
-namespace ActivityValidationResult.Application.Commands.AddActivityValidationResult
+namespace ActivityValidationResult.Application.Commands.UpdateActivityConfirmed
 {
     public class UpdateActivityConfirmedCommand : Command<UpdateActivityConfirmedCommandOutput>
     {

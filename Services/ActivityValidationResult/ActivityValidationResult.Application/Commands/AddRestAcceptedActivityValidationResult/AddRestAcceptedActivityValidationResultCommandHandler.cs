@@ -10,18 +10,17 @@ using ActivityValidationResult.Application.Commands.AddRestAcceptedActivityValid
 
 namespace ActivityValidationResult.Application.Commands.AddActivityValidationResult
 {
-    public class AddRestAcceptedActivityValidationResultCommandHandler : CommandHandler,
-    IRequestHandler<AddRestAcceptedActivityValidationResultCommand, AddRestAcceptedActivityValidationResultCommandOutput>
+    public class AddRestAcceptedActivityValidationResultCommandHandler : CommandHandler<AddRestAcceptedActivityValidationResultCommand, AddRestAcceptedActivityValidationResultCommandOutput,AddRestAcceptedActivityValidationResultCommandValidation>
     {
         private readonly IActivityValidationResultRepository _activityValidationResultRepository;
 
         public AddRestAcceptedActivityValidationResultCommandHandler(IActivityValidationResultRepository ActivityValidationResultRepository,
                                      IDomainNotification domainNotification,
-                                     IMediatorHandler _mediatorHandler) : base(domainNotification, _mediatorHandler)
+                                     IMediatorHandler mediatorHandler) : base(domainNotification, mediatorHandler)
         {
             this._activityValidationResultRepository = ActivityValidationResultRepository;
         }
-        public async Task<AddRestAcceptedActivityValidationResultCommandOutput> Handle(AddRestAcceptedActivityValidationResultCommand request, CancellationToken cancellationToken)
+        public override async Task<AddRestAcceptedActivityValidationResultCommandOutput> ExecutCommand(AddRestAcceptedActivityValidationResultCommand request, CancellationToken cancellationToken)
         {
             var model = await _activityValidationResultRepository.GetByActivityId(request.ActivityId);
 
@@ -33,9 +32,9 @@ namespace ActivityValidationResult.Application.Commands.AddActivityValidationRes
                 await _activityValidationResultRepository.Update(model);
             }
 
-            await PublishEventsOrRollBackEvent(model, null);
+            await PublishEvents(model);
 
-            return new AddRestAcceptedActivityValidationResultCommandOutput();
+            return request.GetCommandOutput();
         }
 
     }

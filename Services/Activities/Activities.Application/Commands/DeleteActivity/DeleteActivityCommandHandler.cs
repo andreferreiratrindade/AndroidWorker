@@ -10,8 +10,7 @@ using Framework.Core.Mediator;
 
 namespace Activities.Application.Commands.DelteActivity
 {
-    public class DeleteActivityCommandHandler : CommandHandler,
-    IRequestHandler<DeleteActivityCommand, Result>
+    public class DeleteActivityCommandHandler : CommandHandler<DeleteActivityCommand, Result,DeleteActivityCommandValidation>
     {
         private readonly IActivityRepository _activitytRepository;
 
@@ -20,7 +19,7 @@ namespace Activities.Application.Commands.DelteActivity
             _activitytRepository = activitytRepository;
         }
 
-        public async Task<Result> Handle(DeleteActivityCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> ExecutCommand(DeleteActivityCommand request, CancellationToken cancellationToken)
         {
             var activity = _activitytRepository.GetById(request.ActivityId) ?? throw new DomainException($"The Activity {request.ActivityId} not exists");
 
